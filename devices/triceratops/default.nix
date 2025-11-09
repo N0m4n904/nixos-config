@@ -29,7 +29,7 @@
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
       nixosHardwareModules.common-cpu-amd
-      nixosHardwareModules.common-cpu-adm-pstate
+      nixosHardwareModules.common-cpu-amd-pstate
       nixosHardwareModules.common-gpu-amd
       foundrixModules.config.via
       foundrixModules.hardware.security.keystore.tpm2
