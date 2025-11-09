@@ -1,36 +1,22 @@
 {
   applyHomeManagerShared,
-  # pkgs is the default package set, from inputs.nixpkgs
   pkgs,
-  # pkgsUnstable is the nixos-unstable variant of pkgs, from inputs.nixpkgs-unstable
   pkgsUnstable,
-  # pkgsMaster is the master branch variant of pkgs, from inputs.nixpkgs-master
-  #pkgsMaster,
-  # If your flake.nix does not provide nixpkgs-unstable and nixpkgs-master, they will be provided
-  # by foundrix instead.
-
-  # foundrix itself also provides some packages
   foundrixPkgs,
-  # If you need to install something from the flake inputs, you can add inputs here
-  #inputs,
   ...
 }:
 {
-  # applyHomeManagerShared sets the same settings for all users.
-  # You can also set these for a single user using home-manager.users.<user> = { ... }
   home-manager = applyHomeManagerShared rec {
-    home.language = rec {
+    home.language = {
       base = "en_US.UTF-8";
-      measurement = base;
-      monetary = base;
-      name = base;
-      paper = base;
-      time = base;
+      measurement = "de_DE.UTF-8";
+      monetary = "de_DE.UTF-8";
+      name = "de_DE.UTF-8";
+      paper = "de_DE.UTF-8";
+      time = "de_DE.UTF-8";
     };
-    # Here's a selection of packages you may find useful. Change to your liking.
     home.packages = with pkgs; [
-      # Example for using a flake input:
-      #inputs.zen-browser.packages.${pkgs.system}.beta
+      rose-pine-cursor
       jq
       pv
       pwgen
@@ -39,13 +25,19 @@
       playerctl
       git
       curl
-      cliphist
       wl-clipboard
+      cliphist
       wl-clipboard-x11
       easyeffects
+      nautilus
+      file-roller
+      loupe
+      gedit
+      gnome-calculator
       mangohud
       celluloid
       dig
+      signal-desktop
       unzip
       file
       zstd
@@ -53,12 +45,16 @@
       bat
       fd
       brotli
+      gparted
       picocom
+      telegram-desktop
       chromium
       protobuf
       e2fsprogs
       lm_sensors
       fastfetch
+      pkgsUnstable.jetbrains.idea-community
+      jdk
       pkgsUnstable.nixd
       nixpkgs-fmt
       bc
@@ -67,6 +63,8 @@
       evince
       stress
       subfinder
+      ntfs3g
+      woeusb-ng
       smartmontools
       rsync
       vlc
@@ -75,33 +73,65 @@
       nftables
       inetutils
       simple-scan
+      via
       hwloc
-      dysk
-      openssl
-      fd
-      nmap
-      lz4
+      inputs.zen-browser.packages.${pkgs.system}.beta
+      gimp3-with-plugins
       zip
-      mpv
-      btop
-      foundrixPkgs.json2nix
-      foundrixPkgs.nix2json
+
+      # Gnome
+      pkgs.gnome-tweaks
+      gnome-terminal
+
+      # AOSP stuff
+      git-repo
+      xmlstarlet
+      ccache
+      apktool
+
+      (vesktop.override { withSystemVencord = true; })
+      pkgsUnstable.spotify
+      pkgsUnstable.android-studio
+      prismlauncher
+      postman
+      dysk
+      vulkan-tools
+      discord-ptb
+      onlyoffice-desktopeditors
       foundrixPkgs.git-aliases
       foundrixPkgs.pickrange
-      gimp3
-      pinta
-      krita
+    ]
+    ++ lib.optionals (osConfig.networking.hostName == "triceratops") [
       ddrescue
-      hdparm
-      gnome-boxes
-      libreoffice-fresh
-      audacity
+      obs-studio
+      pciutils
+    ];
+    programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
+      vue.volar
+      mathiasfrohlich.kotlin
     ];
     xdg = {
       mimeApps.associations = {
         added = {
           "application/pdf" = "org.gnome.Evince.desktop";
-          #"..." = "..."
+          "text/html" = "zen-beta.desktop";
+          "text/x-log" = "org.gnome.gedit.desktop";
+          "x-scheme-handler/http" = "zen-beta.desktop";
+          "x-scheme-handler/https" = "zen-beta.desktop";
+          "x-scheme-handler/about" = "zen-beta.desktop";
+          "image/png" = "org.gnome.Loupe.desktop";
+          "image/jpg" = "org.gnome.Loupe.desktop";
+          "image/jpeg" = "org.gnome.Loupe.desktop";
+          "image/gif" = "org.gnome.Loupe.desktop";
+          "audio/aac" = "io.github.celluloid_player.Celluloid.desktop";
+          "audio/flac" = "io.github.celluloid_player.Celluloid.desktop";
+          "audio/ogg" = "io.github.celluloid_player.Celluloid.desktop";
+          "audio/wav" = "io.github.celluloid_player.Celluloid.desktop";
+          "audio/opus" = "io.github.celluloid_player.Celluloid.desktop";
+          "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+          "x-scheme-handler/tonsite" = "org.telegram.desktop.desktop";
+          "x-sheme-handler/discord" = "vesktop.desktop";
+          "text/plain" = "org.gnome.gedit.desktop";
         };
       };
       mimeApps.defaultApplications = xdg.mimeApps.associations.added;

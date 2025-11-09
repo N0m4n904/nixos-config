@@ -7,6 +7,11 @@
       inputs.home-manager.follows = "home-manager";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    linux-nitrous = {
+      url = "file+https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.7-1-nixos/default.nix";
+      flake = false;
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,14 +32,6 @@
     in
     foundrix.nixosModules.pluggedInTo flakeArgs rec {
       nixosConfigurations = {
-        # Give your OS a name here, or just leave it at nixos-desktop.
-        # This is NOT your hostname, but just an identifier.
-        # There is no device-specific configuration included here as foundrix orchestrates all that for you.
-        # It will discover your devices in the "devices" directory and automatically prepare them as needed.
-        # Ready to use packages will be placed in this flake's packages. For that, consult `nix flake show path:.`
-        # Modules added here is equivalent to importing them from configuration.nix.
-        # If you only need a single configuration, you can also move the additional modules to your configuration.nix
-        # and leave modules here with just configuration.nix.
         nixos-desktop = lib.nixosSystem {
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
@@ -60,7 +57,7 @@
         # still being able to name them differently.
         my-pc = {
           nixosConfiguration = nixosConfigurations.nixos-desktop;
-          deviceConfiguration = ./devices/my-pc; # ← this does not have to be the same as the hostname
+          deviceConfiguration = ./devices/triceratops;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
         };
       };

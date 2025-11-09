@@ -15,6 +15,9 @@
 
 {
   inputs,
+  foundrixModules,
+  options,
+  pkgs,
   ...
 }:
 {
@@ -28,20 +31,63 @@
       nixosHardwareModules.common-cpu-amd
       nixosHardwareModules.common-cpu-adm-pstate
       nixosHardwareModules.common-gpu-amd
+      foundrixModules.config.via
+      foundrixModules.hardware.security.keystore.tpm2
+      inputs.linux-nitrous.outPath
       ./filesystems.nix
     ];
 
-  # Device configuration like name, platforms etc.
   device = {
-    name = "my-pc";
-    # Platforms this device supports. Usually, this only contains one value, but can be more.
+    name = "triceratops";
+    cpu.threads = 32;
     platforms = [ "x86_64" ];
-    # If your setup is any more complex than a simple TTY, you'll find that cross-compilation breaks.
-    # This is why it's disabled here in the template. If you want to build for architectures other than
-    # your build platform, you have to set this to true. The alternative is to use binfmt emulation
-    # and just pretend to be the host platform which works a lot better for many scenarios but is also slower.
     crossCompile = false;
   };
+
+  foundrix.config.nix.buildDirOnTmp = true;
+
+  environment = {
+    systemPackages = with pkgs; [
+      nodejs
+      unstable.openrgb-with-all-plugins
+    ];
+  };
+
+  linux-nitrous.processorFamily = "znver4";
+
+  foundrix = {
+    general.keymap = "de-latin1";
+  };
+
+  networking = {
+    hostName = "triceratops";
+    interfaces.enp11s0.wakeOnLan.enable = true;
+  };
+
+  time.timeZone = "Europe/Berlin";
+
+  i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
+    "de_DE.UTF-8/UTF-8"
+  ];
+
+  services = {
+    fwupd.enable = true;
+    goxlr-utility.enable = true;
+    openssh.enable = true;
+    teamviewer.enable = true;
+    # Use this to prevent teamviewerd from starting on system boot
+    #systemd.services.teamviewerd.wantedBy = lib.mkForce [];
+    #systemd.services.teamviewerd.serviceConfig.Restart = lib.mkForce "no";
+
+    # Support for Carolina Mech Fossil and Lemokey L5 HE 8k
+    udev.extraRules = ''
+    KERNEL=="hidraw*", ATTRS{idVendor}=="4069", ATTRS{idProduct}=="0002", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+
+    KERNEL=="hidraw*", ATTRS{idVendor}=="362d", ATTRS{idProduct}=="0551", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
+  };
+
+  hardware.i2c.enable = true;
 
   boot.loader.timeout = 1;
 }
