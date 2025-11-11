@@ -18,6 +18,7 @@
   foundrixModules,
   options,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 {
@@ -49,7 +50,7 @@
   environment = {
     systemPackages = with pkgs; [
       nodejs
-      unstable.openrgb-with-all-plugins
+      pkgsUnstable.openrgb-with-all-plugins
     ];
   };
 

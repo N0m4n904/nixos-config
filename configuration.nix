@@ -79,10 +79,6 @@ in
     };
   };
 
-  foundrix.config.home-jdk.jdkPackages = [
-    pkgs.jdk17 pkgs.jdk21 pkgs.jdk23
-  ];
-
   boot.binfmt.emulatedSystems = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 [ "aarch64-linux" ];
 
   nixpkgs.config.allowUnfreePredicate =
@@ -104,40 +100,47 @@ in
   services.tailscale.enable = true;
 
   foundrix = {
-    shells.zsh.power10k = {
-      colors = {
-        osIconBackground = "#34ABB1";
-        hostBackground = "#348AB1";
-        userBackground = "#296A87";
-        dirBackground = "#7D74E9";
-        dirAnchorBackground = "#6A62C6";
-        osIconForeground = "#0f0f0f";
-        hostForeground = "#0f0f0f";
-        userForeground = "#0f0f0f";
-        dirForeground = "#0f0f0f";
-        dirAnchorForeground = "#0f0f0f";
+    config = {
+      shell.zsh.power10k = {
+        colors = {
+          osIconBackground = "#34ABB1";
+          hostBackground = "#348AB1";
+          userBackground = "#296A87";
+          dirBackground = "#7D74E9";
+          dirAnchorBackground = "#6A62C6";
+          osIconForeground = "#0f0f0f";
+          hostForeground = "#0f0f0f";
+          userForeground = "#0f0f0f";
+          dirForeground = "#0f0f0f";
+          dirAnchorForeground = "#0f0f0f";
+        };
       };
+      home-jdk.jdkPackages = [
+        pkgs.jdk17 pkgs.jdk21 pkgs.jdk23
+      ];
     };
 
-    desktop = {
-      gnome = {
-        extensions = with pkgs.gnomeExtensions; [
-          vitals
-          user-themes
-          dash-to-dock
-          clipboard-indicator
-          caffeine
-          transparent-top-bar-adjustable-transparency
-          kernel-indicator
-          window-is-ready-remover
-          pip-on-top
-          spotify-controls
-        ];
+    components = {
+      desktop-environments = {
+        gnome = {
+          extensions = with pkgs.gnomeExtensions; [
+            vitals
+            user-themes
+            dash-to-dock
+            clipboard-indicator
+            caffeine
+            transparent-top-bar-adjustable-transparency
+            kernel-indicator
+            window-is-ready-remover
+            pip-on-top
+            spotify-controls
+          ];
+        };
       };
-    };
-    software.steam = {
-      gamescope.enable = true;
-      gamescope.session.enable = true;
+      steam = {
+        gamescope.enable = true;
+        gamescope.session.enable = true;
+      };
     };
   };
 

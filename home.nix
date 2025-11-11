@@ -3,6 +3,7 @@
   pkgs,
   pkgsUnstable,
   foundrixPkgs,
+  inputs,
   ...
 }:
 {
@@ -100,12 +101,11 @@
       onlyoffice-desktopeditors
       foundrixPkgs.git-aliases
       foundrixPkgs.pickrange
-    ]
-    ++ lib.optionals (osConfig.networking.hostName == "triceratops") [
       ddrescue
       obs-studio
       pciutils
     ];
+
     programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
       vue.volar
       mathiasfrohlich.kotlin
