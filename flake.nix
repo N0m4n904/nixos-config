@@ -55,7 +55,7 @@
         # The networking.hostName config will be set by the device framework.
         # That allows you to use the same exact configuration on multiple machines while
         # still being able to name them differently.
-        my-pc = {
+        triceratops = {
           nixosConfiguration = nixosConfigurations.nixos-desktop;
           deviceConfiguration = ./devices/triceratops;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
