@@ -1,7 +1,7 @@
 # Hardware:
 # Mainboard: ASRock X870E Taichi
 # CPU: AMD Ryzen 9 7950X @ 6.07 GHz (overclocked)
-# RAM: 128 GB (2x64 GB) G.SKILL Tridenz Z5 NEO DDR5 6000 MHz
+# RAM: 128 GB (2x64 GB) G.SKILL Trident Z5 NEO DDR5 6000 MHz
 # GPU: PowerColor Red Devil AMD Radeon RX 7900XTX Limited Edition
 # Storage:
 #   Corsair MP700 2 TB NVMe
