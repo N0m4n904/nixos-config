@@ -90,5 +90,5 @@
 
   hardware.i2c.enable = true;
 
-  boot.loader.timeout = 1;
+  boot.loader.timeout = 5;
 }
