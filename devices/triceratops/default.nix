@@ -19,6 +19,7 @@
   options,
   pkgs,
   pkgsUnstable,
+  hardware,
   ...
 }:
 {
@@ -91,4 +92,6 @@
   hardware.i2c.enable = true;
 
   boot.loader.timeout = 5;
+
+  hardware.enableRedistributableFirmware = true;
 }
