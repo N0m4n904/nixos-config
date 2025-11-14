@@ -64,22 +64,6 @@ in
 
   foundrix = {
     components = {
-      desktop-environments = {
-        gnome = {
-          extensions = with pkgs.gnomeExtensions; [
-            caffeine
-            clipboard-indicator
-            dash-to-dock
-            kernel-indicator
-            pip-on-top
-            spotify-controls
-            transparent-top-bar-adjustable-transparency
-            user-themes
-            vitals
-            window-is-ready-remover
-          ];
-        };
-      };
       steam = {
         gamescope.enable = true;
         gamescope.session.enable = true;
