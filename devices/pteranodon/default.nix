@@ -1,17 +1,11 @@
 # Hardware:
-# Mainboard: ASRock X870E Taichi
-# CPU: AMD Ryzen 9 7950X @ 6.07 GHz (overclocked)
-# RAM: 128 GB (2x64 GB) G.SKILL Trident Z5 NEO DDR5 6000 MHz
-# GPU: PowerColor Red Devil AMD Radeon RX 7900XTX Limited Edition
+# Framework 16 Laptop
+# CPU: AMD Ryzen 9 7940HS @ 5.26 GHz
+# RAM: 32 GB (2x16 GB) DDR5 5600 MHz
+# GPU: AMD Radeon RX 7700S
 # Storage:
-#   Corsair MP700 2 TB NVMe
-#   Crucial P3 Pro (CT4000P3PSSD8) 4 TB NVMe
-#   4x SanDisk SSD Plus 1 TB SATA
-# Mouse: Angry Miao Infinity 8k mouse
-# Keyboard: Carolina Mech Fossil SE & Lemokey L5 HE 8k
-# Headphones: beyerdynamic DT 770 Pro 80 Ohm
-# Sound interface: TC Helicon GoXLR MINI
-# Microphone: Shure SM7B
+#   WD_BLACK SN850X 2 TB NVMe
+#   Phison ESMP512GBKB4C3-E13TS 512GB NVMe
 {
   inputs,
   foundrixModules,
