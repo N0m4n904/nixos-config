@@ -6,7 +6,7 @@ My personal NixOS configuration, using:
 
 ---
 
-#LICENSE
+# LICENSE
 
 ```
 Copyright (C) 2025  Noah Anleitner
