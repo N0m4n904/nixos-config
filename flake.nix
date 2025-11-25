@@ -9,7 +9,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     linux-nitrous = {
-      url = "file+https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.8-2-nixos/default.nix";
+      url = "file+https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.9-1-nixos/default.nix";
       flake = false;
     };
     home-manager = {
