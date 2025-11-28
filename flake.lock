@@ -68,18 +68,6 @@
         "type": "github"
       }
     },
-    "linux-nitrous": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-JNZfCeYnVWo86OhZ43vWUZdPEPl/L+4a9Tdd5O9yeXs=",
-        "type": "file",
-        "url": "https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.9-1-nixos/default.nix"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.9-1-nixos/default.nix"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1764080039,
@@ -180,7 +168,6 @@
       "inputs": {
         "foundrix": "foundrix",
         "home-manager": "home-manager",
-        "linux-nitrous": "linux-nitrous",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "zen-browser": "zen-browser"
