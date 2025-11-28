@@ -33,7 +33,6 @@
       nixosHardwareModules.common-pc-ssd
       foundrixModules.config.via
       foundrixModules.hardware.security.keystore.tpm2
-      inputs.linux-nitrous.outPath
       ./filesystems.nix
     ];
 
@@ -66,8 +65,6 @@
   i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
     "de_DE.UTF-8/UTF-8"
   ];
-
-  linux-nitrous.processorFamily = "znver4";
 
   networking = {
     hostName = "triceratops";
