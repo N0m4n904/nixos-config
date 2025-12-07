@@ -24,7 +24,6 @@
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
       foundrixModules.config.filesystem.nix-tmp
-      inputs.linux-nitrous.outPath
       ./filesystems.nix
       ../../modules/via.nix
     ];
@@ -50,8 +49,6 @@
   i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
     "de_DE.UTF-8/UTF-8"
   ];
-
-  linux-nitrous.processorFamily = "znver4";
 
   networking = {
     hostName = "pteranodon";
