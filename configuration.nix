@@ -89,7 +89,7 @@ in
       home-jdk.jdkPackages = [
         pkgs.jdk17
         pkgs.jdk21
-        pkgs.jdk23
+        pkgs.jdk25
       ];
       shell.zsh.power10k = {
         colors = {

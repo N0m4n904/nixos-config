@@ -51,7 +51,7 @@
       hwloc
       imagemagick
       inetutils
-      inputs.zen-browser.packages.${pkgs.system}.beta
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta
       iptables
       jdk
       jq
@@ -86,7 +86,6 @@
       thunderbird
       tree
       unzip
-      via
       vlc
       vulkan-tools
       wl-clipboard
