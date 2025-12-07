@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     foundrix = {
       url = "git+https://codeberg.org/xdevs23/foundrix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -8,12 +8,8 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    linux-nitrous = {
-      url = "file+https://gitlab.com/xdevs23/linux-nitrous/-/raw/v6.17.8-2-nixos/default.nix";
-      flake = false;
-    };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
