@@ -73,7 +73,7 @@ in
       home-jdk.jdkPackages = [
         pkgs.jdk17
         pkgs.jdk21
-        pkgs.jdk23
+        pkgs.jdk25
       ];
       shell.zsh.power10k = {
         colors = {
@@ -92,7 +92,7 @@ in
     };
   };
 
-  home-manager.users.${userName}.home.stateVersion = "25.05";
+  home-manager.users.${userName}.home.stateVersion = "25.11";
 
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -108,6 +108,7 @@ in
       "steam-run"
       "steam-unwrapped"
       "teamviewer"
+      "via"
     ];
 
   security.sudo = {
@@ -116,7 +117,7 @@ in
 
   services.tailscale.enable = true;
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   # Configure your users here
   users.groups.${userName}.gid = config.users.users.${userName}.uid;
