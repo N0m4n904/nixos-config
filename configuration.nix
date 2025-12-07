@@ -124,6 +124,7 @@ in
       "steam-run"
       "steam-unwrapped"
       "teamviewer"
+      "via"
     ];
 
   security.sudo = {
