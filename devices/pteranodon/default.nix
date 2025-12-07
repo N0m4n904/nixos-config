@@ -23,9 +23,10 @@
       nixosHardwareModules.common-gpu-amd
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
-      foundrixModules.config.via
+      foundrixModules.config.filesystem.nix-tmp
       inputs.linux-nitrous.outPath
       ./filesystems.nix
+      ../../modules/via.nix
     ];
 
   boot.loader.timeout = 5;
