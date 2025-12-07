@@ -55,7 +55,10 @@
   };
 
   services = {
-    fwupd.enable = true;
+    fwupd = {
+      enable = true;
+      extraRemotes = [ "lvfs-testing" ];
+    };
     openssh.enable = true;
   };
 
