@@ -31,7 +31,8 @@
       nixosHardwareModules.common-gpu-amd
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
-      foundrixModules.config.via
+      foundrixModules.config.vial
+      foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
     ];
