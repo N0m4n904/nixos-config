@@ -24,6 +24,7 @@
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
       foundrixModules.config.filesystem.nix-tmp
+      foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
       ../../modules/via.nix
     ];
