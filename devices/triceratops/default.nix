@@ -31,10 +31,10 @@
       nixosHardwareModules.common-gpu-amd
       nixosHardwareModules.common-pc
       nixosHardwareModules.common-pc-ssd
-      foundrixModules.config.vial
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
+      ../../modules/via.nix
     ];
 
   boot.loader.timeout = 5;

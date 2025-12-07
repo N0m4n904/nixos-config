@@ -86,6 +86,7 @@
       thunderbird
       tree
       unzip
+      via
       vlc
       vulkan-tools
       wl-clipboard
