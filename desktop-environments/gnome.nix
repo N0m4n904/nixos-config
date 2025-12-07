@@ -1,4 +1,4 @@
-{ foundrixModules, ... }:
+{ foundrixModules, pkgs, ... }:
 {
   imports = [
     foundrixModules.components.desktop-environments.gnome
@@ -8,4 +8,19 @@
 
   # As soon as you try cross-compiling gnome, it will fail with broken totem
   device.crossCompile = false;
+
+  foundrix.components.desktop-environments.gnome = {
+    extensions = with pkgs.gnomeExtensions; [
+      caffeine
+      clipboard-indicator
+      dash-to-dock
+      kernel-indicator
+      pip-on-top
+      spotify-controls
+      transparent-top-bar-adjustable-transparency
+      user-themes
+      vitals
+      window-is-ready-remover
+    ];
+  };
 }
