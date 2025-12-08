@@ -9,4 +9,10 @@
       ];
     })
   ];
+
+  services.system76-scheduler.enable =  true;
+
+  environment.cosmic.excludePackages = with pkgs; [
+    cosmic-edit
+  ];
 }
