@@ -21,7 +21,7 @@ in
     foundrixModules.config.home-jdk
     foundrixModules.config.linux.sysrq
     foundrixModules.config.shell.zsh.power10k
-    foundrixModules.config.virtualisation.docker
+    foundrixModules.config.virtualisation.podman
     foundrixModules.config.vscode-opinionated
     foundrixModules.profiles.desktop-full
     ./dconf.nix
