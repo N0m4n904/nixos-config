@@ -30,7 +30,7 @@
       ../../modules/via.nix
     ];
 
-  boot.loader.timeout = 5;
+  boot.loader.timeout = 1;
 
   device = {
     cpu.threads = 16;
