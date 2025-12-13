@@ -89,6 +89,7 @@
       via
       vlc
       vulkan-tools
+      pkgsUnstable.winboat
       wl-clipboard
       wl-clipboard-x11
       woeusb-ng
