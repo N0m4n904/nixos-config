@@ -32,14 +32,14 @@
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
             ./configuration.nix
-            ./desktop-environments/gnome.nix
+            ./desktop-environments/gnome/gnome.nix
           ];
         };
         nixos-notebook = lib.nixosSystem {
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
             ./configuration.nix
-            ./desktop-environments/cosmic.nix
+            ./desktop-environments/cosmic/cosmic.nix
           ];
         };
         # This is how you create variants of your OS. You don't have to use the "@" character,

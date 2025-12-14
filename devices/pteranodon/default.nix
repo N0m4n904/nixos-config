@@ -40,7 +40,23 @@
   };
 
   foundrix = {
-    config.nix.buildDirOnTmp = true;
+    config = {
+      nix.buildDirOnTmp = true;
+      shell.zsh.power10k = {
+        colors = {
+          dirAnchorBackground = "#D0D0D2";
+          dirAnchorForeground = "#F4ECEC";
+          dirBackground = "#5A3A3C";
+          dirForeground = "#F0E6E6";
+          hostBackground = "#6E6E72";
+          hostForeground = "#0F0F0F";
+          osIconBackground = "#363636";
+          osIconForeground = "#ffffff";
+          userBackground = "#a3080f";
+          userForeground = "#ffffff";
+        };
+      };
+    };
     general.keymap = "de-latin1";
   };
 
