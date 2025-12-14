@@ -1,6 +1,7 @@
 { foundrixModules, pkgs, ... }:
 {
   imports = [
+    ./dconf.nix
     foundrixModules.components.desktop-environments.gnome
     foundrixModules.config.graphics.gtk-dark
     foundrixModules.config.graphics.themes.adwaita-dark

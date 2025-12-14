@@ -24,7 +24,6 @@ in
     foundrixModules.config.virtualisation.podman
     foundrixModules.config.vscode-opinionated
     foundrixModules.profiles.desktop-full
-    ./dconf.nix
     ./home.nix
   ];
 
@@ -75,20 +74,6 @@ in
         pkgs.jdk21
         pkgs.jdk25
       ];
-      shell.zsh.power10k = {
-        colors = {
-          dirAnchorBackground = "#6A62C6";
-          dirAnchorForeground = "#0f0f0f";
-          dirBackground = "#7D74E9";
-          dirForeground = "#0f0f0f";
-          hostBackground = "#348AB1";
-          hostForeground = "#0f0f0f";
-          osIconBackground = "#34ABB1";
-          osIconForeground = "#0f0f0f";
-          userBackground = "#296A87";
-          userForeground = "#0f0f0f";
-        };
-      };
     };
   };
 
