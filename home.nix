@@ -61,6 +61,7 @@
       nautilus
       nftables
       nixpkgs-fmt
+      pkgsUnstable.noriskclient-launcher
       ntfs3g
       obs-studio
       onlyoffice-desktopeditors
@@ -70,7 +71,6 @@
       picocom
       playerctl
       postman
-      prismlauncher
       protobuf
       pv
       pwgen
