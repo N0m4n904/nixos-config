@@ -40,7 +40,7 @@
               "org.gnome.Terminal.desktop"
               "codium.desktop"
               "zen-beta.desktop"
-              "idea-community.desktop"
+              "idea-oss.desktop"
               "steam.desktop"
               "spotify.desktop"
             ];

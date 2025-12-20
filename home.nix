@@ -97,7 +97,7 @@
       zip
       zstd
       pkgsUnstable.android-studio
-      pkgsUnstable.jetbrains.idea-community
+      pkgsUnstable.jetbrains.idea-oss
       pkgsUnstable.nixd
       pkgsUnstable.spotify
       (vesktop.override { withSystemVencord = true; })
