@@ -3,6 +3,7 @@
   foundrixModules,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 # To save you a few keystores, assuming you only need one user, here's where you can set the username.
@@ -76,6 +77,36 @@ in
       ];
     };
   };
+
+  programs.steam.extraCompatPackages = with pkgsUnstable; [
+    proton-ge-bin
+    (
+      (proton-ge-bin.overrideAttrs (
+        prev: final: {
+          src = fetchzip {
+            url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-27/GE-Proton10-27.tar.gz";
+            hash = "sha256-yBPjPb2LzxdgEobuoeSfs3UZ1XUxZF6vIMYF+fAnLA0=";
+          };
+          pname = "proton-ge";
+          version = "GE-Proton10-27";
+        }
+      )).override
+      { steamDisplayName = "Proton-CachyOS"; }
+    )
+    (
+      (proton-ge-bin.overrideAttrs (
+        prev: final: {
+          src = fetchzip {
+            url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20251126-slr/proton-cachyos-10.0-20251126-slr-x86_64_v3.tar.xz";
+            hash = "sha256-aKHEBR1q43Uk4JlXE3b8TFllVj1UJ7t6vZmXQj4M800=";
+          };
+          pname = "proton-cachyos";
+          version = "proton-cachyos-10.0-20251126-slr-x86_64_v3";
+        }
+      )).override
+      { steamDisplayName = "Proton-CachyOS"; }
+    )
+  ];
 
   home-manager.users.${userName}.home.stateVersion = "25.11";
 
