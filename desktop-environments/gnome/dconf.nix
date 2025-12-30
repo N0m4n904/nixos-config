@@ -66,6 +66,9 @@
             show-mounts-only-mounted = false;
             transparency-mode = "FIXED";
           };
+          "org/gnome/shell/extensions/hide-top-bar" = {
+            mouse-sensitive = true;
+          };
           "org/gnome/shell/extensions/caffeine" = {
             indicator-position-max = 1;
           };
