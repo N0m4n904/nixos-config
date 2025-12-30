@@ -22,6 +22,7 @@
       user-themes
       vitals
       window-is-ready-remover
+      hide-top-bar
     ];
   };
 }
