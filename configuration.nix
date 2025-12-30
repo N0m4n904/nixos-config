@@ -91,7 +91,7 @@ in
           version = "GE-Proton10-27";
         }
       )).override
-      { steamDisplayName = "Proton-CachyOS"; }
+      { steamDisplayName = "GE-Proton"; }
     )
     (
       (proton-ge-bin.overrideAttrs (
