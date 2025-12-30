@@ -101,7 +101,7 @@ in
             hash = "sha256-f7fpSEB1LzK12CbYiim4jZbcuDUgQtzq3pU0YUfn7Iw=";
           };
           pname = "proton-cachyos";
-          version = "proton-cachyos-10.0-20251222-slr-x86_64_v4.tar.xz";
+          version = "proton-cachyos-10.0-20251222-slr-x86_64_v4";
         }
       )).override
       { steamDisplayName = "Proton-CachyOS"; }
