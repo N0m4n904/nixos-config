@@ -85,7 +85,6 @@
 
   networking = {
     hostName = "triceratops";
-    interfaces.enp11s0.wakeOnLan.enable = true;
   };
 
   services = {
