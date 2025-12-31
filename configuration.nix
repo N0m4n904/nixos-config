@@ -1,6 +1,7 @@
 {
   config,
   foundrixModules,
+  foundrixPkgs,
   lib,
   pkgs,
   pkgsUnstable,
@@ -80,32 +81,7 @@ in
 
   programs.steam.extraCompatPackages = with pkgsUnstable; [
     proton-ge-bin
-    (
-      (proton-ge-bin.overrideAttrs (
-        prev: final: {
-          src = fetchzip {
-            url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-27/GE-Proton10-27.tar.gz";
-            hash = "sha256-yBPjPb2LzxdgEobuoeSfs3UZ1XUxZF6vIMYF+fAnLA0=";
-          };
-          pname = "proton-ge";
-          version = "GE-Proton10-27";
-        }
-      )).override
-      { steamDisplayName = "GE-Proton"; }
-    )
-    (
-      (proton-ge-bin.overrideAttrs (
-        prev: final: {
-          src = fetchzip {
-            url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20251222-slr/proton-cachyos-10.0-20251222-slr-x86_64_v4.tar.xz";
-            hash = "sha256-f7fpSEB1LzK12CbYiim4jZbcuDUgQtzq3pU0YUfn7Iw=";
-          };
-          pname = "proton-cachyos";
-          version = "proton-cachyos-10.0-20251222-slr-x86_64_v4";
-        }
-      )).override
-      { steamDisplayName = "Proton-CachyOS"; }
-    )
+    foundrixPkgs.proton-packages.cachyos-x86_64_v4
   ];
 
   home-manager.users.${userName}.home.stateVersion = "25.11";
