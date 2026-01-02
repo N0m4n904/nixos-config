@@ -13,6 +13,7 @@
   options,
   pkgs,
   pkgsUnstable,
+  applyHomeManagerShared,
   ...
 }:
 {
@@ -50,6 +51,20 @@
   foundrix = {
     config = {
       nix.buildDirOnTmp = true;
+      shell.zsh.power10k = {
+        colors = {
+          dirAnchorBackground = "#9CA62C";
+          dirAnchorForeground = "#0f0f0f";
+          dirBackground = "#B8C639";
+          dirForeground = "#0f0f0f";
+          hostBackground = "#76A834";
+          hostForeground = "#0f0f0f";
+          osIconBackground = "#76B834";
+          osIconForeground = "#0f0f0f";
+          userBackground = "#5D872A";
+          userForeground = "#0f0f0f";
+        };
+      };
     };
     general.keymap = "de-latin1";
   };
