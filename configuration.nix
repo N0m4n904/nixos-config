@@ -21,6 +21,7 @@ in
     foundrixModules.config.graphics.gtk-dark
     foundrixModules.config.graphics.qt
     foundrixModules.config.home-jdk
+    foundrixModules.config.gamescope-session
     foundrixModules.config.linux.sysrq
     foundrixModules.config.shell.zsh.power10k
     foundrixModules.config.virtualisation.podman
@@ -67,7 +68,6 @@ in
     components = {
       steam = {
         gamescope.enable = true;
-        gamescope.session.enable = true;
       };
     };
     config = {
@@ -76,6 +76,11 @@ in
         pkgs.jdk21
         pkgs.jdk25
       ];
+      gamescope-session = {
+        enable = true;
+        hdr.enable = true;
+        refreshRate = 175;
+      };
     };
   };
 
