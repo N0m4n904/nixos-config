@@ -14,7 +14,6 @@
     graphics.enable = true;
     nvidia = {
       modesetting.enable = true;
-      powerManagement.finegrained = true;
       open = true;
       nvidiaSettings = true;
     };
