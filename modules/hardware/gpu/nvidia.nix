@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -16,6 +16,7 @@
       modesetting.enable = true;
       open = true;
       nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
 }
