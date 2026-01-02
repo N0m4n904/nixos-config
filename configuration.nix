@@ -91,22 +91,20 @@ in
 
   home-manager.users.${userName}.home.stateVersion = "25.11";
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "android-studio-stable"
-      "discord"
-      "discord-ptb"
-      "makemkv"
-      "postman"
-      "spotify"
-      "steam"
-      "steam-original"
-      "steam-run"
-      "steam-unwrapped"
-      "teamviewer"
-      "via"
-    ];
+  foundrix.nixpkgs.allowedUnfreePackageNames = [
+    "android-studio-stable"
+    "discord"
+    "discord-ptb"
+    "makemkv"
+    "postman"
+    "spotify"
+    "steam"
+    "steam-original"
+    "steam-run"
+    "steam-unwrapped"
+    "teamviewer"
+    "via"
+  ];
 
   security.sudo = {
     enable = true;
