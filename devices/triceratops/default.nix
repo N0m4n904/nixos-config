@@ -34,7 +34,7 @@
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
-      ../../modules/via.nix
+      ../../modules/hardware/hid/via.nix
     ];
 
   boot.loader.timeout = 1;
