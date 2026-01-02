@@ -27,7 +27,7 @@
       foundrixModules.hardware.security.keystore.tpm2
       foundrixModules.hardware.hosts.framework.laptop-16-7040
       ./filesystems.nix
-      ../../modules/via.nix
+      ../../modules/hardware/hid/via.nix
     ];
 
   boot.loader.timeout = 1;

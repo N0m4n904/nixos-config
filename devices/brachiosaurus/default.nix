@@ -28,7 +28,7 @@
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
-      ../../modules/gpu/nvidia.nix
+      ../../modules/hardware/gpu/nvidia.nix
     ];
 
   boot.loader.timeout = 1;
