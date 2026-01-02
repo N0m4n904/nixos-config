@@ -44,6 +44,12 @@
             ./desktop-environments/cosmic/cosmic.nix
           ];
         };
+        nixos-server = lib.nixosSystem {
+          specialArgs = self.nixosModules.foundrixSpecialArgs;
+          modules = [
+            ./configuration.nix
+          ];
+        };
         # This is how you create variants of your OS. You don't have to use the "@" character,
         # but it might be a good convention to communicate that it's just a variant of the same base config.
         #"nixos-desktop@hyprland" = lib.nixosSystem {
@@ -68,6 +74,11 @@
         pteranodon = {
           nixosConfiguration = nixosConfigurations.nixos-notebook;
           deviceConfiguration = ./devices/pteranodon;
+          platformModule = foundrix.nixosModules.hardware.platform.x86_64;
+        };
+        brachiosaurus = {
+          nixosConfiguration = nixosConfigurations.nixos-server;
+          deviceConfiguration = ./devices/brachiosaurus;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
         };
       };
