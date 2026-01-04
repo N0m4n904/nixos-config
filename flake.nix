@@ -29,56 +29,49 @@
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
     in
     foundrix.nixosModules.pluggedInTo flakeArgs rec {
+      deviceRoots = [
+        ./desktop/devices
+        ./server/devices
+      ];
       nixosConfigurations = {
         nixos-desktop = lib.nixosSystem {
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
             ./configuration.nix
-            ./desktop-environments/gnome/gnome.nix
+            ./desktop/desktop.nix
+            ./desktop/desktop-environments/gnome/gnome.nix
           ];
         };
         nixos-notebook = lib.nixosSystem {
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
             ./configuration.nix
-            ./desktop-environments/cosmic/cosmic.nix
+            ./desktop/desktop.nix
+            ./desktop/desktop-environments/cosmic/cosmic.nix
           ];
         };
         nixos-server = lib.nixosSystem {
           specialArgs = self.nixosModules.foundrixSpecialArgs;
           modules = [
             ./configuration.nix
+            ./server/server.nix
           ];
         };
-        # This is how you create variants of your OS. You don't have to use the "@" character,
-        # but it might be a good convention to communicate that it's just a variant of the same base config.
-        #"nixos-desktop@hyprland" = lib.nixosSystem {
-        #  specialArgs = self.nixosModules.foundrixSpecialArgs;
-        #  modules = [
-        #    ./configuration.nix
-        #    ./desktop-environments/hyprland.nix
-        #  ];
-        #};
       }
       // foundrixLib.deviceFramework.mkDeviceSpecificConfigurations {
-        # Here's where you actually configure your hosts.
-        # The hostname is the attribute name.
-        # The networking.hostName config will be set by the device framework.
-        # That allows you to use the same exact configuration on multiple machines while
-        # still being able to name them differently.
         triceratops = {
           nixosConfiguration = nixosConfigurations.nixos-desktop;
-          deviceConfiguration = ./devices/triceratops;
+          deviceConfiguration = ./desktop/devices/triceratops;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
         };
         pteranodon = {
           nixosConfiguration = nixosConfigurations.nixos-notebook;
-          deviceConfiguration = ./devices/pteranodon;
+          deviceConfiguration = ./desktop/devices/pteranodon;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
         };
         brachiosaurus = {
           nixosConfiguration = nixosConfigurations.nixos-server;
-          deviceConfiguration = ./devices/brachiosaurus;
+          deviceConfiguration = ./server/devices/brachiosaurus;
           platformModule = foundrix.nixosModules.hardware.platform.x86_64;
         };
       };

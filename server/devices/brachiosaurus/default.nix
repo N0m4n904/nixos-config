@@ -10,10 +10,7 @@
 {
   inputs,
   foundrixModules,
-  options,
   pkgs,
-  pkgsUnstable,
-  applyHomeManagerShared,
   ...
 }:
 {
@@ -29,7 +26,7 @@
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
-      ../../modules/hardware/gpu/nvidia.nix
+      ../../../modules/hardware/gpu/nvidia.nix
     ];
 
   boot.loader.timeout = 1;
@@ -44,7 +41,6 @@
   environment = {
     systemPackages = with pkgs; [
       nodejs
-      pkgsUnstable.openrgb-with-all-plugins
     ];
   };
 
@@ -66,17 +62,12 @@
         };
       };
     };
-    general.keymap = "de-latin1";
   };
 
   hardware = {
     enableRedistributableFirmware = true;
     i2c.enable = true;
   };
-
-  i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
-    "de_DE.UTF-8/UTF-8"
-  ];
 
   networking = {
     hostName = "brachiosaurus";
@@ -86,6 +77,4 @@
     fwupd.enable = true;
     openssh.enable = true;
   };
-
-  time.timeZone = "Europe/Berlin";
 }

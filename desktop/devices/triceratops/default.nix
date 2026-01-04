@@ -15,7 +15,6 @@
 {
   inputs,
   foundrixModules,
-  options,
   pkgs,
   pkgsUnstable,
   ...
@@ -34,7 +33,8 @@
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
-      ../../modules/hardware/hid/via.nix
+      ../../../modules/hardware/hid/via.nix
+      ../../../modules/teamviewer.nix
     ];
 
   boot.loader.timeout = 1;
@@ -71,17 +71,12 @@
         };
       };
     };
-    general.keymap = "de-latin1";
   };
 
   hardware = {
     enableRedistributableFirmware = true;
     i2c.enable = true;
   };
-
-  i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
-    "de_DE.UTF-8/UTF-8"
-  ];
 
   networking = {
     hostName = "triceratops";
@@ -91,16 +86,10 @@
     fwupd.enable = true;
     goxlr-utility.enable = true;
     openssh.enable = true;
-    teamviewer.enable = true;
-    # Use this to prevent teamviewerd from starting on system boot
-    #systemd.services.teamviewerd.wantedBy = lib.mkForce [];
-    #systemd.services.teamviewerd.serviceConfig.Restart = lib.mkForce "no";
     # Support for Carolina Mech Fossil and Lemokey L5 HE 8k
     udev.extraRules = ''
       KERNEL=="hidraw*", ATTRS{idVendor}=="4069", ATTRS{idProduct}=="0002", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="362d", ATTRS{idProduct}=="0551", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     '';
   };
-
-  time.timeZone = "Europe/Berlin";
 }
