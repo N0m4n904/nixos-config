@@ -68,6 +68,7 @@ in
     components = {
       steam = {
         gamescope.enable = true;
+        gamescope.session.enable = true;
       };
     };
     config = {
@@ -108,8 +109,14 @@ in
       "via"
     ];
 
-  security.sudo = {
-    enable = true;
+  security = {
+    sudo = {
+      enable = true;
+    };
+    pam.services.greetd = {
+      allowNullPassword = true;
+      startSession = true;
+    };
   };
 
   services.tailscale.enable = true;
