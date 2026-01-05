@@ -2,6 +2,7 @@
   applyHomeManagerShared,
   pkgs,
   pkgsUnstable,
+  inputs,
   ...
 }:
 {
@@ -15,6 +16,7 @@
       gnome-terminal
       gnome-tweaks
       gparted
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta
       mangohud
       nautilus
       pkgsUnstable.noriskclient-launcher
