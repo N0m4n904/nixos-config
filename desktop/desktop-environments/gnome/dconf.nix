@@ -45,6 +45,22 @@
               "spotify.desktop"
             ];
             last-selected-power-profile = "performance";
+            enabled-extensions = [
+              "caffeine@patapon.info"
+              "clipboard-indicator@tudmotu.com"
+              "dash-to-dock@micxgx.gmail.com"
+              "kernel-indicator@pvizc.gitlab.com"
+              "pip-on-top@rafostar.github.com"
+              "spotify-controls@Sonath21"
+              "transparent-top-bar@ftpix.com"
+              "user-theme@gnome-shell-extensions.gcampax.github.com"
+              "Vitals@CoreCoding.com"
+              "windowIsReady_Remover@nunofarruca@gmail.com"
+              "hidetopbar@mathieu.bidon.ca"
+            ];
+            disabled-extensions = [
+              "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
+            ];
           };
           "org/gnome/shell/extension/dash-to-dock" = {
             apply-custom-theme = false;
