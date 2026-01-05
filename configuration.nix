@@ -1,10 +1,9 @@
 {
   config,
   foundrixModules,
-  foundrixPkgs,
   lib,
   pkgs,
-  pkgsUnstable,
+  options,
   ...
 }:
 # To save you a few keystores, assuming you only need one user, here's where you can set the username.
@@ -13,20 +12,12 @@ let
 in
 {
   imports = [
-    foundrixModules.components.steam
     foundrixModules.config.adb
     foundrixModules.config.direnv
-    foundrixModules.config.graphics.cursors.breezex-rosepine
-    foundrixModules.config.graphics.fonts.adwaita-sans
-    foundrixModules.config.graphics.gtk-dark
-    foundrixModules.config.graphics.qt
     foundrixModules.config.home-jdk
-    foundrixModules.config.gamescope-session
     foundrixModules.config.linux.sysrq
     foundrixModules.config.shell.zsh.power10k
-    foundrixModules.config.virtualisation.podman
-    foundrixModules.config.vscode-opinionated
-    foundrixModules.profiles.desktop-full
+    foundrixModules.config.home-manager
     ./home.nix
   ];
 
@@ -35,11 +26,7 @@ in
   environment = {
     systemPackages = with pkgs; [
       duperemove
-      gparted
     ];
-    variables = {
-      BROWSER = "zen-beta";
-    };
   };
 
   fonts = {
@@ -65,58 +52,19 @@ in
   };
 
   foundrix = {
-    components = {
-      steam = {
-        gamescope.enable = true;
-        gamescope.session.enable = true;
-      };
-    };
     config = {
       home-jdk.jdkPackages = [
         pkgs.jdk17
         pkgs.jdk21
         pkgs.jdk25
       ];
-      gamescope-session = {
-        enable = true;
-        hdr.enable = true;
-        refreshRate = 175;
-      };
     };
   };
 
-  programs.steam.extraCompatPackages = with pkgsUnstable; [
-    proton-ge-bin
-    foundrixPkgs.proton-packages.cachyos-x86_64_v4
-  ];
-
   home-manager.users.${userName}.home.stateVersion = "25.11";
 
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "android-studio-stable"
-      "discord"
-      "discord-ptb"
-      "makemkv"
-      "postman"
-      "spotify"
-      "steam"
-      "steam-original"
-      "steam-run"
-      "steam-unwrapped"
-      "teamviewer"
-      "via"
-    ];
-
-  security = {
-    sudo = {
-      enable = true;
-    };
-    pam.services.greetd = {
-      allowNullPassword = true;
-      startSession = true;
-    };
+  security.sudo = {
+    enable = true;
   };
 
   services.tailscale.enable = true;
@@ -136,4 +84,14 @@ in
 
   # You can also set a root password here
   users.users.root.hashedPassword = config.users.users.${userName}.hashedPassword;
+
+  time.timeZone = "Europe/Berlin";
+
+  i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
+    "de_DE.UTF-8/UTF-8"
+  ];
+
+  foundrix = {
+    general.keymap = "de-latin1";
+  };
 }
