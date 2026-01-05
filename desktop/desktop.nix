@@ -21,8 +21,22 @@
   ];
 
   programs.steam.extraCompatPackages = with pkgsUnstable; [
-    proton-ge-bin
     foundrixPkgs.proton-packages.cachyos-x86_64_v4
+    proton-ge-bin
+    (
+      (proton-ge-bin.overrideAttrs (
+        prev: final: {
+          src = fetchzip {
+            url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20260101-slr/proton-cachyos-10.0-20260101-slr-x86_64_v4.tar.xz";
+            hash = "sha256-/dJDBxUAI3FpOZtCVoNsrhBV6QTrksnUdTH7ZdnAZZY=";
+          };
+          pname = "proton-cachyos";
+          version = "proton-cachyos-10.0-20260101-slr-x86_64_v4";
+        }
+      )).override
+      { steamDisplayName = "Proton-CachyOS-local"; }
+    )
+
   ];
 
   foundrix = {
