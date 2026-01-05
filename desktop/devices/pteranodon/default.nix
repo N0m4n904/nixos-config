@@ -9,7 +9,6 @@
 {
   inputs,
   foundrixModules,
-  options,
   ...
 }:
 {
@@ -27,7 +26,7 @@
       foundrixModules.hardware.security.keystore.tpm2
       foundrixModules.hardware.hosts.framework.laptop-16-7040
       ./filesystems.nix
-      ../../modules/via.nix
+      ../../../modules/hardware/hid/via.nix
     ];
 
   boot.loader.timeout = 1;
@@ -57,16 +56,11 @@
         };
       };
     };
-    general.keymap = "de-latin1";
   };
 
   hardware = {
     enableRedistributableFirmware = true;
   };
-
-  i18n.supportedLocales = options.i18n.supportedLocales.default ++ [
-    "de_DE.UTF-8/UTF-8"
-  ];
 
   networking = {
     hostName = "pteranodon";
@@ -79,6 +73,4 @@
     };
     openssh.enable = true;
   };
-
-  time.timeZone = "Europe/Berlin";
 }
