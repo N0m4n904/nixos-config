@@ -2,7 +2,10 @@
 
 let
   desktopFile =
-    "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop";
+    if lib.hasAttrByPath [ "foundrix" "config" "gamescope-session" "desktopEntry" ] config then
+      "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop"
+    else
+      null;
 in
 {
   imports = [
@@ -32,7 +35,7 @@ in
   };
 
   home-manager = applyHomeManagerShared {
-    home.file = lib.mkIf (builtins.pathExists desktopFile) {
+    home.file = lib.mkIf (desktopFile != null && builtins.pathExists desktopFile) {
       "Desktop/Switch to Gamemode.desktop".source = desktopFile;
     };
   };
