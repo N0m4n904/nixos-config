@@ -5,6 +5,7 @@
 {
   imports = [
     foundrixModules.profiles.server-baseline
+    foundrixModules.config.virtualisation.docker
   ];
 
   users.allowNoPasswordLogin = true;
