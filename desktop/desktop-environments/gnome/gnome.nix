@@ -36,7 +36,10 @@ in
 
   home-manager = applyHomeManagerShared {
     home.file = lib.mkIf (desktopFile != null && builtins.pathExists desktopFile) {
-      "Desktop/Switch to Gamemode.desktop".source = desktopFile;
+      "Desktop/gamescope.desktop" = {
+        source = desktopFile;
+        executable = true;
+      };
     };
   };
 }
