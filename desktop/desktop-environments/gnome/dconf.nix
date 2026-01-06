@@ -95,6 +95,11 @@
           "org/gnome/shell/extensions/hide-top-bar" = {
             mouse-sensitive = true;
           };
+          "org/gnome/shell/extensions/hidetopbar" = {
+            enable-active-window = true;
+            enable-intellihide = true;
+            mouse-sensitive = true;
+          };
           "org/gnome/shell/extensions/caffeine" = {
             indicator-position-max = 1;
           };
