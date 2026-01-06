@@ -45,13 +45,6 @@
         gamescope.session.enable = true;
       };
     };
-    config = {
-      gamescope-session = {
-        enable = true;
-        hdr.enable = true;
-        refreshRate = 175;
-      };
-    };
     nixpkgs.allowedUnfreePackageNames = [
       "android-studio-stable"
       "discord"

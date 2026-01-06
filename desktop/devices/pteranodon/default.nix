@@ -25,6 +25,7 @@
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
       foundrixModules.hardware.hosts.framework.laptop-16-7040
+      foundrixModules.config.gamescope-session
       ./filesystems.nix
       ../../../modules/hardware/hid/via.nix
     ];
@@ -40,6 +41,11 @@
 
   foundrix = {
     config = {
+      gamescope-session = {
+        enable = true;
+        refreshRate = 165;
+        adaptiveSync = true;
+      };
       nix.buildDirOnTmp = true;
       shell.zsh.power10k = {
         colors = {
@@ -56,6 +62,12 @@
         };
       };
     };
+    nixpkgs.allowedUnfreePackageNames = [
+      "steam"
+      "steam-original"
+      "steam-run"
+      "steam-unwrapped"
+    ];
   };
 
   hardware = {

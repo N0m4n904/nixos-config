@@ -32,6 +32,7 @@
       nixosHardwareModules.common-pc-ssd
       foundrixModules.config.filesystem.nix-tmp
       foundrixModules.hardware.security.keystore.tpm2
+      foundrixModules.config.gamescope-session
       ./filesystems.nix
       ../../../modules/hardware/hid/via.nix
       ../../../modules/teamviewer.nix
@@ -55,6 +56,11 @@
 
   foundrix = {
     config = {
+      gamescope-session = {
+        enable = true;
+        hdr.enable = true;
+        refreshRate = 175;
+      };
       nix.buildDirOnTmp = true;
       shell.zsh.power10k = {
         colors = {
@@ -71,6 +77,12 @@
         };
       };
     };
+    nixpkgs.allowedUnfreePackageNames = [
+      "steam"
+      "steam-original"
+      "steam-run"
+      "steam-unwrapped"
+    ];
   };
 
   hardware = {
