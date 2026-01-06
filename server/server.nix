@@ -1,5 +1,6 @@
 {
   foundrixModules,
+  config,
   ...
 }:
 {
@@ -9,4 +10,6 @@
 
   users.allowNoPasswordLogin = true;
   services.getty.autologinUser = "noah";
+
+  nix.settings.trusted-users = [ "root" "@wheel" ];
 }
