@@ -1,6 +1,5 @@
 {
   foundrixModules,
-  config,
   ...
 }:
 {
