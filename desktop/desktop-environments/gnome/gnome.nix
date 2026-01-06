@@ -1,4 +1,9 @@
-{ foundrixModules, pkgs, ... }:
+{ foundrixModules, pkgs, config, lib, applyHomeManagerShared, ... }:
+
+let
+  desktopFile =
+    "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop";
+in
 {
   imports = [
     ./dconf.nix
@@ -7,7 +12,6 @@
     foundrixModules.config.graphics.themes.adwaita-dark
   ];
 
-  # As soon as you try cross-compiling gnome, it will fail with broken totem
   device.crossCompile = false;
 
   foundrix.components.desktop-environments.gnome = {
@@ -15,6 +19,7 @@
       caffeine
       clipboard-indicator
       dash-to-dock
+      desktop-icons-ng-ding
       kernel-indicator
       pip-on-top
       spotify-controls
@@ -24,5 +29,11 @@
       window-is-ready-remover
       hide-top-bar
     ];
+  };
+
+  home-manager = applyHomeManagerShared {
+    home.file = lib.mkIf (builtins.pathExists desktopFile) {
+      "Desktop/Switch to Gamemode.desktop".source = desktopFile;
+    };
   };
 }

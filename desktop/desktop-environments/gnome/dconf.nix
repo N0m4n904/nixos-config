@@ -57,6 +57,7 @@
               "Vitals@CoreCoding.com"
               "windowIsReady_Remover@nunofarruca@gmail.com"
               "hidetopbar@mathieu.bidon.ca"
+              "ding@rastersoft.com"
             ];
             disabled-extensions = [
               "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
@@ -81,6 +82,15 @@
             show-mounts = false;
             show-mounts-only-mounted = false;
             transparency-mode = "FIXED";
+          };
+          "org/gnome/shell/extensions/ding" = {
+            add-volumes-opposite = false;
+            check-x11wayland = true;
+            show-drop-place = true;
+            show-home = false;
+            show-link-emblem = true;
+            show-trash = false;
+            show-volumes = false;
           };
           "org/gnome/shell/extensions/hide-top-bar" = {
             mouse-sensitive = true;
