@@ -18,6 +18,7 @@ in
     foundrixModules.config.linux.sysrq
     foundrixModules.config.shell.zsh.power10k
     foundrixModules.config.home-manager
+    foundrixModules.config.graphics.fonts.adwaita-sans
     ./home.nix
   ];
 

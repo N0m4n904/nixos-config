@@ -12,7 +12,6 @@
     foundrixModules.config.virtualisation.podman
     foundrixModules.config.vscode-opinionated
     foundrixModules.config.graphics.cursors.breezex-rosepine
-    foundrixModules.config.graphics.fonts.adwaita-sans
     foundrixModules.config.graphics.gtk-dark
     foundrixModules.config.gamescope-session
     foundrixModules.config.graphics.qt
