@@ -3,9 +3,19 @@
   pkgsUnstable,
   foundrixPkgs,
   pkgs,
+  lib,
+  config,
+  applyHomeManagerShared,
   ...
 }:
 
+let
+  desktopFile =
+    if lib.hasAttrByPath [ "foundrix" "config" "gamescope-session" "desktopEntry" ] config then
+      "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop"
+    else
+      null;
+in
 {
   imports = [
     foundrixModules.profiles.desktop-full
@@ -65,6 +75,15 @@
     ];
     variables = {
       BROWSER = "zen-beta";
+    };
+  };
+
+  home-manager = applyHomeManagerShared {
+    home.file = lib.mkIf (desktopFile != null && builtins.pathExists desktopFile) {
+      "Desktop/gamescope.desktop" = {
+        source = desktopFile;
+        executable = true;
+      };
     };
   };
 }
