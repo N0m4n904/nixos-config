@@ -71,6 +71,7 @@
 
   networking = {
     hostName = "brachiosaurus";
+    interfaces.enp34s0.wakeOnLan.enable = true;
   };
 
   services = {
