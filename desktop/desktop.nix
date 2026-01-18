@@ -39,7 +39,7 @@ in
           prev: final: {
             src = fetchzip {
               url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20260102-slr/proton-cachyos-10.0-20260102-slr-x86_64_v4.tar.xz";
-              hash = "sha256-xC7+kapFQhcbGCxqQ7Tbe3jLdRar5i34Il6eOcvOlak=";
+              hash = "sha256-WkFVS8CbY1TnEYX55LB4zfsvwz1t4nJjhXpK0d9loVA=";
             };
             pname = "proton-cachyos";
             version = "proton-cachyos-10.0-20260102-slr-x86_64_v4";
