@@ -30,13 +30,24 @@
       ../../../modules/hardware/hid/via.nix
     ];
 
-  boot.loader.timeout = 1;
+  boot = {
+    loader.timeout = 1;
+    kernel.sysctl = {
+      "vm.page-cluster" = 0;
+      "vm.swapiness" = 120;
+    };
+  };
 
   device = {
     cpu.threads = 16;
     crossCompile = false;
     name = "pteranodon";
     platforms = [ "x86_64" ];
+  };
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 33;
   };
 
   foundrix = {
