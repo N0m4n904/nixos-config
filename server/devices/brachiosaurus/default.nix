@@ -72,6 +72,7 @@
   networking = {
     hostName = "brachiosaurus";
     interfaces.enp34s0.wakeOnLan.enable = true;
+    firewall.allowedUDPPorts = [ 9 ];
   };
 
   services = {
