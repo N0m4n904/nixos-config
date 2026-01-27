@@ -95,5 +95,10 @@
       extraRemotes = [ "lvfs-testing" ];
     };
     openssh.enable = true;
+    # Support for Backlit Keyboard ISO and Numpad
+    udev.extraRules = ''
+      KERNEL=="hidraw*", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0014", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0018", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    '';
   };
 }
