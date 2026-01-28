@@ -27,6 +27,7 @@ in
     foundrixModules.config.graphics.qt
     foundrixModules.components.steam
     ./home.nix
+    ../modules/browser/zen.nix
   ];
 
   programs.steam = {
