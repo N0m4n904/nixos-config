@@ -1,6 +1,7 @@
 {
   inputs,
   applyHomeManagerShared,
+  pkgs,
   ...
 }:
 {
@@ -17,6 +18,11 @@
             "zen.window-sync.enabled" = false;
             "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;
           };
+          extensions.packages =
+            with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
+              ublock-origin
+              bitwarden
+            ];
         };
       };
     };
