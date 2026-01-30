@@ -44,6 +44,12 @@ in
               Status = "locked";
             });
           in {
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+            Cryptomining = true;
+            Fingerprinting = true;
+          };
           Preferences = mLockedAttrs {
             "browser.toolbars.bookmarks.visibility" = "always";
             "browser.bookmarks.restore_default_bookmarks" = false;
