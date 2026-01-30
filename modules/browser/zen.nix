@@ -1,6 +1,7 @@
 {
   inputs,
   applyHomeManagerShared,
+  pkgs,
   ...
 }:
 let
@@ -23,6 +24,11 @@ let
     if builtins.isAttrs entry
     then entry
     else mkExtensionEntry {id = entry;});
+
+  base64Decode = encoded:
+    builtins.readFile (pkgs.runCommand "decode" {} ''
+      echo "${encoded}" | ${pkgs.coreutils}/bin/base64 -d > $out
+    '');
 in
 {
   home-manager = applyHomeManagerShared {
@@ -32,7 +38,17 @@ in
     programs = {
       zen-browser = {
         enable = true;
-        policies = {
+        policies = let
+            mLockedAttrs = builtins.mapAttrs (_: value: {
+              Value = value;
+              Status = "locked";
+            });
+          in {
+          Preferences = mLockedAttrs {
+            "browser.toolbars.bookmarks.visibility" = "always";
+            "browser.bookmarks.restore_default_bookmarks" = false;
+            "browser.bookmarks.addedImportButton" = true;
+          };
           ExtensionSettings = mkExtensionSettings {
             "uBlock0@raymondhill.net" = mkExtensionEntry {
               id = "ublock-origin";
@@ -94,6 +110,91 @@ in
                 definedAliases = [ "@sp" "@startpage" ];
               };
             };
+          };
+          bookmarks = {
+            force = true;
+            settings = [
+              {
+                name = "Bookmarks";
+                toolbar = true;
+                bookmarks = [
+                  {
+                    name = "Home Assistant";
+                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMTc4LjE1NDo4MTIzL25vYWgtemltbWVyL2NsaW1hdGU=";
+                  }
+                  {
+                    name = "Portainer | local";
+                    url = base64Decode "aHR0cHM6Ly8xOTIuMTY4LjE3OC4xNTc6OTQ0My8jIS8zL2RvY2tlci9jb250YWluZXJz";
+                  }
+                  {
+                    name = "Pi-hole";
+                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMTc4LjE1Ny9hZG1pbg==";
+                  }
+                  {
+                    name = "Vaultwarden Web";
+                    url = base64Decode "aHR0cHM6Ly93YXJkZW4ubm9uZXR3b3IuY2MvIy9sb2dpbg==";
+                  }
+                  {
+                    name = "FRITZ!Box";
+                    url = "http://fritz.box";
+                  }
+                  {
+                    name = "LTE Stick";
+                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMC4xL2luZGV4Lmh0bWw=";
+                  }
+                  {
+                    name = "GitLab";
+                    url = "https://gitlab.com/N0m4n904";
+                  }
+                  {
+                    name = "halogenOS";
+                    bookmarks = [
+                      {
+                        name = "halogenOS";
+                        url = "https://halogenos.org";
+                      }
+                      {
+                        name = "halogenOS GitLab";
+                        url = "https://git.halogenos.org/halogenOS";
+                      }
+                      {
+                        name = "halogenOS - buildkite";
+                        url = "https://buildkite.com/halogenos";
+                      }
+                    ];
+                  }
+                  {
+                    name = "Pong";
+                    bookmarks = [
+                      {
+                        name = "Pong - Development";
+                        url = "https://github.com/Pong-Development";
+                      }
+                      {
+                        name = "Nothing Phone 2 Development";
+                        url = "https://github.com/Nothing-phone-2-Development";
+                      }
+                      {
+                        name = "Flashable Firmware";
+                        url = "https://github.com/spike0en/pong_flashable_firmware";
+                      }
+                      {
+                        name = "Nothing Archive";
+                        url = "https://github.com/spike0en/nothing_archive/releases";
+                      }
+                      {
+                        name = "android12-5.10-lts";
+                        url = "https://android-review.googlesource.com/q/project:kernel/common+branch:android12-5.10-lts";
+                      }
+                      {
+                        name = "LOS/kernel_qcom_sm8450";
+                        url = "https://review.lineageos.org/q/project:LineageOS/android_kernel_qcom_sm8450";
+                      }
+                    ];
+                  }
+                ];
+              }
+            ];
           };
         };
       };
