@@ -38,6 +38,21 @@
               youtube-shorts-block
               youtube-no-translation
             ];
+          search = {
+            force = true;
+            default = "Startpage";
+            engines = {
+              "Startpage" = {
+                urls = [{
+                  template = "https://www.startpage.com/sp/search";
+                  params = [
+                    { name = "query"; value = "{searchTerms}"; }
+                  ];
+                }];
+                definedAliases = [ "@sp" "@startpage" ];
+              };
+            };
+          };
         };
       };
     };
