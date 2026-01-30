@@ -63,18 +63,22 @@ in
         profiles.default = {
           isDefault = true;
           settings = {
-            "zen.window-sync.enabled" = false;
-            "zen.site-data-panel.show-callout" = false;
-            "zen.theme.gradient-legacy-version" = 1;
-            "zen.ui.migration.compact-mode-button-added" = true;
-            "zen.urlbar.behavior" = "normal";
-            "zen.view.compact.enable-at-startup" = false;
-            "zen.view.show-newtab-button-border-top" = true;
-            "zen.view.show-newtab-button-top" = false;
-            "zen.view.use-single-toolbar" = false;
-            "zen.view.window.scheme" = 0;
-            "zen.workspace.separate-essentials" = false;
-            "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled" = true;
+            zen = {
+              window-sync.enabled = false;
+              site-data-panel.show-callout = false;
+              theme.gradient-legacy-version = 1;
+              ui.migration.compact-mode-button-added = true;
+              urlbar.behavior = "normal";
+              view = {
+                compact. enable-at-startup = false;
+                show-newtab-button-border-top = true;
+                show-newtab-button-top = false;
+                use-single-toolbar = false;
+                window.scheme = 0;
+              };
+              workspace.separate-essentials = false;
+            };
+            media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled = true;
           };
           search = {
             force = true;
