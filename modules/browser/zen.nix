@@ -91,6 +91,7 @@ in
               theme.gradient-legacy-version = 1;
               ui.migration.compact-mode-button-added = true;
               urlbar.behavior = "normal";
+              welcome-screen.seen = true;
               view = {
                 compact. enable-at-startup = false;
                 show-newtab-button-border-top = true;
