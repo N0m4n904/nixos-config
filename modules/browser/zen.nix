@@ -2,7 +2,6 @@
   inputs,
   applyHomeManagerShared,
   pkgs,
-  config,
   ...
 }:
 let
@@ -80,7 +79,46 @@ in
             };
           };
         };
-        profiles.default = {
+        profiles.default = rec {
+          containersForce = true;
+          containers = {
+            Default = {
+              color = "blue";
+              id = 1;
+            };
+          };
+          spacesForce = true;
+          spaces = {
+              "Default" = {
+                id = "1a03eb2f-7d2d-41d4-a527-9abcc75f46b8";
+                position = 1000;
+                container = containers.Default.id;
+              };
+            };
+          pinsForce = true;
+          pins = {
+              "GitHub" = {
+                id = "7c3743cd-fd67-4e93-8d58-52a1c50f7fa4";
+                container = containers.Default.id;
+                url = "https://github.com";
+                isEssential = true;
+                position = 101;
+              };
+              "YouTube" = {
+                id = "eb7870a6-ca65-4341-bc7f-a2bb0214041f";
+                container = containers.Default.id;
+                url = "https://www.youtube.com";
+                isEssential = true;
+                position = 102;
+              };
+              "Twitch" = {
+                id = "e93b112c-67af-44ce-b781-c3ca1d41191c";
+                container = containers.Default.id;
+                url = "https://www.twitch.tv/mahluna";
+                isEssential = true;
+                position = 103;
+              };
+            };
           isDefault = true;
           settings = {
             "zen.window-sync.enabled" = false;
