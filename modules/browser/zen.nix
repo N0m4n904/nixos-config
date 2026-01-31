@@ -138,6 +138,19 @@ in
             "browser.bookmarks.restore_default_bookmarks" = false;
             "browser.bookmarks.addedImportButton" = true;
           };
+          mods = [
+            "f4866f39-cfd6-4498-ab92-54213b8279dc" # Animations Plus
+            "d8b79d4a-6cba-4495-9ff6-d6d30b0e94fe" # Better Active Tab
+            "a6335949-4465-4b71-926c-4a52d34bc9c0" # Better Find Bar
+            "1e9f3101-210b-4ff5-8830-434e4919100d" # Better Letterboxing
+            "664c54f9-d97d-410b-a479-23dd8a08a628" # Better Tab Indicators
+            "f7c71d9a-bce2-420f-ae44-a64bd92975ab" # Better Unloaded Tabs
+            "906c6915-5677-48ff-9bfc-096a02a72379" # Floating Status Bar
+            "6c122084-c4ec-4c9e-8cc5-3d87c3a089cb" # NavBar Margin
+            "bc25808c-a012-4c0d-ad9a-aa86be616019" # sleek border
+            "79dde383-4fe7-404a-a8e6-9be440022542" # Tidy Popup
+            "03a8e7ef-cf00-4f41-bf24-a90deeafc9db" # Zen Colored Picker
+          ];
           search = {
             force = true;
             default = "Startpage";
