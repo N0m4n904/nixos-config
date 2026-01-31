@@ -28,6 +28,18 @@ in
     systemPackages = with pkgs; [
       duperemove
     ];
+    interactiveShellInit = ''
+      firmwareupdate() {
+        echo "Checking devices..."
+        fwupdmgr get-devices
+        echo "Refreshing metadata..."
+        fwupdmgr refresh
+        echo "Checking for updates..."
+        fwupdmgr get-updates
+        echo "Applying updates..."
+        fwupdmgr update
+      }
+    '';
   };
 
   fonts = {
