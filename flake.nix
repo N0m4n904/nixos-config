@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     led-matrix-monitoring = {
-      url = "github:MidnightJava/led-matrix";
+      url = "github:N0m4n904/led-matrix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

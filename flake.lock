@@ -75,15 +75,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1769887847,
-        "narHash": "sha256-iD6ue8wUs0Tzrdh8BX0SmNgs2xOylUfczFvN2wbWyHE=",
-        "owner": "MidnightJava",
+        "lastModified": 1769891468,
+        "narHash": "sha256-XveWFiOy3UsLqcX6cPn02a4F+dsan89cGbGhuLgeFYE=",
+        "owner": "N0m4n904",
         "repo": "led-matrix",
-        "rev": "e295621dd2866aef58e8ed77bc2ec8b8c3e75d35",
+        "rev": "c72c0d7059e1b1198b2638e6b65fabdd3acb5594",
         "type": "github"
       },
       "original": {
-        "owner": "MidnightJava",
+        "owner": "N0m4n904",
         "repo": "led-matrix",
         "type": "github"
       }
