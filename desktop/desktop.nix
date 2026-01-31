@@ -59,7 +59,7 @@ in
       };
     };
     nixpkgs.allowedUnfreePackageNames = [
-      "android-studio-stable"
+      "android-studio"
       "discord"
       "discord-ptb"
       "makemkv"
