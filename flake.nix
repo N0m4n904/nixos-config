@@ -20,6 +20,10 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    led-matrix-monitoring = {
+      url = "github:MidnightJava/led-matrix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

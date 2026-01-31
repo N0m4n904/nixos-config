@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "foundrix": {
       "inputs": {
         "home-manager": [
@@ -46,6 +64,27 @@
         "owner": "nix-community",
         "ref": "release-25.11",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "led-matrix-monitoring": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769887847,
+        "narHash": "sha256-iD6ue8wUs0Tzrdh8BX0SmNgs2xOylUfczFvN2wbWyHE=",
+        "owner": "MidnightJava",
+        "repo": "led-matrix",
+        "rev": "e295621dd2866aef58e8ed77bc2ec8b8c3e75d35",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MidnightJava",
+        "repo": "led-matrix",
         "type": "github"
       }
     },
@@ -133,10 +172,26 @@
       "inputs": {
         "foundrix": "foundrix",
         "home-manager": "home-manager",
+        "led-matrix-monitoring": "led-matrix-monitoring",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "zen-browser": "zen-browser"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     },
     "zen-browser": {

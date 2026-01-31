@@ -26,6 +26,7 @@
       foundrixModules.hardware.security.keystore.tpm2
       foundrixModules.hardware.hosts.framework.laptop-16-7040
       foundrixModules.config.gamescope-session
+      inputs.led-matrix-monitoring.nixosModules.led-matrix-monitoring
       ./filesystems.nix
       ../../../modules/hardware/hid/via.nix
     ];
@@ -95,10 +96,31 @@
       extraRemotes = [ "lvfs-testing" ];
     };
     openssh.enable = true;
-    # Support for Backlit Keyboard ISO and Numpad
+    # Support for Backlit Keyboard ISO, Numpad and LED Matrix modules
     udev.extraRules = ''
       KERNEL=="hidraw*", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0014", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0018", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      SUBSYSTEM=="tty", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0020", MODE="0666", GROUP="dialout"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0020", MODE="0666", GROUP="dialout"
     '';
+    led-matrix-monitoring = {
+      enable = true;
+      topLeft = "cpu";
+      bottomLeft = "mem-bat";
+      topRight = "temp";
+      bottomRight = "fan";
+      disableKeyListener = true;
+      user = "noah";
+    };
+  };
+
+  systemd.services.led-matrix-monitoring = {
+    environment = {
+      DISPLAY = ":0";
+    };
+    serviceConfig = {
+      After = [ "graphical-session.target" ];
+      Wants = [ "graphical-session.target" ];
+    };
   };
 }
