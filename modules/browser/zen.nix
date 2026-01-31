@@ -2,6 +2,7 @@
   inputs,
   applyHomeManagerShared,
   pkgs,
+  config,
   ...
 }:
 let
@@ -51,9 +52,6 @@ in
             Fingerprinting = true;
           };
           Preferences = mLockedAttrs {
-            "browser.toolbars.bookmarks.visibility" = "always";
-            "browser.bookmarks.restore_default_bookmarks" = false;
-            "browser.bookmarks.addedImportButton" = true;
           };
           ExtensionSettings = mkExtensionSettings {
             "uBlock0@raymondhill.net" = mkExtensionEntry {
@@ -85,23 +83,22 @@ in
         profiles.default = {
           isDefault = true;
           settings = {
-            zen = {
-              window-sync.enabled = false;
-              site-data-panel.show-callout = false;
-              theme.gradient-legacy-version = 1;
-              ui.migration.compact-mode-button-added = true;
-              urlbar.behavior = "normal";
-              welcome-screen.seen = true;
-              view = {
-                compact. enable-at-startup = false;
-                show-newtab-button-border-top = true;
-                show-newtab-button-top = false;
-                use-single-toolbar = false;
-                window.scheme = 0;
-              };
-              workspace.separate-essentials = false;
-            };
-            media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled = true;
+            "zen.window-sync.enabled" = false;
+            "zen.site-data-panel.show-callout" = false;
+            "zen.theme.gradient-legacy-version" = 1;
+            "zen.ui.migration.compact-mode-button-added" = true;
+            "zen.urlbar.behavior" = "normal";
+            "zen.view.compact. enable-at-startup" = false;
+            "zen.view.show-newtab-button-border-top" = true;
+            "zen.view.show-newtab-button-top" = false;
+            "zen.view.use-single-toolbar" = false;
+            "zen.view.window.scheme" = 0;
+            "zen.workspace.separate-essentials" = false;
+            "zen.welcome-screen.seen" = true;
+            "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled"= true;
+            "browser.toolbars.bookmarks.visibility" = "always";
+            "browser.bookmarks.restore_default_bookmarks" = false;
+            "browser.bookmarks.addedImportButton" = true;
           };
           search = {
             force = true;
