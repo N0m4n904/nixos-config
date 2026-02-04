@@ -39,11 +39,11 @@ in
         (proton-ge-bin.overrideAttrs (
           prev: final: {
             src = fetchzip {
-              url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20260127-slr/proton-cachyos-10.0-20260127-slr-x86_64_v4.tar.xz";
-              hash = "sha256-o7dFFe3reJ06fJqKTTWL003vEjfqKLDo32aXcRzHCPM=";
+              url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-10.0-20260203-slr/proton-cachyos-10.0-20260203-slr-x86_64_v4.tar.xz";
+              hash = "sha256-vmPr6hXPvl5pIVmVkdbUWKZm/ZEefT2/2PDUzQAFLU0=";
             };
             pname = "proton-cachyos";
-            version = "proton-cachyos-10.0-20260127-slr-x86_64_v4";
+            version = "proton-cachyos-10.0-20260203-slr-x86_64_v4";
           }
         )).override
         { steamDisplayName = "Proton-CachyOS-latest"; }
