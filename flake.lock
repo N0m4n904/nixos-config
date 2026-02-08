@@ -33,11 +33,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770421201,
-        "narHash": "sha256-ocmUKvvSnYFQzNvuuXkig1fILeLWZ8t+xSQL0di2GfA=",
+        "lastModified": 1770482021,
+        "narHash": "sha256-Lbu07PrJovBNwlwMZWvPVjNi9ozCk65OwDaucX9lNM4=",
         "ref": "refs/heads/main",
-        "rev": "a0293defd0ed8027af648c42326afffdb2bfab94",
-        "revCount": 260,
+        "rev": "9e5774a1ad07a3507819cd8a9c5eb25bdcce9329",
+        "revCount": 261,
         "type": "git",
         "url": "https://codeberg.org/xdevs23/foundrix"
       },
@@ -106,11 +106,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770136044,
-        "narHash": "sha256-tlFqNG/uzz2++aAmn4v8J0vAkV3z7XngeIIB3rM3650=",
+        "lastModified": 1770464364,
+        "narHash": "sha256-z5NJPSBwsLf/OfD8WTmh79tlSU8XgIbwmk6qB1/TFzY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e576e3c9cf9bad747afcddd9e34f51d18c855b4e",
+        "rev": "23d72dabcb3b12469f57b37170fcbc1789bd7457",
         "type": "github"
       },
       "original": {
