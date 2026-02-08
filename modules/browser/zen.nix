@@ -1,7 +1,6 @@
 {
   inputs,
   applyHomeManagerShared,
-  pkgs,
   ...
 }:
 let
@@ -24,11 +23,6 @@ let
     if builtins.isAttrs entry
     then entry
     else mkExtensionEntry {id = entry;});
-
-  base64Decode = encoded:
-    builtins.readFile (pkgs.runCommand "decode" {} ''
-      echo "${encoded}" | ${pkgs.coreutils}/bin/base64 -d > $out
-    '');
 in
 {
   home-manager = applyHomeManagerShared {
@@ -175,19 +169,19 @@ in
                 bookmarks = [
                   {
                     name = "Home Assistant";
-                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMTc4LjE1NDo4MTIzL25vYWgtemltbWVyL2NsaW1hdGU=";
+                    url = "http://192.168.178.154:8123/noah-zimmer/climate";
                   }
                   {
                     name = "Portainer | local";
-                    url = base64Decode "aHR0cHM6Ly8xOTIuMTY4LjE3OC4xNTc6OTQ0My8jIS8zL2RvY2tlci9jb250YWluZXJz";
+                    url = "https://192.168.178.157:9443/#!/3/docker/containers";
                   }
                   {
                     name = "Pi-hole";
-                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMTc4LjE1Ny9hZG1pbg==";
+                    url = "http://192.168.178.157/admin";
                   }
                   {
                     name = "Vaultwarden Web";
-                    url = base64Decode "aHR0cHM6Ly93YXJkZW4ubm9uZXR3b3IuY2MvIy9sb2dpbg==";
+                    url = "https://warden.nonetwor.cc/#/login";
                   }
                   {
                     name = "FRITZ!Box";
@@ -195,7 +189,7 @@ in
                   }
                   {
                     name = "LTE Stick";
-                    url = base64Decode "aHR0cDovLzE5Mi4xNjguMC4xL2luZGV4Lmh0bWw=";
+                    url = "http://192.168.0.1/index.html";
                   }
                   {
                     name = "GitLab";
