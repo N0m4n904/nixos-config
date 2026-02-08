@@ -3,19 +3,11 @@
   pkgsUnstable,
   foundrixPkgs,
   pkgs,
-  lib,
   config,
   applyHomeManagerShared,
   ...
 }:
 
-let
-  desktopFile =
-    if lib.hasAttrByPath [ "foundrix" "config" "gamescope-session" "desktopEntry" ] config then
-      "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop"
-    else
-      null;
-in
 {
   imports = [
     foundrixModules.profiles.desktop-full
@@ -82,11 +74,9 @@ in
   };
 
   home-manager = applyHomeManagerShared {
-    home.file = lib.mkIf (desktopFile != null && builtins.pathExists desktopFile) {
-      "Desktop/gamescope.desktop" = {
-        source = desktopFile;
-        executable = true;
-      };
+    home.file."Desktop/gamescope.desktop" = {
+      source = "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop";
+      executable = true;
     };
   };
 }
