@@ -29,7 +29,10 @@
       ../../../modules/hardware/gpu/nvidia.nix
     ];
 
-  boot.loader.timeout = 1;
+  boot = {
+    kernelPackages = pkgs.linuxPackages_6_18;
+    loader.timeout = 1;
+  };
 
   device = {
     cpu.threads = 16;
