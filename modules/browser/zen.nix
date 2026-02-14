@@ -224,6 +224,14 @@ in
                         url = "https://github.com/Nothing-phone-2-Development";
                       }
                       {
+                        name = "Nothing LineageOS";
+                        url = "https://github.com/lineageos?q=nothing&type=all&language=&sort=";
+                      }
+                      {
+                        name = "Nothing TheMuppets";
+                        url = "https://github.com/TheMuppets?q=nothing&type=all&language=&sort=";
+                      }
+                      {
                         name = "Flashable Firmware";
                         url = "https://github.com/spike0en/pong_flashable_firmware";
                       }
