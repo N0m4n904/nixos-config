@@ -33,11 +33,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770856569,
-        "narHash": "sha256-rOMapNzwlmm2rn+q5p8pean4eWA0MtibdKyAZ4rxmb8=",
+        "lastModified": 1771026113,
+        "narHash": "sha256-wyKViJ+I8dUA6b3mALfsy1SIxXezi33QCB69Xg/N7Ek=",
         "ref": "refs/heads/main",
-        "rev": "18081caf91a4b482859def658b32efcbf916003b",
-        "revCount": 266,
+        "rev": "c1a6ba137cd163b3fe420ca44001d23231c9d81a",
+        "revCount": 267,
         "type": "git",
         "url": "https://codeberg.org/xdevs23/foundrix"
       },
@@ -75,11 +75,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769957488,
-        "narHash": "sha256-q6a5HOQz5poXKJ+IJE6zNvjCcazeoKH2GamSfO0B+LI=",
+        "lastModified": 1771017962,
+        "narHash": "sha256-67x+17gH2hd41M5qmaNvdNtceepPThmZGgQGQ+x889E=",
         "owner": "MidnightJava",
         "repo": "led-matrix",
-        "rev": "7b4a2166f6fbce7de616935a0c8a072e8a638a78",
+        "rev": "98805eec678a88c705da0d6c21b900114953c269",
         "type": "github"
       },
       "original": {
@@ -154,11 +154,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1770841267,
-        "narHash": "sha256-9xejG0KoqsoKEGp2kVbXRlEYtFFcDTHjidiuX8hGO44=",
+        "lastModified": 1771008912,
+        "narHash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ec7c70d12ce2fc37cb92aff673dcdca89d187bae",
+        "rev": "a82ccc39b39b621151d6732718e3e250109076fa",
         "type": "github"
       },
       "original": {
@@ -204,11 +204,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770975915,
-        "narHash": "sha256-WwzL82Cnt2RJYG82o4chf0sdx68uCTZVZ5aNQipz7/Y=",
+        "lastModified": 1771073480,
+        "narHash": "sha256-62U5QqYnPmTaIZXLjvSLW9ezVlo4+1DbgdA1M5wur10=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "17a9aeb5a85802567eddb4f9141cb13d72beba08",
+        "rev": "8d5cf4e426c83771ec9d2fec34f9e70dd0174c1c",
         "type": "github"
       },
       "original": {
