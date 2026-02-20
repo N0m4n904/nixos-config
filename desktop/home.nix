@@ -27,7 +27,7 @@
       postman
       rose-pine-cursor
       signal-desktop
-      teamspeak6-client
+      pkgsUnstable.teamspeak6-client
       telegram-desktop
       thunderbird
       vlc
