@@ -118,7 +118,7 @@ in
             "zen.theme.gradient-legacy-version" = 1;
             "zen.ui.migration.compact-mode-button-added" = true;
             "zen.urlbar.behavior" = "normal";
-            "zen.view.compact. enable-at-startup" = false;
+            "zen.view.compact.enable-at-startup" = false;
             "zen.view.show-newtab-button-border-top" = true;
             "zen.view.show-newtab-button-top" = false;
             "zen.view.use-single-toolbar" = false;
