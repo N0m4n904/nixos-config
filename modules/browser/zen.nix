@@ -182,6 +182,10 @@ in
                     url = "https://warden.nonetwor.cc/#/login";
                   }
                   {
+                    name = "Hetzner";
+                    url = "https://console.hetzner.com";
+                  }
+                  {
                     name = "FRITZ!Box";
                     url = "http://fritz.box";
                   }
