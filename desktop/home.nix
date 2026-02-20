@@ -9,6 +9,7 @@
   home-manager = applyHomeManagerShared rec {
     home.packages = with pkgs; [
       chromium
+      dbeaver-bin
       discord-ptb
       easyeffects
       gimp3-with-plugins
@@ -26,6 +27,7 @@
       postman
       rose-pine-cursor
       signal-desktop
+      teamspeak6-client
       telegram-desktop
       thunderbird
       vlc
