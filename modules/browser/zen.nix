@@ -32,6 +32,7 @@ in
     programs = {
       zen-browser = {
         enable = true;
+        suppressXdgMigrationWarning = true;
         policies = let
             mLockedAttrs = builtins.mapAttrs (_: value: {
               Value = value;
