@@ -126,6 +126,9 @@ in
             "zen.workspace.separate-essentials" = false;
             "zen.welcome-screen.seen" = true;
             "media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled"= true;
+            "media.peerconnection.ice.proxy_only" = false;
+            "media.webrtc.hw.h264.enabled" = true;
+            "media.peerconnection.ice.obfuscate_host_addresses" = false;
             "browser.toolbars.bookmarks.visibility" = "always";
             "browser.bookmarks.restore_default_bookmarks" = false;
             "browser.bookmarks.addedImportButton" = true;
@@ -184,6 +187,10 @@ in
                   {
                     name = "Hetzner";
                     url = "https://console.hetzner.com";
+                  }
+                  {
+                    name = "JetKVM";
+                    url = "http://192.168.178.36/";
                   }
                   {
                     name = "FRITZ!Box";
