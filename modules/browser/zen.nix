@@ -190,7 +190,7 @@ in
                   }
                   {
                     name = "JetKVM";
-                    url = "http://192.168.178.36/";
+                    url = "https://jetkvm-noah/";
                   }
                   {
                     name = "FRITZ!Box";
