@@ -116,7 +116,8 @@ in
             };
           isDefault = true;
           settings = {
-            "zen.window-sync.enabled" = false;
+            "zen.window-sync.enabled" = true;
+            "zen.window-sync.sync-only-pinned-tabs" = true;
             "zen.site-data-panel.show-callout" = false;
             "zen.theme.gradient-legacy-version" = 1;
             "zen.ui.migration.compact-mode-button-added" = true;
