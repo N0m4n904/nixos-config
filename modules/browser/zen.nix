@@ -94,18 +94,21 @@ in
           pins = {
               "GitHub" = {
                 id = "7c3743cd-fd67-4e93-8d58-52a1c50f7fa4";
+                container = containers.Default.id;
                 url = "https://github.com";
                 isEssential = true;
                 position = 101;
               };
               "YouTube" = {
                 id = "eb7870a6-ca65-4341-bc7f-a2bb0214041f";
+                container = containers.Default.id;
                 url = "https://www.youtube.com";
                 isEssential = true;
                 position = 102;
               };
               "Twitch" = {
                 id = "e93b112c-67af-44ce-b781-c3ca1d41191c";
+                container = containers.Default.id;
                 url = "https://www.twitch.tv/mahluna";
                 isEssential = true;
                 position = 103;
