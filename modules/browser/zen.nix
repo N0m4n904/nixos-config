@@ -72,6 +72,10 @@ in
               id = "youtube-no-translation";
               pinned = false;
             };
+            "moz-addon-prod@7tv.app" = mkExtensionEntry {
+              id = "7tv-extension";
+              pinned = false;
+            };
           };
         };
         profiles.default = rec {
