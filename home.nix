@@ -59,6 +59,7 @@
       pwgen
       rsync
       simple-scan
+      sshfs
       smartmontools
       socat
       stress
