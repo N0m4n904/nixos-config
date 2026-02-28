@@ -66,6 +66,7 @@
       subfinder
       tree
       unzip
+      vim
       vulkan-tools
       wl-clipboard
       wl-clipboard-x11
