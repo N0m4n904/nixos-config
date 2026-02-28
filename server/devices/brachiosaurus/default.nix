@@ -1,7 +1,7 @@
 # Hardware:
-# Mainboard: MSI X470 GAMING PLUS
-# CPU: AMD Ryzen 7 3700X @ 4.43 GHz
-# RAM: 16 GB (2x8 GB) Corsair Vengeance RGB PRO DDR4 3200 MHz
+# Mainboard: Asus B550 E Gaming
+# CPU: AMD Ryzen 9 5950XX @ 4.43 GHz
+# RAM: 32 GB (4x8 GB) Corsair Vengeance RGB PRO DDR4 3200 MHz
 # GPU: MSI GeForce RTX 2080 DUKE 8G OC
 # Storage:
 #   Samsung SSD 970 PRO 512 GB NVMe
@@ -35,7 +35,7 @@
   };
 
   device = {
-    cpu.threads = 16;
+    cpu.threads = 32;
     crossCompile = false;
     name = "brachiosaurus";
     platforms = [ "x86_64" ];
@@ -74,7 +74,7 @@
 
   networking = {
     hostName = "brachiosaurus";
-    interfaces.enp34s0.wakeOnLan.enable = true;
+    interfaces.enp7s0.wakeOnLan.enable = true;
     firewall.allowedUDPPorts = [ 9 ];
   };
 
