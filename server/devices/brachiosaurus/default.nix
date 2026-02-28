@@ -1,6 +1,6 @@
 # Hardware:
 # Mainboard: Asus B550 E Gaming
-# CPU: AMD Ryzen 9 5950XX @ 4.43 GHz
+# CPU: AMD Ryzen 9 5950XX @ 5.09 GHz
 # RAM: 32 GB (4x8 GB) Corsair Vengeance RGB PRO DDR4 3200 MHz
 # GPU: MSI GeForce RTX 2080 DUKE 8G OC
 # Storage:
