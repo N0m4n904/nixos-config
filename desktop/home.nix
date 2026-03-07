@@ -26,6 +26,7 @@
       pavucontrol
       postman
       rose-pine-cursor
+      scrcpy
       signal-desktop
       pkgsUnstable.teamspeak6-client
       telegram-desktop
