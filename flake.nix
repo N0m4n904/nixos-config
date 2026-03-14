@@ -24,6 +24,10 @@
       url = "github:MidnightJava/led-matrix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    joycon-colors = {
+      url = "git+https://gitlab.com/N0m4n904/joy-con-color-change";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -50,6 +54,7 @@
             ./configuration.nix
             ./desktop/desktop.nix
             ./desktop/desktop-environments/gnome/gnome.nix
+            flakeArgs.joycon-colors.nixosModules.default
           ];
         };
         nixos-notebook = lib.nixosSystem {
@@ -58,6 +63,7 @@
             ./configuration.nix
             ./desktop/desktop.nix
             ./desktop/desktop-environments/cosmic/cosmic.nix
+            flakeArgs.joycon-colors.nixosModules.default
           ];
         };
         nixos-server = lib.nixosSystem {

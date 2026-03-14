@@ -77,6 +77,13 @@
     };
   };
 
+  hardware = {
+    joycon-color-change = {
+      enable = true;
+      gui = true;
+    };
+  };
+
   home-manager = applyHomeManagerShared {
     home.file."Desktop/gamescope.desktop" = {
       source = "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop";
