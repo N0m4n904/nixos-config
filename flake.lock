@@ -74,11 +74,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773524906,
-        "narHash": "sha256-SsQtbj/8P7thwlmtcD3My0dQ16h+89ITvZN9HNr37hs=",
+        "lastModified": 1773581797,
+        "narHash": "sha256-zslKobzoukWuroGs472NTLPZ/ykxBkeOoRoaJobXu98=",
         "ref": "refs/heads/main",
-        "rev": "2631522f81318fb4bb7c0c1e31db2b96684ee254",
-        "revCount": 12,
+        "rev": "f41fe9cc96dd534a0bce7fee8e35c0ce962d4496",
+        "revCount": 14,
         "type": "git",
         "url": "https://gitlab.com/N0m4n904/joy-con-color-change"
       },
