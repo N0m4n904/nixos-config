@@ -28,6 +28,10 @@
       url = "git+https://gitlab.com/N0m4n904/joy-con-color-change";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xos-ci = {
+      url = "github:halogenOS/ci/romboss";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

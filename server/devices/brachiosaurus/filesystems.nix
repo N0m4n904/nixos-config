@@ -38,7 +38,7 @@
       ];
     };
 
-    "/home/noah/XOS" = {
+    "/var/lib/buildkite-agent/builds" = {
       device = "/dev/disk/by-uuid/4dc1680c-da77-4515-b464-1e2c56d0a7a4";
       fsType = "btrfs";
       options = [
@@ -48,7 +48,7 @@
       ];
     };
 
-    "/home/noah/CCache" = {
+    "/var/ccache/ccache" = {
       device = "/dev/disk/by-uuid/c76cdb0a-7e73-47e6-b1fa-5e85c02435aa";
       fsType = "btrfs";
       options = [

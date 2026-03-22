@@ -27,6 +27,7 @@
       foundrixModules.hardware.security.keystore.tpm2
       ./filesystems.nix
       ../../../modules/hardware/gpu/nvidia.nix
+      inputs.xos-ci.nixosModules.buildkite
     ];
 
   boot = {
@@ -81,5 +82,12 @@
   services = {
     fwupd.enable = true;
     openssh.enable = true;
+    xos-buildkite = {
+      ccache =  {
+        enable = true;
+        maxSize = "80G";
+      };
+      priority = 2;
+    };
   };
 }

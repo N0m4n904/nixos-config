@@ -197,6 +197,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "xos-ci": "xos-ci",
         "zen-browser": "zen-browser"
       }
     },
@@ -212,6 +213,27 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "xos-ci": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774188867,
+        "narHash": "sha256-r8s0jr4HeUgqKa6hAcGIjlKF+PuwKqiASaadUbq1kgw=",
+        "owner": "halogenOS",
+        "repo": "ci",
+        "rev": "f860fd219305a223d4f15155bd8ffaa70b00e4b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "halogenOS",
+        "ref": "romboss",
+        "repo": "ci",
         "type": "github"
       }
     },
