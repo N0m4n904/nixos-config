@@ -5,6 +5,7 @@
   pkgs,
   config,
   applyHomeManagerShared,
+  inputs,
   ...
 }:
 
@@ -20,6 +21,7 @@
     foundrixModules.components.steam
     ./home.nix
     ../modules/browser/zen.nix
+    inputs.joycon-colors.nixosModules.default
   ];
 
   programs.steam = {

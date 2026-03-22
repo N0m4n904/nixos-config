@@ -58,7 +58,6 @@
             ./configuration.nix
             ./desktop/desktop.nix
             ./desktop/desktop-environments/gnome/gnome.nix
-            flakeArgs.joycon-colors.nixosModules.default
           ];
         };
         nixos-notebook = lib.nixosSystem {
@@ -67,7 +66,6 @@
             ./configuration.nix
             ./desktop/desktop.nix
             ./desktop/desktop-environments/cosmic/cosmic.nix
-            flakeArgs.joycon-colors.nixosModules.default
           ];
         };
         nixos-server = lib.nixosSystem {
