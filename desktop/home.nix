@@ -31,7 +31,6 @@
       pkgsUnstable.teamspeak6-client
       thunderbird
       vlc
-      pkgsUnstable.winboat
       pkgsUnstable.android-studio
       pkgsUnstable.jetbrains.idea-oss
       pkgsUnstable.spotify
