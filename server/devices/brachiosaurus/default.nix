@@ -42,6 +42,11 @@
     platforms = [ "x86_64" ];
   };
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+  };
+
   environment = {
     systemPackages = with pkgs; [
       nodejs
