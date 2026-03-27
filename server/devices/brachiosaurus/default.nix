@@ -44,7 +44,7 @@
 
   zramSwap = {
     enable = true;
-    memoryPercent = 100;
+    memoryPercent = 250;
   };
 
   environment = {
