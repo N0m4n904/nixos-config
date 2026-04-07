@@ -29,6 +29,7 @@
       scrcpy
       signal-desktop
       pkgsUnstable.teamspeak6-client
+      telegram-desktop
       thunderbird
       vlc
       pkgsUnstable.android-studio
