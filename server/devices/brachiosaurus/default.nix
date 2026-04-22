@@ -31,7 +31,7 @@
     ];
 
   boot = {
-    #kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_6_19;
     loader.timeout = 1;
   };
 
