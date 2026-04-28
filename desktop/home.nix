@@ -11,6 +11,7 @@
       chromium
       dbeaver-bin
       discord-ptb
+      dolphin-emu
       easyeffects
       gimp3-with-plugins
       gnome-calculator
