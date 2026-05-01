@@ -35,6 +35,7 @@
       foundrixModules.config.gamescope-session
       ./filesystems.nix
       ../../../modules/hardware/hid/via.nix
+      inputs.ammaster-bridge.nixosModules.default
       ../../../modules/teamviewer.nix
     ];
 
@@ -95,6 +96,7 @@
   };
 
   services = {
+    ammaster.enable = true;
     fwupd.enable = true;
     goxlr-utility.enable = true;
     openssh.enable = true;

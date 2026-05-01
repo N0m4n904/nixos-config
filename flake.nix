@@ -32,6 +32,10 @@
       url = "github:halogenOS/ci/romboss";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ammaster-bridge = {
+      url = "git+https://gitlab.com/N0m4n904/ammaster-bridge";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
