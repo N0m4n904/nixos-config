@@ -24,6 +24,8 @@
     inputs.joycon-colors.nixosModules.default
   ];
 
+  services.udev.packages = [ pkgsUnstable.dolphin-emu ];
+
   programs.steam = {
     protontricks.enable = true;
     extraCompatPackages = with pkgsUnstable; [
