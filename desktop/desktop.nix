@@ -18,6 +18,7 @@
     foundrixModules.config.graphics.gtk-dark
     foundrixModules.config.gamescope-session
     foundrixModules.config.graphics.qt
+    foundrixModules.hardware.peripherals.nsw2-controller
     foundrixModules.components.steam
     ./home.nix
     ../modules/browser/zen.nix
@@ -52,6 +53,11 @@
       steam = {
         gamescope.enable = true;
         gamescope.session.enable = true;
+      };
+    };
+    hardware = {
+      peripherals = {
+        nsw2-controller.enable = true;
       };
     };
     nixpkgs.allowedUnfreePackageNames = [
