@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777588610,
-        "narHash": "sha256-QWZr+5mQl0Ce6IJ54cH2dY+bYFzr17WZQqi2I3DP5Rg=",
+        "lastModified": 1777820137,
+        "narHash": "sha256-lj6SMmByv/ZFsg4LziftdYvDC10aWAXacDp5H/RxdTc=",
         "ref": "refs/heads/main",
-        "rev": "5be482986245b905408eb2fc1611f71665cdafd7",
-        "revCount": 324,
+        "rev": "d1479b07bdf422dbf2bd60180ff800de9129b346",
+        "revCount": 325,
         "type": "git",
         "url": "https://codeberg.org/xdevs23/foundrix"
       },
