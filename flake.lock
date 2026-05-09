@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777820137,
-        "narHash": "sha256-lj6SMmByv/ZFsg4LziftdYvDC10aWAXacDp5H/RxdTc=",
+        "lastModified": 1778275186,
+        "narHash": "sha256-UvBoyakAISp3Y9HI9aP7hl5/bVAaK9Lu8Ae/W0kLavo=",
         "ref": "refs/heads/main",
-        "rev": "d1479b07bdf422dbf2bd60180ff800de9129b346",
-        "revCount": 325,
+        "rev": "de53cae324d920efe55d9b91fa86b71503d907b3",
+        "revCount": 327,
         "type": "git",
         "url": "https://codeberg.org/xdevs23/foundrix"
       },
@@ -268,11 +268,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777564084,
-        "narHash": "sha256-O9VRkxg+2j+sh+c73wi4VeIBECoqW2PlnCR9Qe1nQKA=",
+        "lastModified": 1778297162,
+        "narHash": "sha256-wUvtUtZdjgwN6E7KrF4JwMOTv85rF/qcjvMxsppFh/I=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "d93443c0f6fdb3b179bed68856f322dba4842612",
+        "rev": "9e8ad38cad40802f2315d862b89dc3b10e9be3e7",
         "type": "github"
       },
       "original": {
