@@ -8,6 +8,7 @@
 {
   home-manager = applyHomeManagerShared rec {
     home.packages = with pkgs; [
+      avbroot
       chromium
       dbeaver-bin
       discord-ptb
