@@ -50,6 +50,7 @@
       nftables
       nixpkgs-fmt
       ntfs3g
+      opencode
       p7zip
       pciutils
       picocom
