@@ -30,7 +30,7 @@
   programs.steam = {
     protontricks.enable = true;
     extraCompatPackages = with pkgsUnstable; [
-      foundrixPkgs.proton-packages.cachyos-x86_64_v4
+      #foundrixPkgs.proton-packages.cachyos-x86_64_v4
       proton-ge-bin
       (
         (proton-ge-bin.overrideAttrs (
