@@ -50,7 +50,7 @@
       nftables
       nixpkgs-fmt
       ntfs3g
-      opencode
+      pkgsUnstable.opencode
       p7zip
       pciutils
       picocom
