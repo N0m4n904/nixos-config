@@ -48,6 +48,8 @@
     platforms = [ "x86_64" ];
   };
 
+  nix.settings.max-jobs = 8;
+
   environment = {
     systemPackages = with pkgs; [
       nodejs

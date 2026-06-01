@@ -82,6 +82,8 @@ in
 
   services.tailscale.enable = true;
 
+  nix.settings.auto-optimise-store = true;
+
   system.stateVersion = "25.11";
 
   # Configure your users here

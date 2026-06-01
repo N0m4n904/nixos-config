@@ -46,6 +46,8 @@
     platforms = [ "x86_64" ];
   };
 
+  nix.settings.max-jobs = 4;
+
   zramSwap = {
     enable = true;
     memoryPercent = 33;
