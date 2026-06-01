@@ -53,33 +53,58 @@
       lib = nixpkgs.lib;
       foundrixLib = foundrix.lib;
       forAllSystems = lib.genAttrs lib.systems.flakeExposed;
-    in
-    foundrix.nixosModules.pluggedInTo flakeArgs rec {
-      deviceRoots = [
-        ./desktop/devices
-        ./server/devices
+
+      # Reconstruct foundrixPackages to match what pluggedInTo used to provide.
+      foundrixPackages =
+        pkgs: extraArgs:
+        let
+          scope = extraArgs // {
+            inherit pkgs;
+          };
+        in
+        lib.filesystem.packagesFromDirectoryRecursive {
+          callPackage = pkgs.newScope scope;
+          newScope = extra: pkgs.newScope (scope // extra);
+          directory = foundrix + "/packages";
+        };
+
+      # Build the special args that foundrix modules expect.
+      specialArgs = {
+        inherit foundrix foundrixPackages;
+        foundrixModules = foundrix.nixosModules;
+        foundrixInputs = removeAttrs flakeArgs [ "self" ];
+        foundrixIgnoreMissingInputs = false;
+        inputs = removeAttrs flakeArgs [ "self" ];
+        currentFlake = self;
+      }
+      // (import (foundrix + "/special.nix") {
+        inherit lib foundrix;
+        currentFlake = self;
+      });
+
+      baseModules = [
+        ./configuration.nix
       ];
+    in
+    rec {
       nixosConfigurations = {
         nixos-desktop = lib.nixosSystem {
-          specialArgs = self.nixosModules.foundrixSpecialArgs;
-          modules = [
-            ./configuration.nix
+          inherit specialArgs;
+          modules = baseModules ++ [
             ./desktop/desktop.nix
             ./desktop/desktop-environments/gnome/gnome.nix
           ];
         };
         nixos-notebook = lib.nixosSystem {
-          specialArgs = self.nixosModules.foundrixSpecialArgs;
-          modules = [
-            ./configuration.nix
+          inherit specialArgs;
+          modules = baseModules ++ [
             ./desktop/desktop.nix
             ./desktop/desktop-environments/cosmic/cosmic.nix
           ];
         };
         nixos-server = lib.nixosSystem {
-          specialArgs = self.nixosModules.foundrixSpecialArgs;
-          modules = [
-            ./configuration.nix
+          inherit specialArgs;
+          modules = baseModules ++ [
             ./server/server.nix
           ];
         };
