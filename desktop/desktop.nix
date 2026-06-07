@@ -6,6 +6,7 @@
   config,
   applyHomeManagerShared,
   inputs,
+  lib,
   ...
 }:
 
@@ -26,6 +27,8 @@
   ];
 
   services.udev.packages = [ pkgsUnstable.dolphin-emu ];
+
+  security.wrappers.bwrap.setuid = lib.mkForce false;
 
   programs.steam = {
     protontricks.enable = true;
