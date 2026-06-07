@@ -28,8 +28,6 @@
 
   services.udev.packages = [ pkgsUnstable.dolphin-emu ];
 
-  security.wrappers.bwrap.setuid = lib.mkForce false;
-
   programs.steam = {
     protontricks.enable = true;
     extraCompatPackages = with pkgsUnstable; [
@@ -55,7 +53,6 @@
     components = {
       steam = {
         gamescope.enable = true;
-        gamescope.session.enable = true;
       };
     };
     hardware = {
