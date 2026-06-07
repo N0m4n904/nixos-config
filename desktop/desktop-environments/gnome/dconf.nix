@@ -7,8 +7,7 @@
 {
   home-manager = applyHomeManagerShared {
     dconf.settings =
-      lib.optionalAttrs
-        (config.services.desktopManager.gnome.enable or config.services.xserver.desktopManager.gnome.enable)
+      lib.optionalAttrs config.services.desktopManager.gnome.enable
         {
           "org/gnome/desktop/interface" = {
             accent-color = "blue";

@@ -1,7 +1,7 @@
 {
   foundrixModules,
   pkgsUnstable,
-  foundrixPkgs,
+  #foundrixPkgs,
   pkgs,
   config,
   applyHomeManagerShared,

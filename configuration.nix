@@ -74,7 +74,7 @@ in
     };
   };
 
-  home-manager.users.${userName}.home.stateVersion = "25.11";
+  home-manager.users.${userName}.home.stateVersion = "26.05";
 
   security.sudo = {
     enable = true;
@@ -84,7 +84,7 @@ in
 
   nix.settings.auto-optimise-store = true;
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   # Configure your users here
   users.groups.${userName}.gid = config.users.users.${userName}.uid;

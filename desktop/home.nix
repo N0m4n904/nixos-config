@@ -40,7 +40,7 @@
       (vesktop.override { withSystemVencord = true; })
     ];
 
-    programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
+    programs.vscodium.profiles.default.extensions = with pkgs.vscode-extensions; [
       mathiasfrohlich.kotlin
       vue.volar
     ];
