@@ -6,7 +6,6 @@
   config,
   applyHomeManagerShared,
   inputs,
-  lib,
   ...
 }:
 
@@ -37,11 +36,11 @@
         (proton-ge-bin.overrideAttrs (
           prev: final: {
             src = fetchzip {
-              url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-11.0-20260521-slr/proton-cachyos-11.0-20260521-slr-x86_64_v3.tar.xz";
-              hash = "sha256-Vy4asQ9UfvkD+ZWi+7Le7GjUfMR7QZcGtOQ0msYni7w=";
+              url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-11.0-20260601-slr/proton-cachyos-11.0-20260601-slr-x86_64_v3.tar.xz";
+              hash = "sha256-LOJX4H3g3+9yTQ78RUOJ05p/SLJFJCyyRQ6G/rThyDU=";
             };
             pname = "proton-cachyos";
-            version = "proton-cachyos-11.0-20260521-slr-x86_64_v3";
+            version = "proton-cachyos-11.0-20260601-slr-x86_64_v3";
           }
         )).override
         { steamDisplayName = "Proton-CachyOS-latest"; }
