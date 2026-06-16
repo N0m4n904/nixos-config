@@ -17,6 +17,10 @@
 # not written directly. Each mode transition resets the PPD profile to
 # "performance"; because nothing re-asserts it on a timer, a manual change in
 # the COSMIC widget sticks until the next transition (mode switch / reboot).
+#
+# A third BATTERY profile (./battery.nix) is applied by a watcher service while
+# the COSMIC widget is set to "Power Saver" (PPD power-saver): low CPU envelope,
+# Bluetooth off, dimmed display. It reverts when the widget leaves Power Saver.
 {
   pkgs,
   lib,
@@ -28,12 +32,16 @@ let
     dev = import ./dev.nix;
     gaming = import ./gaming.nix;
   };
+  battery = import ./battery.nix;
 
   ryzenadj = lib.getExe pkgs.ryzenadj;
   fw-fanctrl = "${config.hardware.fw-fanctrl.package}/bin/fw-fanctrl";
   powerprofilesctl = "${config.services.power-profiles-daemon.package}/bin/powerprofilesctl";
+  rfkill = lib.getExe' pkgs.util-linux "rfkill";
 
   stateFile = "/run/power-profile.active";
+  batteryMarker = "/run/power-profile.battery-active";
+  savedBrightness = "/run/power-profile.saved-brightness";
 
   # PPT (power limits) + fan curve + active-profile marker. This is the part
   # that is safe to re-run on resume: it only touches ryzenadj (the SMU drops
@@ -79,6 +87,88 @@ let
     '';
 
   applyScripts = lib.mapAttrs (name: _: mkApply name) profiles;
+
+  # --- Battery profile (COSMIC/PPD "power-saver") -------------------------------
+  # The CPU envelope alone — reused by the resume hook (the SMU drops PPT on
+  # suspend, so it must be re-applied while still on battery).
+  batteryCpu = pkgs.writeShellScript "power-profile-battery-cpu" ''
+    set -uo pipefail
+    ${ryzenadj} \
+      --stapm-limit=${toString battery.ppt.stapm} \
+      --fast-limit=${toString battery.ppt.fast} \
+      --slow-limit=${toString battery.ppt.slow} \
+      --apu-slow-limit=${toString battery.ppt.apuSlow} \
+      --tctl-temp=${toString battery.ppt.tctlTemp} \
+      --dgpu-skin-temp=${toString battery.ppt.dgpuSkinTemp} || true
+  '';
+
+  # Enter: the one-shot side effects — Bluetooth off + dim display (saving the
+  # prior brightness). Marker-gated by the watcher so brightness is saved once.
+  batteryEnter = pkgs.writeShellScript "power-profile-battery-enter" ''
+    set -uo pipefail
+    ${lib.optionalString battery.disableBluetooth "${rfkill} block bluetooth || true"}
+
+    : > ${savedBrightness}
+    for b in /sys/class/backlight/*; do
+      [ -e "$b/brightness" ] || continue
+      max=$(cat "$b/max_brightness")
+      echo "$b $(cat "$b/brightness")" >> ${savedBrightness}
+      echo $(( max * ${toString battery.brightnessPercent} / 100 )) > "$b/brightness" 2>/dev/null || true
+    done
+
+    touch ${batteryMarker}
+  '';
+
+  # Exit: restore brightness + Bluetooth, then re-apply the active mode's CPU/fan
+  # (battery never touches PPD, so the user's COSMIC choice is left alone).
+  batteryExit = pkgs.writeShellScript "power-profile-battery-exit" ''
+    set -uo pipefail
+    if [ -f ${savedBrightness} ]; then
+      while read -r dev val; do
+        echo "$val" > "$dev/brightness" 2>/dev/null || true
+      done < ${savedBrightness}
+      rm -f ${savedBrightness}
+    fi
+
+    ${lib.optionalString battery.disableBluetooth "${rfkill} unblock bluetooth || true"}
+
+    case "$(cat ${stateFile} 2>/dev/null || echo dev)" in
+      gaming) ${baseScripts.gaming} ;;
+      *)      ${baseScripts.dev} ;;
+    esac
+
+    rm -f ${batteryMarker}
+  '';
+
+  # Watcher: engage the battery profile while EITHER the COSMIC/PPD profile is
+  # "power-saver" OR the battery is discharging at/below the threshold. The CPU
+  # clamp is re-asserted every poll (so it survives a dev/gaming transition or
+  # resume while engaged); the dim/Bluetooth side effects fire once via the
+  # marker. Polling (not D-Bus) is simpler and ~4s latency is fine here. Never
+  # touches PPD, so there is no feedback loop.
+  batteryWatch = pkgs.writeShellScript "power-profile-battery-watch" ''
+    set -uo pipefail
+    while :; do
+      should=0
+      [ "$(${powerprofilesctl} get 2>/dev/null || echo "")" = "power-saver" ] && should=1
+      ${lib.optionalString (battery.autoBelowPercent != null) ''
+        for bat in /sys/class/power_supply/BAT*; do
+          [ -e "$bat/capacity" ] || continue
+          [ "$(cat "$bat/status" 2>/dev/null)" = "Discharging" ] || continue
+          cap=$(cat "$bat/capacity" 2>/dev/null)
+          [ -n "$cap" ] && [ "$cap" -le ${toString battery.autoBelowPercent} ] && should=1
+        done
+      ''}
+
+      if [ "$should" = 1 ]; then
+        ${batteryCpu}
+        [ -e ${batteryMarker} ] || ${batteryEnter}
+      else
+        [ -e ${batteryMarker} ] && ${batteryExit} || true
+      fi
+      sleep 4
+    done
+  '';
 
   mkService = name: {
     description = "Apply ${name} power/fan profile (Framework 16)";
@@ -155,6 +245,21 @@ in
     }
   ];
 
+  # Watch the COSMIC/PPD power profile and apply the battery profile while it is
+  # set to "power-saver" (the widget's battery option).
+  systemd.services.power-profile-battery-watch = {
+    description = "Apply battery power/fan profile on PPD power-saver";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "power-profiles-daemon.service" ];
+    wants = [ "power-profiles-daemon.service" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = batteryWatch;
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
   # Re-apply only PPT + fan after resume — the SMU drops ryzenadj PPT limits on
   # suspend/hibernate. Uses the base scripts so PPD/EPP is left untouched.
   environment.etc."systemd/system-sleep/power-profile-resume.sh" = {
@@ -163,11 +268,14 @@ in
       #!/bin/sh
       case "$1" in
         post)
-          active=$(cat ${stateFile} 2>/dev/null || echo dev)
-          case "$active" in
-            gaming) ${baseScripts.gaming} ;;
-            *)      ${baseScripts.dev} ;;
-          esac
+          if [ -e ${batteryMarker} ]; then
+            ${batteryCpu}
+          else
+            case "$(cat ${stateFile} 2>/dev/null || echo dev)" in
+              gaming) ${baseScripts.gaming} ;;
+              *)      ${baseScripts.dev} ;;
+            esac
+          fi
           ;;
       esac
     '';
