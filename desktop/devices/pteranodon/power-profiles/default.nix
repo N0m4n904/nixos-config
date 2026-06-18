@@ -52,6 +52,10 @@ let
     pkgs.writeShellScript "power-profile-${name}-base" ''
       set -uo pipefail
 
+      # system-sleep runs scripts with a minimal PATH; make coreutils (seq,
+      # sleep, cat) resolvable so this works when called from the resume hook.
+      export PATH="${lib.makeBinPath [ pkgs.coreutils ]}:$PATH"
+
       # PPT via ryzenadj. Values are in milliwatts.
       ${ryzenadj} \
         --stapm-limit=${toString profile.ppt.stapm} \
@@ -245,6 +249,21 @@ in
     }
   ];
 
+  # Prevent the machine from auto-suspending while in Game Mode. The gamescope
+  # session runs on its own TTY, so the COSMIC desktop's idle timer would
+  # otherwise suspend the whole system mid-game. Hold a block inhibitor on
+  # sleep+idle for the lifetime of the gamescope session.
+  systemd.services.gamescope-inhibit-sleep = {
+    description = "Inhibit auto-suspend/idle during the gamescope session";
+    wantedBy = [ "gamescope-session.service" ];
+    partOf = [ "gamescope-session.service" ];
+    after = [ "gamescope-session.service" ];
+    serviceConfig.ExecStart =
+      "${lib.getExe' pkgs.systemd "systemd-inhibit"} "
+      + "--what=sleep:idle --who=gamescope --why='Game Mode active' --mode=block "
+      + "${lib.getExe' pkgs.coreutils "sleep"} infinity";
+  };
+
   # Watch the COSMIC/PPD power profile and apply the battery profile while it is
   # set to "power-saver" (the widget's battery option).
   systemd.services.power-profile-battery-watch = {
@@ -266,6 +285,7 @@ in
     mode = "0755";
     text = ''
       #!/bin/sh
+      export PATH="${lib.makeBinPath [ pkgs.coreutils ]}:$PATH"
       case "$1" in
         post)
           if [ -e ${batteryMarker} ]; then
