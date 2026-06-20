@@ -37,7 +37,7 @@
           prev: final: {
             src = fetchzip {
               url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-11.0-20260602-slr/proton-cachyos-11.0-20260602-slr-x86_64_v3.tar.xz";
-              hash = "sha256-FNBO6DTlguBNGSozXDW3mSfhLhzsK7thk2QGkIGaWlQ=";
+              hash = "sha256-SVJSIqd7SEjtl2FcsCHOUgYYSDMn3cedA2GTGUNmDQM=";
             };
             pname = "proton-cachyos";
             version = "proton-cachyos-11.0-20260602-slr-x86_64_v3";
