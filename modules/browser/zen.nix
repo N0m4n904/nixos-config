@@ -116,6 +116,13 @@ in
                 isEssential = true;
                 position = 103;
               };
+              "Netflix" = {
+                id = "e23da431-de69-4ef0-8a45-af4787bc20f0";
+                container = containers.Default.id;
+                url = "https://www.netflix.com";
+                isEssential = true;
+                position = 104;
+              };
             };
           isDefault = true;
           settings = {
@@ -231,6 +238,10 @@ in
                   {
                     name = "Pong";
                     bookmarks = [
+                      {
+                        name = "NothingOSS - kernel_sm8475";
+                        url = "https://github.com/NothingOSS/android_kernel_msm-5.10_nothing_sm8475";
+                      }
                       {
                         name = "Pong - Development";
                         url = "https://github.com/Pong-Development";
