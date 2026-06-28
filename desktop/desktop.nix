@@ -74,6 +74,11 @@
     ];
   };
 
+  # signal-desktop pulls pnpm at build time only; nixpkgs flagged this pnpm
+  # version insecure, which aborts evaluation even though it never reaches the
+  # running system. Permit it until nixpkgs bumps Signal's pnpm.
+  nixpkgs.config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
+
   environment = {
     systemPackages = with pkgs; [
       gparted
