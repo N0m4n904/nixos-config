@@ -22,7 +22,7 @@
       # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.beta
       mangohud
       nautilus
-      pkgsUnstable.noriskclient-launcher
+      noriskclient-launcher
       obs-studio
       onlyoffice-desktopeditors
       pavucontrol
