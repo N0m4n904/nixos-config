@@ -16,7 +16,6 @@
       clipboard-indicator
       dash-to-dock
       desktop-icons-ng-ding
-      kernel-indicator
       pip-on-top
       spotify-controls
       transparent-top-bar-adjustable-transparency

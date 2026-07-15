@@ -48,7 +48,6 @@
               "caffeine@patapon.info"
               "clipboard-indicator@tudmotu.com"
               "dash-to-dock@micxgx.gmail.com"
-              "kernel-indicator@pvizc.gitlab.com"
               "pip-on-top@rafostar.github.com"
               "spotify-controls@Sonath21"
               "transparent-top-bar@ftpix.com"
