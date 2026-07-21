@@ -102,10 +102,12 @@
     fwupd.enable = true;
     goxlr-utility.enable = true;
     openssh.enable = true;
-    # Support for Carolina Mech Fossil and Lemokey L5 HE 8k
+    # Support for Carolina Mech Fossil, Lemokey L5 HE 8k, Keychron Link and Keychron K3 HE
     udev.extraRules = ''
       KERNEL=="hidraw*", ATTRS{idVendor}=="4069", ATTRS{idProduct}=="0002", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="362d", ATTRS{idProduct}=="0551", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0e31", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     '';
   };
 }
