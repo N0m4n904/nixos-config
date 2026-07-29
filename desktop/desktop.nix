@@ -84,7 +84,7 @@
       gparted
     ];
     interactiveShellInit = ''
-      alias claude='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://codeberg.org/xdevs23/claude-code-10x'
+      alias claude='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x'
     '';
     variables = {
       BROWSER = "zen-beta";
