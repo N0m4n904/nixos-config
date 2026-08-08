@@ -233,6 +233,10 @@ in
                         name = "halogenOS - buildkite";
                         url = "https://buildkite.com/halogenos";
                       }
+                      {
+                        name = "halogenOS mail";
+                        url = "https://mail.halogenos.org/";
+                      }
                     ];
                   }
                   {
