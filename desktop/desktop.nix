@@ -22,6 +22,7 @@
     foundrixModules.components.steam
     ./home.nix
     ../modules/browser/zen.nix
+    ../modules/overlays/noriskclient-launcher.nix
     inputs.joycon-colors.nixosModules.default
   ];
 
