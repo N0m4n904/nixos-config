@@ -226,8 +226,8 @@ in
                         url = "https://halogenos.org";
                       }
                       {
-                        name = "halogenOS GitLab";
-                        url = "https://git.halogenos.org/halogenOS";
+                        name = "halogenOS git";
+                        url = "https://git.halogenos.org";
                       }
                       {
                         name = "halogenOS - buildkite";
