@@ -49,8 +49,17 @@ Scope {
     }
 
     function review() {
-        for (const toplevel of Hyprland.toplevels.values)
+        for (const toplevel of Hyprland.toplevels?.values ?? [])
             clamp(toplevel);
+    }
+
+    // valuesChanged only reports changes, so without a pass at startup every window
+    // that was already open - which after a shell restart is all of them - would never
+    // be looked at. The refresh is what populates their geometry.
+    Component.onCompleted: {
+        Hyprland.refreshToplevels();
+        review();
+        settle.restart();
     }
 
     // A toplevel can appear before Hyprland has settled its geometry, in which case
