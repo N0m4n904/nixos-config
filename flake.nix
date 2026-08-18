@@ -107,6 +107,7 @@
           modules = baseModules ++ [
             ./desktop/desktop.nix
             ./desktop/desktop-environments/gnome/gnome.nix
+            ./desktop/desktop-environments/hyprland/hyprland.nix
           ];
         };
         nixos-notebook = lib.nixosSystem {
