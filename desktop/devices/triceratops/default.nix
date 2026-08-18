@@ -13,8 +13,10 @@
 # Sound interface: TC Helicon GoXLR MINI
 # Microphone: Shure SM7B
 {
+  applyHomeManagerShared,
   inputs,
   foundrixModules,
+  lib,
   pkgs,
   pkgsUnstable,
   ...
@@ -52,6 +54,9 @@
 
   environment = {
     systemPackages = with pkgs; [
+      # Normally pulled in as a side effect of the XDG autostart entry, which is
+      # turned off below; goxlr-client and friends should stay on PATH regardless.
+      goxlr-utility
       nodejs
       pkgsUnstable.openrgb-with-all-plugins
     ];
@@ -97,10 +102,44 @@
     hostName = "triceratops";
   };
 
+  # The GoXLR's lighting and its routing sinks - Game, Chat, Music, System, Sample -
+  # only exist while this daemon runs, so when it does not start the device sits dark
+  # and most of its outputs are missing from PipeWire.
+  #
+  # It ships as an XDG autostart entry, which failed twice over here: entries are
+  # keyed by filename and a user-level one shadows the system one, and the user-level
+  # one had been written by hand against a store path that was later collected. The
+  # generator then found a missing executable and produced no unit at all, so the
+  # correct system entry never got a look in. A user service is addressed by name
+  # rather than filename and always carries the current store path.
+  home-manager = applyHomeManagerShared {
+    systemd.user.services.goxlr-daemon = {
+      Unit = {
+        Description = "GoXLR Utility daemon";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = lib.getExe' pkgs.goxlr-utility "goxlr-daemon";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      # Wanted by the generic graphical target, not the Hyprland one: the GoXLR should
+      # work in whichever session is running.
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   services = {
     ammaster.enable = true;
     fwupd.enable = true;
-    goxlr-utility.enable = true;
+
+    goxlr-utility = {
+      enable = true;
+      # Superseded by the user service above.
+      autoStart.xdg = false;
+    };
+
     openssh.enable = true;
     # Support for Carolina Mech Fossil, Lemokey L5 HE 8k, Keychron Link and Keychron K3 HE
     udev.extraRules = ''
