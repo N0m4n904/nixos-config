@@ -189,10 +189,12 @@ in
         # G-Sync Dell flickering if the per-monitor value lost the merge.
         misc.vrr = lib.mkForce 0;
 
-        # The cursor plane leaves the pointer visibly behind the mouse on the
-        # ultrawide. Compositing it costs nothing measurable here - the GPU idles
-        # around 5% - and it tracks correctly.
-        cursor.no_hardware_cursors = true;
+        # Left on deliberately, which is also the default. Compositing the cursor
+        # instead was tried to chase pointer lag on the ultrawide, and it cost a
+        # permanent second cursor: with the plane unclaimed, whatever image the
+        # greeter left on it stays frozen on screen for the whole session. The lag
+        # turned out not to need this.
+        cursor.no_hardware_cursors = false;
 
         # Windows are moved by dragging their title bar, so the modifier shortcut is
         # redundant. Resize stays: window edges are draggable too, but the shortcut is
