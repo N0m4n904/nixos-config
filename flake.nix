@@ -24,6 +24,20 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Deliberately not following nixpkgs: hyprland.cachix.org only has binaries for
+    # the closure built against Hyprland's own pin. Overriding it means building the
+    # compositor and all of hyprwm's libraries from source on every bump.
+    hyprland.url = "github:hyprwm/Hyprland/39d7e209c79d451efab1b21151d5938289da838d";
+    # Plugins link against Hyprland's internals, so the rev has to come from the same
+    # era as the compositor: this one is the first after "all: update for 0.55".
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins/1cb37fad68dff5f5840010c314fed5809b4ee66f";
+      inputs.hyprland.follows = "hyprland";
+    };
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     led-matrix-monitoring = {
       url = "github:MidnightJava/led-matrix";
       inputs.nixpkgs.follows = "nixpkgs";
