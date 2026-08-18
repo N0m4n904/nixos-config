@@ -155,6 +155,12 @@
     ammaster.enable = true;
     fwupd.enable = true;
 
+    # OpenRGB reaches its devices through these, and warns that "most devices will not
+    # be available" without them. Normally the upstream module installs them, but it
+    # is not used here - its service loads profiles from /var/lib/OpenRGB, while this
+    # profile lives where OpenRGB's own GUI writes it.
+    udev.packages = [ pkgsUnstable.openrgb-with-all-plugins ];
+
     goxlr-utility = {
       enable = true;
       # Superseded by the user service above.
