@@ -2,25 +2,23 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
-// Keeps newly mapped windows out from under the bar.
+// Keeps windows out from under the bar, permanently.
 //
 // Hyprland accepts a client's requested position whenever the window's *centre point*
 // falls inside the work area, so an application restoring a tall window at y=0 is
-// honoured even though its top edge - and with it the title bar it is dragged by -
-// ends up behind the bar. The check is on the centre, not the box, and no window rule
-// clamps a window into the work area, so it is done here rather than by maintaining a
-// list of the applications that happen to do it.
+// honoured even though its top edge - and the title bar it is dragged by - ends up
+// behind the bar. The check is on the centre, not the box, and no window rule clamps a
+// window into the work area.
+//
+// Correcting a window as it appears is not sufficient: Electron applications re-apply
+// their saved bounds after mapping, sometimes seconds later, and VSCodium does it late
+// enough to defeat any reasonable settling period. So this does not try to guess when a
+// window has finished moving itself - it simply keeps checking, and puts back anything
+// that ends up under the bar.
 Scope {
     id: root
 
-    // A window is watched for a short while after it is first seen, not corrected once.
-    // Electron applications map first and apply their saved bounds a moment later, so a
-    // single correction is simply undone. After the window settles it is left alone,
-    // and moving it under the bar yourself is then a deliberate act.
-    readonly property int graceMs: 4000
-    readonly property int sweepMs: 250
-
-    property var firstSeen: ({})
+    readonly property int sweepMs: 400
 
     function reservedTop(toplevel) {
         const monitor = toplevel?.monitor;
@@ -35,69 +33,46 @@ Scope {
         return monitor.y + reserved[1];
     }
 
-    // True while this window is still within its grace period, so the sweep knows
-    // whether there is anything left to watch.
-    function clamp(toplevel, now) {
+    function clamp(toplevel) {
         const address = toplevel?.address;
         if (!address)
-            return false;
-
-        if (firstSeen[address] === undefined)
-            firstSeen[address] = now;
-
-        if (now - firstSeen[address] > graceMs)
-            return false;
+            return;
 
         const at = toplevel.lastIpcObject?.at;
         const minimumY = reservedTop(toplevel);
 
-        if (at && at.length >= 2 && minimumY !== null && at[1] < minimumY)
-            Hyprland.dispatch(`movewindowpixel exact ${at[0]} ${minimumY},address:0x${address}`);
+        if (!at || at.length < 2 || minimumY === null || at[1] >= minimumY)
+            return;
 
-        return true;
+        Hyprland.dispatch(`movewindowpixel exact ${at[0]} ${minimumY},address:0x${address}`);
     }
 
     function review() {
-        const now = Date.now();
-        const toplevels = Hyprland.toplevels?.values ?? [];
-        let watching = false;
-
-        for (const toplevel of toplevels) {
-            if (clamp(toplevel, now))
-                watching = true;
-        }
-
-        // Forget windows that have gone, so the record cannot grow for a session.
-        const live = {};
-        for (const toplevel of toplevels) {
-            if (toplevel.address && firstSeen[toplevel.address] !== undefined)
-                live[toplevel.address] = firstSeen[toplevel.address];
-        }
-        firstSeen = live;
-
-        sweep.running = watching;
+        for (const toplevel of Hyprland.toplevels?.values ?? [])
+            clamp(toplevel);
     }
 
     Component.onCompleted: Hyprland.refreshToplevels()
 
-    // Runs only while something is still within its grace period. The model is empty
-    // when this component is created and fills asynchronously, so there is nothing to
-    // do here beyond waiting for the first window to arrive.
+    // Runs for the life of the session. It walks a handful of windows and dispatches
+    // only when one is actually out of place, which costs nothing measurable, and it is
+    // the only thing that survives an application moving itself back at an arbitrary
+    // moment.
     Timer {
-        id: sweep
-
         interval: root.sweepMs
         repeat: true
-        running: false
+        running: true
+        triggeredOnStart: true
         onTriggered: root.review()
     }
 
+    // The model is empty at startup and fills asynchronously, so this catches each
+    // window as it is announced rather than waiting for the next sweep.
     Connections {
         target: Hyprland.toplevels
 
         function onValuesChanged() {
             root.review();
-            sweep.running = true;
         }
     }
 }
