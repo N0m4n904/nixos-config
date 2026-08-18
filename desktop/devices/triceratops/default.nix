@@ -128,6 +128,27 @@
       # work in whichever session is running.
       Install.WantedBy = [ "graphical-session.target" ];
     };
+
+    # Same story as the GoXLR: this was an autostart entry hand-edited to add the
+    # profile, pinned to a store path that has since been collected, so the lighting
+    # has not been applied at login for some time.
+    #
+    # Passing --profile and nothing else keeps OpenRGB headless - it only shows a
+    # window when given --gui or no arguments at all - so this applies the saved
+    # profile and exits rather than lingering.
+    systemd.user.services.openrgb-profile = {
+      Unit = {
+        Description = "Apply the saved OpenRGB lighting profile";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${lib.getExe pkgsUnstable.openrgb-with-all-plugins} --profile ASROCK";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 
   services = {
