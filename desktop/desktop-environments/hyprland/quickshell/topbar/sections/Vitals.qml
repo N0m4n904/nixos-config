@@ -4,18 +4,11 @@ import qs.common.lib
 import qs.common.data
 import qs.common.widgets
 
+// Mirrors the sensors pinned in the GNOME Vitals extension, in its order:
+// CPU temperature, GPU temperature, memory usage, processor frequency, network
+// down, network up.
 RowLayout {
     spacing: Theme.metrics.sectionGap
-
-    BarMetric {
-        icon: "memory"
-        value: Format.percent(Cpu.usage)
-    }
-
-    BarMetric {
-        icon: "memory_alt"
-        value: Format.percent(Memory.usage)
-    }
 
     BarMetric {
         visible: Temperatures.cpu > 0
@@ -26,9 +19,19 @@ RowLayout {
 
     BarMetric {
         visible: Temperatures.gpu > 0
-        icon: "thermostat"
+        icon: "mode_heat"
         value: Format.celsius(Temperatures.gpu)
         tint: Temperatures.gpu >= 100 ? Theme.colors.red : Temperatures.gpu >= 90 ? Theme.colors.amber : Theme.colors.text
+    }
+
+    BarMetric {
+        icon: "memory_alt"
+        value: Format.percent(Memory.usage)
+    }
+
+    BarMetric {
+        icon: "speed"
+        value: Format.gigahertz(Cpu.frequency)
     }
 
     BarMetric {

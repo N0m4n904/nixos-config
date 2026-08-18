@@ -7,7 +7,8 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    readonly property int sampleInterval: 2000
+    // Matches the GNOME Vitals extension's update-time of one second.
+    readonly property int sampleInterval: 1000
 
     property real usage: 0
 
