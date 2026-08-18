@@ -4,6 +4,7 @@ My personal NixOS configuration, using:
 - foundrix
 - Gnome
 - COSMIC
+- Hyprland
 
 ---
 
