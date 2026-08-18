@@ -34,6 +34,9 @@ in
   imports = [
     foundrixModules.components.desktop-environments.hyprland
     foundrixModules.components.gui.quickshell
+    # Imported here rather than alongside the other overlays because it exists purely
+    # to undo an assumption this session breaks.
+    ../../../modules/overlays/signal-password-store.nix
   ];
 
   # foundrix's hyprland component brings up greetd, whose unit is aliased to
