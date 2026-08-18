@@ -43,6 +43,11 @@ in
   # in its session picker.
   services.greetd.enable = lib.mkForce false;
 
+  # NetworkState reads the network through "jc nmcli device status" and
+  # "jc ip route get", so without jc on PATH the network panel and its tiles have
+  # nothing to parse and come up empty. nmcli and ip are already present.
+  environment.systemPackages = [ pkgs.jc ];
+
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
     trusted-public-keys = [
