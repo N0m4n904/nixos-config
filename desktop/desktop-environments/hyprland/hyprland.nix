@@ -102,17 +102,6 @@ in
         # positioned by dragging it, so the layout is never rearranged underneath you.
         windowrule = float on, match:class .*
 
-        # Apps that restore their own saved geometry can land under the bar. Hyprland
-        # accepts a client's requested position whenever the window's *centre point*
-        # falls inside the work area, so a tall window restored at y=0 is honoured even
-        # though its top 40px are behind the bar - and with the modifier drag gone,
-        # its title bar is then unreachable. Centring is measured against the
-        # reserved-aware work area, so it always lands clear.
-        #
-        # Kept to the apps that actually do this rather than applied to everything,
-        # which would throw away deliberate window positions across three monitors.
-        windowrule = center, match:class ^(vscodium|spotify)$
-
         # Hyprland itself draws no decorations, so the title bar every window is
         # dragged by comes from hyprbars.
         plugin {
