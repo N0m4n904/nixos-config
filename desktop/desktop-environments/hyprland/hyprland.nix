@@ -162,9 +162,16 @@ in
       # The shell resolves no binaries itself: every action it can trigger arrives as
       # a store path, so a missing tool fails the build instead of a button.
       environment = {
-        # The bar belongs on the main screen only. Matched on part of the model rather
-        # than the connector, which is not stable across cable moves.
+        # The bar and dock belong on the main screen only, matching Dash to Dock's
+        # multi-monitor being off. Matched on part of the model rather than the
+        # connector, which is not stable across cable moves.
         QS_BAR_SCREEN = "AW3423DW";
+        QS_DOCK_SCREEN = "AW3423DW";
+
+        # The same pinned applications GNOME's dash shows, from one shared list.
+        QS_DOCK_APPS = lib.concatStringsSep ":" (import ../../favourite-apps.nix);
+
+        QS_LAUNCHER_COMMAND = "wofi --gtk-dark --normal-window -i --show drun -p 'Search applications…' -M multi-contains -i -O alphabetical";
 
         QS_CLIPBOARD_COMMAND = clipboardHistoryCommand;
         QS_LOCK_COMMAND = "${loginctl} lock-session";
@@ -203,13 +210,16 @@ in
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        # Restated to turn xray off. With it on, the blur behind the bar samples only
-        # the wallpaper and ignores windows - and with no wallpaper engine running that
-        # means the bar frosts over plain black, so its transparency buys nothing. Off,
-        # it frosts whatever is actually underneath.
+        # Restated for two reasons. xray off, because with it on the blur samples only
+        # the wallpaper and ignores windows - and with no wallpaper engine running the
+        # surfaces would frost over plain black, so their transparency would buy
+        # nothing. And ignore_alpha above zero, because these surfaces are wider than
+        # what they draw: the dock is a centred pill on a full-width layer, so blurring
+        # every pixel frosts the empty space beside it into a band across the screen.
+        # The threshold sits below the surfaces' own alpha and above nothing at all.
         layerrule = lib.mkForce [
-          "ignore_alpha 0, blur on, xray off, match:namespace topbar"
-          "ignore_alpha 0, blur on, xray off, match:namespace quickshell"
+          "ignore_alpha 0.4, blur on, xray off, match:namespace topbar"
+          "ignore_alpha 0.4, blur on, xray off, match:namespace quickshell"
         ];
 
         # Restated rather than extended so foundrix's "suppress_event maximize" can be

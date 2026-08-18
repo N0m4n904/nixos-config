@@ -1,0 +1,199 @@
+import QtQuick
+import QtQuick.Layouts
+import Quickshell
+import Quickshell.Hyprland
+import Quickshell.Wayland
+import Quickshell.Widgets
+import qs.common.lib
+import qs.common.data
+import qs.common.widgets
+
+// Mirrors the Dash to Dock settings used under GNOME: bottom edge, centred, sized to
+// its contents, above windows, with running indicators. It stays out except when a
+// fullscreen window wants the whole screen, where it drops to an edge strip that
+// slides it back on hover.
+Variants {
+    model: Screens.dockScreens
+
+    PanelWindow {
+        id: panel
+
+        required property var modelData
+
+        readonly property int iconSize: 48
+        readonly property int tilePadding: 6
+        readonly property int revealDelay: 250
+        readonly property int hideDelay: 200
+        readonly property int slideDuration: 200
+
+        // The strip left exposed while hidden. Layer surfaces get no pointer events
+        // outside their own geometry, so something has to stay on screen to notice the
+        // pointer arriving at the edge.
+        readonly property int pressureStrip: 2
+
+        readonly property int dockHeight: iconSize + tilePadding * 4
+
+        // Only a fullscreen window on this monitor's active workspace gets the dock out
+        // of the way. Otherwise it stays out, rather than hiding whenever the pointer
+        // leaves it.
+        readonly property bool fullscreenActive: Hyprland.monitorFor(modelData)?.activeWorkspace?.hasFullscreen ?? false
+
+        readonly property bool revealed: !fullscreenActive || pointer.containsMouse || hideTimer.running
+
+        screen: modelData
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+
+        // Above windows rather than merely above the desktop, so it is not covered by
+        // whatever happens to be focused. It claims no space, so windows still size to
+        // the whole screen and the dock floats over them.
+        WlrLayershell.layer: WlrLayer.Overlay
+        implicitHeight: dockHeight + Theme.metrics.barMargin
+
+        anchors {
+            bottom: true
+            left: true
+            right: true
+        }
+
+        mask: Region {
+            item: revealed ? dock : pressure
+        }
+
+        Item {
+            id: pressure
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: dock.width
+            height: panel.pressureStrip
+        }
+
+        Timer {
+            id: hideTimer
+
+            interval: panel.hideDelay
+            repeat: false
+        }
+
+        Rectangle {
+            id: dock
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: row.implicitWidth + panel.tilePadding * 2
+            height: panel.dockHeight
+            radius: height / 4
+            color: Theme.colors.bar
+            border.width: 1
+            border.color: Theme.colors.separator
+
+            // Slides out of view rather than disappearing, so the reveal reads as
+            // motion the way the GNOME dash does.
+            y: panel.revealed ? Theme.metrics.barMargin : panel.dockHeight
+
+            Behavior on y {
+                NumberAnimation {
+                    duration: panel.slideDuration
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            MouseArea {
+                id: pointer
+
+                anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.NoButton
+                onEntered: hideTimer.stop()
+                onExited: hideTimer.restart()
+            }
+
+            RowLayout {
+                id: row
+
+                anchors.centerIn: parent
+                spacing: panel.tilePadding
+
+                Repeater {
+                    model: Apps.items
+
+                    delegate: Item {
+                        id: tile
+
+                        required property var modelData
+
+                        readonly property var windows: Apps.windowsFor(modelData.entry)
+                        readonly property bool running: windows.length > 0
+
+                        Layout.alignment: Qt.AlignVCenter
+                        implicitWidth: panel.iconSize + panel.tilePadding * 2
+                        implicitHeight: panel.iconSize + panel.tilePadding * 2
+
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: Theme.metrics.padding
+                            color: tilePointer.containsMouse ? Theme.colors.hover : "transparent"
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: Theme.duration.fast
+                                }
+                            }
+                        }
+
+                        IconImage {
+                            anchors.centerIn: parent
+                            implicitSize: panel.iconSize
+                            source: Quickshell.iconPath(tile.modelData.entry.icon, "application-x-executable")
+                        }
+
+                        // Running indicator, matching running-indicator-style DEFAULT:
+                        // a dot under the icon, widened when several windows are open.
+                        Rectangle {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottom: parent.bottom
+                            visible: tile.running
+                            width: tile.windows.length > 1 ? 12 : 5
+                            height: 3
+                            radius: height / 2
+                            color: Theme.colors.accent
+
+                            Behavior on width {
+                                NumberAnimation {
+                                    duration: Theme.duration.normal
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            id: tilePointer
+
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: Apps.activate(tile.modelData.entry)
+                        }
+                    }
+                }
+
+                Rectangle {
+                    Layout.alignment: Qt.AlignVCenter
+                    Layout.leftMargin: panel.tilePadding
+                    Layout.rightMargin: panel.tilePadding
+                    implicitWidth: 1
+                    implicitHeight: panel.iconSize * 0.6
+                    color: Theme.colors.separator
+                }
+
+                BarButton {
+                    Layout.alignment: Qt.AlignVCenter
+                    icon: "apps"
+                    tint: Theme.colors.textSecondary
+                    diameter: panel.iconSize
+                    iconSize: 28
+                    onClicked: Commands.run(Commands.launcher)
+                }
+            }
+        }
+    }
+}

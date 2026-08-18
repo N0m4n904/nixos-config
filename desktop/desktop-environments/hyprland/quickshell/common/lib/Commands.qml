@@ -8,6 +8,7 @@ import Quickshell
 // environment and a missing tool is a build error instead of a dead button.
 QtObject {
     readonly property string clipboard: Quickshell.env("QS_CLIPBOARD_COMMAND") ?? ""
+    readonly property string launcher: Quickshell.env("QS_LAUNCHER_COMMAND") ?? ""
     readonly property string lock: Quickshell.env("QS_LOCK_COMMAND") ?? ""
     readonly property string logout: Quickshell.env("QS_LOGOUT_COMMAND") ?? ""
     readonly property string reboot: Quickshell.env("QS_REBOOT_COMMAND") ?? ""
