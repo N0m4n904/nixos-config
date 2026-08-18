@@ -162,6 +162,10 @@ in
       # The shell resolves no binaries itself: every action it can trigger arrives as
       # a store path, so a missing tool fails the build instead of a button.
       environment = {
+        # The bar belongs on the main screen only. Matched on part of the model rather
+        # than the connector, which is not stable across cable moves.
+        QS_BAR_SCREEN = "AW3423DW";
+
         QS_CLIPBOARD_COMMAND = clipboardHistoryCommand;
         QS_LOCK_COMMAND = "${loginctl} lock-session";
         QS_LOGOUT_COMMAND = "${uwsm} stop";
@@ -195,6 +199,15 @@ in
         # far easier to hit on a floating layout.
         bindm = lib.mkForce [
           "$mainMod, mouse:273, resizewindow"
+        ];
+
+        # Restated to turn xray off. With it on, the blur behind the bar samples only
+        # the wallpaper and ignores windows - and with no wallpaper engine running that
+        # means the bar frosts over plain black, so its transparency buys nothing. Off,
+        # it frosts whatever is actually underneath.
+        layerrule = lib.mkForce [
+          "ignore_alpha 0, blur on, xray off, match:namespace topbar"
+          "ignore_alpha 0, blur on, xray off, match:namespace quickshell"
         ];
 
         # Restated rather than extended so foundrix's "suppress_event maximize" can be

@@ -9,13 +9,20 @@ Rectangle {
     property int diameter: Theme.metrics.buttonSize
     property int iconSize: Theme.font.iconSize
 
+    // Hovering normally just lifts the background a little and leaves the icon alone.
+    // Setting these turns it into the filled treatment the power buttons use, where
+    // the button floods with its own colour and the icon inverts to read against it.
+    property color hoverFill: Theme.colors.hover
+    property color hoverTint: tint
+    property int cornerRadius: -1
+
     signal clicked
     signal secondaryClicked
 
     implicitWidth: diameter
     implicitHeight: diameter
-    radius: height / 2
-    color: pointer.pressed ? Theme.colors.pressed : pointer.containsMouse ? Theme.colors.hover : "transparent"
+    radius: cornerRadius < 0 ? height / 2 : cornerRadius
+    color: pointer.pressed ? Theme.colors.pressed : pointer.containsMouse ? hoverFill : "transparent"
 
     Behavior on color {
         ColorAnimation {
@@ -26,8 +33,14 @@ Rectangle {
     BarIcon {
         anchors.centerIn: parent
         text: root.icon
-        color: root.tint
+        color: pointer.containsMouse ? root.hoverTint : root.tint
         size: root.iconSize
+
+        Behavior on color {
+            ColorAnimation {
+                duration: Theme.duration.fast
+            }
+        }
     }
 
     MouseArea {

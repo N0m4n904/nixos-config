@@ -5,7 +5,7 @@ import qs.common.lib
 import "./sections"
 
 Variants {
-    model: Quickshell.screens
+    model: Screens.barScreens
 
     PanelWindow {
         id: panel
@@ -70,12 +70,9 @@ Variants {
                         Layout.rightMargin: Theme.metrics.gap
                     }
 
-                    VolumeControl {
+                    StatusButtons {
                         Layout.alignment: Qt.AlignVCenter
-                    }
-
-                    PowerMenu {
-                        Layout.alignment: Qt.AlignVCenter
+                        hostScreen: panel.modelData
                     }
                 }
             }
