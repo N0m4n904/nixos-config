@@ -13,6 +13,12 @@ Singleton {
 
     readonly property var toplevels: Hyprland.toplevels?.values ?? []
 
+    // The entry database populates asynchronously. Reading it inside the items binding
+    // is what makes that binding re-run once it is ready - without the dependency the
+    // list is built once while every lookup still returns null, and nothing recomputes
+    // it, so the dock sits empty until something unrelated happens to change.
+    readonly property var applications: DesktopEntries.applications?.values ?? []
+
     function entryFor(id) {
         return DesktopEntries.byId(id) ?? DesktopEntries.byId(id.replace(/\.desktop$/, "")) ?? DesktopEntries.heuristicLookup(id.replace(/\.desktop$/, ""));
     }
@@ -44,6 +50,11 @@ Singleton {
     }
 
     readonly property var items: {
+        // Both the dependency on the entry database and a genuine guard: with nothing
+        // loaded every lookup below would return null and produce an empty dock.
+        if (applications.length === 0)
+            return [];
+
         const pinned = favouriteIds.map(id => ({
                     id: id,
                     entry: entryFor(id),
