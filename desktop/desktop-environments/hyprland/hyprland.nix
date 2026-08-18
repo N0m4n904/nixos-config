@@ -172,16 +172,6 @@ in
   };
 
   home-manager = applyHomeManagerShared {
-    # Hyprland's own "env" only reaches processes it spawns directly. Anything started
-    # through "uwsm app --" - the browser bind among them - becomes a systemd user unit
-    # and inherits the user manager's environment instead, so the same variable has to
-    # be preloaded here too or Zen would decorate itself differently depending on how
-    # it was launched. uwsm is only used by the Hyprland session, so this file cannot
-    # leak into GNOME or COSMIC.
-    xdg.configFile."uwsm/env".text = ''
-      export MOZ_GTK_TITLEBAR_DECORATION=system
-    '';
-
     wayland.windowManager.hyprland = {
       plugins = [ inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars ];
 
@@ -199,15 +189,6 @@ in
         # ultrawide. Compositing it costs nothing measurable here - the GPU idles
         # around 5% - and it tracks correctly.
         cursor.no_hardware_cursors = true;
-
-        # Equivalent to ticking "Title Bar" in Zen's customise screen, but scoped to
-        # this session instead of written into the profile - the profile is shared with
-        # the GNOME session on this machine, where the integrated header is wanted.
-        # Firefox reads this before deciding whether it may decorate itself, so
-        # "system" makes it leave the title bar to hyprbars, which supplies both a drag
-        # region and buttons that work. The variable is Mozilla-specific, so no other
-        # GTK application is affected.
-        env = [ "MOZ_GTK_TITLEBAR_DECORATION,system" ];
 
         # Windows are moved by dragging their title bar, so the modifier shortcut is
         # redundant. Resize stays: window edges are draggable too, but the shortcut is
