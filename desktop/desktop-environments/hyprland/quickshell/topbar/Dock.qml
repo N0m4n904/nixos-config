@@ -42,7 +42,7 @@ Variants {
         // leaves it.
         readonly property bool fullscreenActive: Hyprland.monitorFor(modelData)?.activeWorkspace?.hasFullscreen ?? false
 
-        readonly property bool revealed: !fullscreenActive || pointer.containsMouse || hideTimer.running
+        readonly property bool revealed: !fullscreenActive || pointer.containsMouse || hideTimer.running || edgeLatch.running
 
         screen: modelData
         color: "transparent"
@@ -64,6 +64,9 @@ Variants {
             item: revealed ? dock : pressure
         }
 
+        // The only thing on screen while the dock is hidden, and therefore the only
+        // thing that can notice the pointer arriving at the edge - the dock's own
+        // hover area slides away with it.
         Item {
             id: pressure
 
@@ -71,6 +74,24 @@ Variants {
             anchors.horizontalCenter: parent.horizontalCenter
             width: dock.width
             height: panel.pressureStrip
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.NoButton
+                onEntered: edgeLatch.restart()
+            }
+        }
+
+        // Revealing switches the input mask from this strip to the dock, so the strip
+        // stops reporting the pointer the instant it has done its job - and the pointer
+        // is then over the gap below the dock, not over the dock itself. The latch
+        // holds the dock out long enough to move onto it.
+        Timer {
+            id: edgeLatch
+
+            interval: panel.revealDelay * 3
+            repeat: false
         }
 
         Timer {
