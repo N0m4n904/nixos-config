@@ -22,15 +22,12 @@ Variants {
 
         readonly property int iconSize: 48
         readonly property int tilePadding: 6
-        readonly property int revealDelay: 250
         readonly property int hideDelay: 200
         readonly property int slideDuration: 200
 
         // The strip left exposed while hidden. Layer surfaces get no pointer events
         // outside their own geometry, so something has to stay on screen to notice the
         // pointer arriving at the edge.
-        readonly property int pressureStrip: 2
-
         readonly property int dockHeight: iconSize + tilePadding * 4
 
         // Gap left below the dock so it floats clear of the screen edge rather than
@@ -42,7 +39,13 @@ Variants {
         // leaves it.
         readonly property bool fullscreenActive: Hyprland.monitorFor(modelData)?.activeWorkspace?.hasFullscreen ?? false
 
-        readonly property bool revealed: !fullscreenActive || pointer.hovered || hideTimer.running || edgeLatch.running
+        // Each interactive part of the dock reports the pointer for itself. A single
+        // hover region cannot do it: the tiles carry mouse areas that take the hover as
+        // the pointer crosses them, and the dock would slide away from under whichever
+        // icon was being aimed at.
+        property int hoveredParts: 0
+
+        readonly property bool revealed: !fullscreenActive || hoveredParts > 0 || pointer.hovered || hideTimer.running
 
         screen: modelData
         color: "transparent"
@@ -64,10 +67,25 @@ Variants {
         // animated, so a region tracking it is computed while it is still off screen
         // and the pointer can never enter it. This covers the dock and the gap beneath,
         // so the pointer is inside the moment the edge reveals it.
+        // Fixed, never switched. Making the mask depend on whether the dock is out
+        // creates a loop - the mask decides whether the pointer is seen, being seen
+        // decides whether the dock is out - and it oscillates. Only the dock's position
+        // changes; the region it accepts input over stays put.
+        //
+        // The cost is that this band keeps taking clicks while the dock is hidden. It
+        // is the width of the dock and sits at the very bottom of one monitor.
         mask: Region {
-            item: revealed ? interactive : pressure
+            item: interactive
         }
 
+        // Sits below the dock so the tiles keep their own hover, which they report
+        // through hoveredParts. This covers what they do not: the dock's background and
+        // the gap beneath it.
+        //
+        // Its geometry is static, unlike the dock's, which is animated: a region
+        // tracking the dock is computed while the dock is still off screen, and the
+        // pointer can then never enter it. This spans the dock and the gap below, so
+        // the pointer is inside from the moment the edge reveals it.
         Item {
             id: interactive
 
@@ -76,44 +94,11 @@ Variants {
             anchors.bottom: parent.bottom
             width: dock.width
 
-            // A handler rather than a MouseArea: the tiles have their own mouse areas
-            // stacked above this one, and a MouseArea here would stop reporting the
-            // pointer as soon as it moved onto a tile - hiding the dock from under it.
             HoverHandler {
                 id: pointer
 
                 onHoveredChanged: hovered ? hideTimer.stop() : hideTimer.restart()
             }
-        }
-
-        // The only thing on screen while the dock is hidden, and therefore the only
-        // thing that can notice the pointer arriving at the edge - the dock's own
-        // hover area slides away with it.
-        Item {
-            id: pressure
-
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: dock.width
-            height: panel.pressureStrip
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                acceptedButtons: Qt.NoButton
-                onEntered: edgeLatch.restart()
-            }
-        }
-
-        // Revealing switches the input mask from this strip to the dock, so the strip
-        // stops reporting the pointer the instant it has done its job - and the pointer
-        // is then over the gap below the dock, not over the dock itself. The latch
-        // holds the dock out long enough to move onto it.
-        Timer {
-            id: edgeLatch
-
-            interval: panel.revealDelay * 3
-            repeat: false
         }
 
         Timer {
@@ -210,6 +195,21 @@ Variants {
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
                             onClicked: Apps.activate(tile.modelData.entry)
+                            // The hide delay is what bridges the gap between leaving
+                            // one tile and entering the next: without it the count hits
+                            // zero for a few milliseconds and the dock drops away
+                            // between every pair of icons.
+                            onEntered: {
+                                panel.hoveredParts++;
+                                hideTimer.stop();
+                            }
+                            onExited: {
+                                // Started before the count drops: the binding re-runs
+                                // the moment it changes, so a timer started afterwards
+                                // is too late to bridge anything.
+                                hideTimer.restart();
+                                panel.hoveredParts--;
+                            }
                         }
                     }
                 }
@@ -230,8 +230,18 @@ Variants {
                     diameter: panel.iconSize
                     iconSize: 28
                     onClicked: Commands.run(Commands.launcher)
+                    onHoveredChanged: {
+                        if (hovered) {
+                            panel.hoveredParts++;
+                            hideTimer.stop();
+                        } else {
+                            hideTimer.restart();
+                            panel.hoveredParts--;
+                        }
+                    }
                 }
             }
         }
+
     }
 }

@@ -16,6 +16,10 @@ Rectangle {
     property color hoverTint: tint
     property int cornerRadius: -1
 
+    // Lets a container know the pointer is on this button, which it cannot learn from
+    // its own handlers once this one has taken the hover.
+    readonly property alias hovered: pointer.containsMouse
+
     signal clicked
     signal secondaryClicked
 
