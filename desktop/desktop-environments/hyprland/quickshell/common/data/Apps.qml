@@ -2,7 +2,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
+import Quickshell.Wayland
 
 // The dock's model: pinned entries first, then anything running that is not pinned,
 // which is how the GNOME dash orders itself.
@@ -11,7 +11,11 @@ Singleton {
 
     readonly property var favouriteIds: (Quickshell.env("QS_DOCK_APPS") ?? "").split(":").filter(id => id !== "")
 
-    readonly property var toplevels: Hyprland.toplevels?.values ?? []
+    // The Wayland toplevel list, not Hyprland's IPC model. The latter is cleared and
+    // refetched whenever something refreshes it, and WindowPlacement does exactly that
+    // while it sweeps, so the dock's indicators would blink off and stay off. This list
+    // is maintained by the compositor protocol itself and does not churn.
+    readonly property var toplevels: ToplevelManager.toplevels?.values ?? []
 
     // The entry database populates asynchronously. Reading it inside the items binding
     // is what makes that binding re-run once it is ready - without the dependency the
@@ -24,8 +28,7 @@ Singleton {
     }
 
     function windowClass(toplevel) {
-        const ipc = toplevel?.lastIpcObject ?? {};
-        return ipc["class"] ?? ipc["initialClass"] ?? "";
+        return toplevel?.appId ?? "";
     }
 
     // A window belongs to an entry when its class matches the entry's id or its
@@ -119,11 +122,8 @@ Singleton {
             return;
         }
 
-        const active = Hyprland.activeToplevel;
+        const active = ToplevelManager.activeToplevel;
         const current = windows.findIndex(toplevel => toplevel === active);
-        const next = windows[(current + 1) % windows.length];
-
-        if (next?.address)
-            Hyprland.dispatch(`focuswindow address:0x${next.address}`);
+        windows[(current + 1) % windows.length].activate();
     }
 }
