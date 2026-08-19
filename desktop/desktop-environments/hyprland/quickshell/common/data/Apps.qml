@@ -49,11 +49,35 @@ Singleton {
         return toplevels.filter(toplevel => belongsTo(toplevel, entry));
     }
 
-    readonly property var items: {
-        // Both the dependency on the entry database and a genuine guard: with nothing
-        // loaded every lookup below would return null and produce an empty dock.
-        if (applications.length === 0)
-            return [];
+    // The set of tiles, rebuilt only when it can actually differ. Binding this to the
+    // toplevels directly would hand the dock a fresh array on every window event, and
+    // a Repeater discards and recreates every delegate when its model changes - which
+    // reloads each icon and resets anything the tiles were showing. The per-tile
+    // running state does not need that: it is bound separately and updates in place.
+    property var items: []
+
+    // Changes only when a tile could appear or disappear: the pinned list, whether the
+    // entry database has loaded, or which application classes currently have a window.
+    readonly property string signature: {
+        const classes = [];
+        for (const toplevel of toplevels) {
+            const cls = windowClass(toplevel).toLowerCase();
+            if (cls !== "" && !classes.includes(cls))
+                classes.push(cls);
+        }
+
+        return `${favouriteIds.join("|")}::${applications.length > 0}::${classes.sort().join(",")}`;
+    }
+
+    onSignatureChanged: rebuild()
+    Component.onCompleted: rebuild()
+
+    function rebuild() {
+        // With no entries loaded every lookup returns null, which would empty the dock.
+        if (applications.length === 0) {
+            items = [];
+            return;
+        }
 
         const pinned = favouriteIds.map(id => ({
                     id: id,
@@ -82,7 +106,7 @@ Singleton {
             });
         }
 
-        return pinned.concat(extra);
+        items = pinned.concat(extra);
     }
 
     // GNOME's click-action is cycle-windows: launch when nothing is open, focus when
