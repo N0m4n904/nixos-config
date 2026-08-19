@@ -42,7 +42,7 @@ Variants {
         // leaves it.
         readonly property bool fullscreenActive: Hyprland.monitorFor(modelData)?.activeWorkspace?.hasFullscreen ?? false
 
-        readonly property bool revealed: !fullscreenActive || pointer.containsMouse || hideTimer.running || edgeLatch.running
+        readonly property bool revealed: !fullscreenActive || pointer.hovered || hideTimer.running || edgeLatch.running
 
         screen: modelData
         color: "transparent"
@@ -60,8 +60,30 @@ Variants {
             right: true
         }
 
+        // Masked against a static item, never the dock itself: the dock's position is
+        // animated, so a region tracking it is computed while it is still off screen
+        // and the pointer can never enter it. This covers the dock and the gap beneath,
+        // so the pointer is inside the moment the edge reveals it.
         mask: Region {
-            item: revealed ? dock : pressure
+            item: revealed ? interactive : pressure
+        }
+
+        Item {
+            id: interactive
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: dock.width
+
+            // A handler rather than a MouseArea: the tiles have their own mouse areas
+            // stacked above this one, and a MouseArea here would stop reporting the
+            // pointer as soon as it moved onto a tile - hiding the dock from under it.
+            HoverHandler {
+                id: pointer
+
+                onHoveredChanged: hovered ? hideTimer.stop() : hideTimer.restart()
+            }
         }
 
         // The only thing on screen while the dock is hidden, and therefore the only
@@ -122,16 +144,6 @@ Variants {
                     duration: panel.slideDuration
                     easing.type: Easing.OutCubic
                 }
-            }
-
-            MouseArea {
-                id: pointer
-
-                anchors.fill: parent
-                hoverEnabled: true
-                acceptedButtons: Qt.NoButton
-                onEntered: hideTimer.stop()
-                onExited: hideTimer.restart()
             }
 
             RowLayout {
