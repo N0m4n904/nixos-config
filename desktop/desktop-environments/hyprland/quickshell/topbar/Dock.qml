@@ -39,13 +39,7 @@ Variants {
         // leaves it.
         readonly property bool fullscreenActive: Hyprland.monitorFor(modelData)?.activeWorkspace?.hasFullscreen ?? false
 
-        // Each interactive part of the dock reports the pointer for itself. A single
-        // hover region cannot do it: the tiles carry mouse areas that take the hover as
-        // the pointer crosses them, and the dock would slide away from under whichever
-        // icon was being aimed at.
-        property int hoveredParts: 0
-
-        readonly property bool revealed: !fullscreenActive || hoveredParts > 0 || pointer.hovered || hideTimer.running
+        readonly property bool revealed: !fullscreenActive || pointer.hovered || hideTimer.running
 
         screen: modelData
         color: "transparent"
@@ -78,9 +72,18 @@ Variants {
             item: interactive
         }
 
-        // Sits below the dock so the tiles keep their own hover, which they report
-        // through hoveredParts. This covers what they do not: the dock's background and
-        // the gap beneath it.
+        Timer {
+            id: hideTimer
+
+            interval: panel.hideDelay
+            repeat: false
+        }
+
+        // Parents the dock rather than sitting beside it, so its hover handler keeps
+        // reporting the pointer while the tiles' own mouse areas have it. As a sibling
+        // it cannot: hover goes to whichever of the two is on top, so either the dock
+        // loses the pointer over its own icons or the icons lose their highlight. From
+        // above them there is nothing left to take it.
         //
         // Its geometry is static, unlike the dock's, which is animated: a region
         // tracking the dock is computed while the dock is still off screen, and the
@@ -99,145 +102,114 @@ Variants {
 
                 onHoveredChanged: hovered ? hideTimer.stop() : hideTimer.restart()
             }
-        }
 
-        Timer {
-            id: hideTimer
+            Rectangle {
+                id: dock
 
-            interval: panel.hideDelay
-            repeat: false
-        }
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: row.implicitWidth + panel.tilePadding * 2
+                height: panel.dockHeight
+                radius: height / 4
+                color: Theme.colors.bar
+                border.width: 1
+                border.color: Theme.colors.separator
 
-        Rectangle {
-            id: dock
+                // Slides out of view rather than disappearing, so the reveal reads as
+                // motion the way the GNOME dash does. Revealed it sits at the top of the
+                // surface, leaving edgeGap below it.
+                y: panel.revealed ? 0 : panel.implicitHeight
 
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: row.implicitWidth + panel.tilePadding * 2
-            height: panel.dockHeight
-            radius: height / 4
-            color: Theme.colors.bar
-            border.width: 1
-            border.color: Theme.colors.separator
-
-            // Slides out of view rather than disappearing, so the reveal reads as
-            // motion the way the GNOME dash does. Revealed it sits at the top of the
-            // surface, leaving edgeGap below it.
-            y: panel.revealed ? 0 : panel.implicitHeight
-
-            Behavior on y {
-                NumberAnimation {
-                    duration: panel.slideDuration
-                    easing.type: Easing.OutCubic
-                }
-            }
-
-            RowLayout {
-                id: row
-
-                anchors.centerIn: parent
-                spacing: panel.tilePadding
-
-                Repeater {
-                    model: Apps.items
-
-                    delegate: Item {
-                        id: tile
-
-                        required property var modelData
-
-                        readonly property var windows: Apps.windowsFor(modelData.entry)
-                        readonly property bool running: windows.length > 0
-
-                        Layout.alignment: Qt.AlignVCenter
-                        implicitWidth: panel.iconSize + panel.tilePadding * 2
-                        implicitHeight: panel.iconSize + panel.tilePadding * 2
-
-                        Rectangle {
-                            anchors.fill: parent
-                            radius: Theme.metrics.padding
-                            color: tilePointer.containsMouse ? Theme.colors.hover : "transparent"
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: Theme.duration.fast
-                                }
-                            }
-                        }
-
-                        IconImage {
-                            anchors.centerIn: parent
-                            implicitSize: panel.iconSize
-                            source: Quickshell.iconPath(tile.modelData.entry.icon, "application-x-executable")
-                        }
-
-                        // Running indicator, matching running-indicator-style DEFAULT:
-                        // a dot under the icon, widened when several windows are open.
-                        Rectangle {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.bottom: parent.bottom
-                            visible: tile.running
-                            width: tile.windows.length > 1 ? 12 : 5
-                            height: 3
-                            radius: height / 2
-                            color: Theme.colors.accent
-
-                            Behavior on width {
-                                NumberAnimation {
-                                    duration: Theme.duration.normal
-                                }
-                            }
-                        }
-
-                        MouseArea {
-                            id: tilePointer
-
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: Apps.activate(tile.modelData.entry)
-                            // The hide delay is what bridges the gap between leaving
-                            // one tile and entering the next: without it the count hits
-                            // zero for a few milliseconds and the dock drops away
-                            // between every pair of icons.
-                            onEntered: {
-                                panel.hoveredParts++;
-                                hideTimer.stop();
-                            }
-                            onExited: {
-                                // Started before the count drops: the binding re-runs
-                                // the moment it changes, so a timer started afterwards
-                                // is too late to bridge anything.
-                                hideTimer.restart();
-                                panel.hoveredParts--;
-                            }
-                        }
+                Behavior on y {
+                    NumberAnimation {
+                        duration: panel.slideDuration
+                        easing.type: Easing.OutCubic
                     }
                 }
 
-                Rectangle {
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.leftMargin: panel.tilePadding
-                    Layout.rightMargin: panel.tilePadding
-                    implicitWidth: 1
-                    implicitHeight: panel.iconSize * 0.6
-                    color: Theme.colors.separator
-                }
+                RowLayout {
+                    id: row
 
-                BarButton {
-                    Layout.alignment: Qt.AlignVCenter
-                    icon: "apps"
-                    tint: Theme.colors.textSecondary
-                    diameter: panel.iconSize
-                    iconSize: 28
-                    onClicked: Commands.run(Commands.launcher)
-                    onHoveredChanged: {
-                        if (hovered) {
-                            panel.hoveredParts++;
-                            hideTimer.stop();
-                        } else {
-                            hideTimer.restart();
-                            panel.hoveredParts--;
+                    anchors.centerIn: parent
+                    spacing: panel.tilePadding
+
+                    Repeater {
+                        model: Apps.items
+
+                        delegate: Item {
+                            id: tile
+
+                            required property var modelData
+
+                            readonly property var windows: Apps.windowsFor(modelData.entry)
+                            readonly property bool running: windows.length > 0
+
+                            Layout.alignment: Qt.AlignVCenter
+                            implicitWidth: panel.iconSize + panel.tilePadding * 2
+                            implicitHeight: panel.iconSize + panel.tilePadding * 2
+
+                            Rectangle {
+                                anchors.fill: parent
+                                radius: Theme.metrics.padding
+                                color: tilePointer.containsMouse ? Theme.colors.hover : "transparent"
+
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: Theme.duration.fast
+                                    }
+                                }
+                            }
+
+                            IconImage {
+                                anchors.centerIn: parent
+                                implicitSize: panel.iconSize
+                                source: Quickshell.iconPath(tile.modelData.entry.icon, "application-x-executable")
+                            }
+
+                            // Running indicator, matching running-indicator-style DEFAULT:
+                            // a dot under the icon, widened when several windows are open.
+                            Rectangle {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.bottom: parent.bottom
+                                visible: tile.running
+                                width: tile.windows.length > 1 ? 12 : 5
+                                height: 3
+                                radius: height / 2
+                                color: Theme.colors.accent
+
+                                Behavior on width {
+                                    NumberAnimation {
+                                        duration: Theme.duration.normal
+                                    }
+                                }
+                            }
+
+                            MouseArea {
+                                id: tilePointer
+
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: Apps.activate(tile.modelData.entry)
+                            }
                         }
+                    }
+
+                    Rectangle {
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.leftMargin: panel.tilePadding
+                        Layout.rightMargin: panel.tilePadding
+                        implicitWidth: 1
+                        implicitHeight: panel.iconSize * 0.6
+                        color: Theme.colors.separator
+                    }
+
+                    BarButton {
+                        Layout.alignment: Qt.AlignVCenter
+                        icon: "apps"
+                        tint: Theme.colors.textSecondary
+                        diameter: panel.iconSize
+                        iconSize: 28
+                        onClicked: Commands.run(Commands.launcher)
                     }
                 }
             }
