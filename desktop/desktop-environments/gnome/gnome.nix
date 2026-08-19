@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./conky.nix
     ./dconf.nix
     foundrixModules.components.desktop-environments.gnome
     foundrixModules.config.graphics.gtk-dark
