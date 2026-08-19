@@ -33,6 +33,10 @@ Variants {
 
         readonly property int dockHeight: iconSize + tilePadding * 4
 
+        // Gap left below the dock so it floats clear of the screen edge rather than
+        // sitting flush against it.
+        readonly property int edgeGap: Theme.metrics.barMargin * 2
+
         // Only a fullscreen window on this monitor's active workspace gets the dock out
         // of the way. Otherwise it stays out, rather than hiding whenever the pointer
         // leaves it.
@@ -48,7 +52,7 @@ Variants {
         // whatever happens to be focused. It claims no space, so windows still size to
         // the whole screen and the dock floats over them.
         WlrLayershell.layer: WlrLayer.Overlay
-        implicitHeight: dockHeight + Theme.metrics.barMargin
+        implicitHeight: dockHeight + edgeGap
 
         anchors {
             bottom: true
@@ -88,8 +92,9 @@ Variants {
             border.color: Theme.colors.separator
 
             // Slides out of view rather than disappearing, so the reveal reads as
-            // motion the way the GNOME dash does.
-            y: panel.revealed ? Theme.metrics.barMargin : panel.dockHeight
+            // motion the way the GNOME dash does. Revealed it sits at the top of the
+            // surface, leaving edgeGap below it.
+            y: panel.revealed ? 0 : panel.implicitHeight
 
             Behavior on y {
                 NumberAnimation {
