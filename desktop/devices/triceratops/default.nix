@@ -100,6 +100,15 @@
 
   networking = {
     hostName = "triceratops";
+
+    # serve-console-update publishes a console's update artifacts here for the
+    # console to fetch, which needs the port reachable from it.
+    #
+    # Bound to the Tailscale interface rather than opened outright: this is a
+    # directory server with no authentication, and the machines on the tailnet
+    # are already ones this host trusts. Nothing on the local network - or on a
+    # network it is merely visiting - gets to see it.
+    firewall.interfaces."tailscale0".allowedTCPPorts = [ 8000 ];
   };
 
   # The GoXLR's lighting and its routing sinks - Game, Chat, Music, System, Sample -
