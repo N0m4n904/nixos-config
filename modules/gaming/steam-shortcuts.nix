@@ -249,15 +249,29 @@ in
     systemd.services.steam-shortcuts = {
       description = "Publish declared non-Steam shortcuts into Steam";
 
-      # Ordered against game mode rather than run at boot, because entering it is
-      # the moment Steam is reliably not running to write the file back: the
-      # switch out of the desktop shuts Steam down first. Both kinds of machine
-      # here have that session, so both get the same trigger.
+      # Two moments, because one is not enough.
       #
-      # Wanted rather than required, so failing to write a shortcut costs the
-      # shortcut and not the session.
-      before = [ "gamescope-session.service" ];
-      wantedBy = [ "gamescope-session.service" ];
+      # Entering game mode is the reliable one - the switch out of the desktop
+      # shuts Steam down first - and both machines here have that session. But a
+      # unit wanted only by it never runs on a workstation that has not entered
+      # game mode since the shortcut was declared, and a rebuild does not start
+      # it either, because nothing it is wanted by is active. Declaring a
+      # shortcut then appears to do nothing at all.
+      #
+      # multi-user.target covers that: it runs at boot, before anything has had
+      # a chance to start Steam, and again on switching to a configuration that
+      # newly wants it - which is the moment a shortcut is usually added.
+      #
+      # Wanted rather than required throughout, so failing to write a shortcut
+      # costs the shortcut and not the session.
+      before = [
+        "gamescope-session.service"
+        "display-manager.service"
+      ];
+      wantedBy = [
+        "gamescope-session.service"
+        "multi-user.target"
+      ];
 
       unitConfig = {
         # The home may be a mount of its own - on the console it is an overlay
