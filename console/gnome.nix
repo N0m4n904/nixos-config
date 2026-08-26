@@ -13,12 +13,21 @@
 # hands over to game mode.
 {
   applyHomeManagerShared,
+  config,
   foundrixModules,
   lib,
   pkgs,
   ...
 }:
 
+let
+  # foundrix.general.keymap names a console keymap; the graphical layout is the
+  # part before the first dash. Derived rather than restated so the two cannot
+  # disagree, and by the same rule foundrix already applies when it hands the
+  # layout to Hyprland - which is why the workstations have a German keyboard
+  # and GNOME here did not. foundrix wires that up for Hyprland only.
+  layout = builtins.head (lib.strings.splitString "-" config.foundrix.general.keymap);
+in
 {
   imports = [
     foundrixModules.components.desktop-environments.gnome
@@ -44,6 +53,17 @@
   home-manager = applyHomeManagerShared {
     dconf.settings = {
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+      # GNOME keeps its own list of input sources and stops consulting the X11
+      # layout once it has one, so the xkb.layout beside this is necessary but
+      # not sufficient: that one decides what GDM and a fresh profile get, this
+      # one decides what the session actually types in.
+      "org/gnome/desktop/input-sources".sources = [
+        (lib.gvariant.mkTuple [
+          "xkb"
+          layout
+        ])
+      ];
 
       # Game Mode first, then the browser and the file manager - the browser
       # because a console still needs captive portals and downloads, the file

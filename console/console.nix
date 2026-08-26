@@ -8,8 +8,10 @@
 # because the console has no use for them, but because every gigabyte lands in
 # two store slots and again in the flasher that carries them.
 {
+  config,
   foundrixModules,
   inputs,
+  lib,
   options,
   pkgs,
   pkgsUnstable,
@@ -178,6 +180,22 @@ in
     # seconds.
     kernelParams = [ "vt.global_cursor_default=0" ];
   };
+
+  # foundrix.general.keymap reaches the virtual console, and foundrix hands the
+  # same value to Hyprland as a layout - which is how the workstations come up
+  # German. Nothing does that for X11 or for GNOME, so those were left at the
+  # nixpkgs default of "us".
+  #
+  # A workstation never notices, because the layout gets chosen once in the
+  # desktop's settings and lives in the user's dconf database from then on. An
+  # appliance that is reflashed rather than configured has no such memory and
+  # comes back American every time, which is why it has to be stated.
+  #
+  # Split on the dash for the same reason foundrix does: the option names a
+  # console keymap - "de-latin1" - and the graphical layout is its first part.
+  services.xserver.xkb.layout = builtins.head (
+    lib.strings.splitString "-" config.foundrix.general.keymap
+  );
 
   # An appliance is expected to work with whatever hardware it is built around,
   # and nothing about a console makes that hardware predictable - so the answer
