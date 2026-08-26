@@ -19,8 +19,15 @@ in
     foundrixModules.config.shell.zsh.power10k
     foundrixModules.config.home-manager
     foundrixModules.config.graphics.fonts.adwaita-sans
-    ./home.nix
   ];
+
+  # ./home.nix is deliberately not imported here. It is the general-purpose
+  # toolkit - compilers, Android tooling, image and archive utilities - which
+  # every host wanted back when every host was a workstation or a server. The
+  # console is neither: it ships a read-only store sized in advance, so what it
+  # carries is paid for twice over in slot size, and it has no use for a JDK.
+  # The flake composes it in per configuration instead, next to the desktop
+  # environment, so which hosts get it is visible in one place.
 
   boot.binfmt.emulatedSystems = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 [ "aarch64-linux" ];
 

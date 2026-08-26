@@ -660,6 +660,18 @@
         "type": "github"
       }
     },
+    "proton-cachyos-release": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-XEWwXgX0lW2iJHJaTXbITQE8ZxVSwLd32RdbdIXEsbM=",
+        "type": "file",
+        "url": "https://api.github.com/repos/CachyOS/proton-cachyos/releases/latest"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.github.com/repos/CachyOS/proton-cachyos/releases/latest"
+      }
+    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -692,6 +704,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "proton-cachyos-release": "proton-cachyos-release",
         "quickshell": "quickshell",
         "xos-ci": "xos-ci",
         "zen-browser": "zen-browser"

@@ -3,8 +3,6 @@
   pkgsUnstable,
   #foundrixPkgs,
   pkgs,
-  config,
-  applyHomeManagerShared,
   inputs,
   ...
 }:
@@ -16,11 +14,12 @@
     foundrixModules.config.vscode-opinionated
     foundrixModules.config.graphics.cursors.breezex-rosepine
     foundrixModules.config.graphics.gtk-dark
-    foundrixModules.config.gamescope-session
     foundrixModules.config.graphics.qt
     foundrixModules.hardware.peripherals.nsw2-controller
     foundrixModules.components.steam
     ./home.nix
+    ../modules/gaming/game-mode-desktop-entry.nix
+    ../modules/gaming/proton-cachyos.nix
     ../modules/browser/zen.nix
     ../modules/overlays/noriskclient-launcher.nix
     inputs.joycon-colors.nixosModules.default
@@ -28,25 +27,12 @@
 
   services.udev.packages = [ pkgsUnstable.dolphin-emu ];
 
+  # Proton-CachyOS comes from ../modules/gaming/proton-cachyos.nix, which appends
+  # itself to this list. It tracks upstream's latest release through the flake
+  # lock, so it moves with `nix flake update` rather than by hand.
   programs.steam = {
     protontricks.enable = true;
-    extraCompatPackages = with pkgsUnstable; [
-      #foundrixPkgs.proton-packages.cachyos-x86_64_v4
-      proton-ge-bin
-      (
-        (proton-ge-bin.overrideAttrs (
-          prev: final: {
-            src = fetchzip {
-              url = "https://github.com/CachyOS/proton-cachyos/releases/download/cachyos-11.0-20260703-slr/proton-cachyos-11.0-20260703-slr-x86_64_v3.tar.xz";
-              hash = "sha256-8Y7orUvnFOG0zSqCrMyvmclmy3JInj7d8A2h0Y7RwhE=";
-            };
-            pname = "proton-cachyos";
-            version = "proton-cachyos-11.0-20260703-slr-x86_64_v3";
-          }
-        )).override
-        { steamDisplayName = "Proton-CachyOS-latest"; }
-      )
-    ];
+    extraCompatPackages = [ pkgsUnstable.proton-ge-bin ];
   };
 
   foundrix = {
@@ -75,7 +61,7 @@
     ];
   };
 
-  nixpkgs.config.permittedInsecurePackages = ["idea-oss-2025.3.4" ];
+  nixpkgs.config.permittedInsecurePackages = [ "idea-oss-2025.3.4" ];
 
   environment = {
     systemPackages = with pkgs; [
@@ -93,13 +79,6 @@
     joycon-color-change = {
       enable = true;
       gui = true;
-    };
-  };
-
-  home-manager = applyHomeManagerShared {
-    home.file."Desktop/gamescope.desktop" = {
-      source = "${config.foundrix.config.gamescope-session.desktopEntry}/share/applications/gamescope-session.desktop";
-      executable = true;
     };
   };
 }
