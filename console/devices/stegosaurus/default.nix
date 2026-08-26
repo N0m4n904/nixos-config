@@ -136,6 +136,9 @@
     #      where that path produces black and corrupted frames, and the fault it
     #      was added for had a different cause. Steam's Big Picture renders
     #      correctly on this card outside gamescope, so the card is not at fault.
-    version = "15";
+    #  16: the graphical keyboard layout derived from the keymap that was
+    #      already set, which foundrix only ever handed to Hyprland - so GNOME
+    #      and GDM had been American on a machine configured as German.
+    version = "16";
   };
 }
