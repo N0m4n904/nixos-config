@@ -19,13 +19,12 @@
     foundrixModules.components.steam
     ./home.nix
     ../modules/gaming/game-mode-desktop-entry.nix
+    ../modules/gaming/non-steam-games.nix
     ../modules/gaming/proton-cachyos.nix
     ../modules/browser/zen.nix
     ../modules/overlays/noriskclient-launcher.nix
     inputs.joycon-colors.nixosModules.default
   ];
-
-  services.udev.packages = [ pkgsUnstable.dolphin-emu ];
 
   # Proton-CachyOS comes from ../modules/gaming/proton-cachyos.nix, which appends
   # itself to this list. It tracks upstream's latest release through the flake

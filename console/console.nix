@@ -30,6 +30,7 @@ in
     foundrixModules.hardware.peripherals.nsw2-controller
     foundrixModules.components.steam
     ../modules/gaming/game-console.nix
+    ../modules/gaming/non-steam-games.nix
     ../modules/gaming/console-ota.nix
     ../modules/gaming/game-mode-desktop-entry.nix
     ../modules/gaming/proton-cachyos.nix
@@ -50,27 +51,7 @@ in
     # router handing out a different lease; triceratops has to allow the port on
     # its tailscale0 interface, which desktop/devices/triceratops does.
     updateServer = "http://triceratops:8000/";
-
-    # Published into Steam so they are reachable from game mode with a
-    # controller, rather than only from desktop mode. Declaring them here also
-    # installs them; see modules/gaming/steam-shortcuts.nix for why that has to
-    # be system-wide.
-    steamShortcuts = {
-      "Dolphin Emulator" = {
-        package = pkgsUnstable.dolphin-emu;
-        icon = "${pkgsUnstable.dolphin-emu}/share/icons/hicolor/256x256/apps/dolphin-emu.png";
-        tags = [ "Emulator" ];
-      };
-      "NoRisk Client" = {
-        package = pkgs.noriskclient-launcher;
-        tags = [ "Launcher" ];
-      };
-    };
   };
-
-  # Emulators ship udev rules for the controllers they talk to directly, which
-  # have to be present system-wide rather than in the user's package set.
-  services.udev.packages = [ pkgsUnstable.dolphin-emu ];
 
   # gamescope is normally launched through a wrapper carrying CAP_SYS_NICE, so it
   # can ask for realtime scheduling. Steam's container runtime inherits that,

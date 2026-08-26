@@ -1,11 +1,11 @@
 # Declared non-Steam shortcuts, so emulators and third-party launchers appear in
-# game mode beside the Steam library instead of only in desktop mode.
+# the Steam library beside real games - in game mode on the console, and in Big
+# Picture or the desktop client anywhere else.
 #
 # Steam keeps these in shortcuts.vdf, a binary file under the account directory
-# it rewrites whenever it exits, which makes this the one part of the console
+# which it rewrites whenever it exits. That makes this the one part of the setup
 # that cannot be pure configuration: the file has to be edited in place, and only
-# while Steam is not running. The sync therefore runs just before game mode
-# starts, which is precisely when Steam is guaranteed to be down.
+# while Steam is not running. Everything below is about finding those moments.
 {
   config,
   lib,
@@ -14,8 +14,9 @@
 }:
 
 let
-  cfg = config.gameConsole;
-  shortcuts = cfg.steamShortcuts;
+  cfg = config.steamShortcuts;
+  shortcuts = cfg.entries;
+
 
   declared = (pkgs.formats.json { }).generate "steam-shortcuts.json" (
     lib.mapAttrs (_: entry: {
@@ -145,12 +146,21 @@ let
       '';
 in
 {
-  options.gameConsole.steamShortcuts = lib.mkOption {
+  options.steamShortcuts.user = lib.mkOption {
+    type = lib.types.str;
+    description = ''
+      Account whose Steam library the shortcuts are published into. Every
+      signed-in account under that home is updated, since Steam keeps one
+      shortcuts file per account.
+    '';
+  };
+
+  options.steamShortcuts.entries = lib.mkOption {
     default = { };
     description = ''
       Programs to publish into Steam as non-Steam games, keyed by the name Steam
       displays. Declared entries are kept in step with this attribute set;
-      shortcuts added by hand from desktop mode are left alone.
+      shortcuts added by hand in Steam are left alone.
     '';
     example = lib.literalExpression ''
       {
@@ -221,13 +231,13 @@ in
     );
   };
 
-  config = lib.mkIf (cfg.enable && shortcuts != { }) {
+  config = lib.mkIf (shortcuts != { }) {
     assertions = [
       {
         assertion = incomplete == [ ];
         message = ''
-          gameConsole.steamShortcuts entries need either a package or an explicit
-          exe: ${lib.concatStringsSep ", " incomplete}
+          steamShortcuts.entries need either a package or an explicit exe:
+          ${lib.concatStringsSep ", " incomplete}
         '';
       }
     ];
@@ -239,17 +249,42 @@ in
     systemd.services.steam-shortcuts = {
       description = "Publish declared non-Steam shortcuts into Steam";
 
-      # Ordered against game mode rather than run once at boot, because this is
-      # the only moment Steam is reliably not running to rewrite the file back:
-      # the switch out of desktop mode shuts Steam down before starting here.
-      # Wanted rather than required, so a failure to write a shortcut costs the
-      # shortcut and not the gaming session.
+      # Ordered against game mode rather than run at boot, because entering it is
+      # the moment Steam is reliably not running to write the file back: the
+      # switch out of the desktop shuts Steam down first. Both kinds of machine
+      # here have that session, so both get the same trigger.
+      #
+      # Wanted rather than required, so failing to write a shortcut costs the
+      # shortcut and not the session.
       before = [ "gamescope-session.service" ];
       wantedBy = [ "gamescope-session.service" ];
+
+      unitConfig = {
+        # The home may be a mount of its own - on the console it is an overlay
+        # assembled from /var - and writing into it before it appears would put
+        # the shortcuts somewhere nothing will ever read. systemd works out which
+        # unit that is from the path.
+        RequiresMountsFor = config.users.users.${cfg.user}.home;
+      };
 
       serviceConfig = {
         Type = "oneshot";
         User = cfg.user;
+
+        # Steam rewrites shortcuts.vdf from memory when it exits, so editing the
+        # file underneath a running client achieves nothing and loses whatever it
+        # had. Skipping is the honest outcome - the next entry into game mode
+        # will do it - and the switch into game mode shuts Steam down first, so
+        # in the ordinary case this passes.
+        #
+        # A script rather than pgrep directly, because the condition wanted is
+        # the negation of what pgrep reports and systemd has no way to invert an
+        # exit status. pgrep's own -v inverts which processes are listed, not
+        # whether any matched, so it would report success no matter what.
+        ExecCondition = pkgs.writeShellScript "steam-not-running" ''
+          ! ${lib.getExe' pkgs.procps "pgrep"} -x steam >/dev/null
+        '';
+
         ExecStart = "${lib.getExe sync} ${declared} ${config.users.users.${cfg.user}.home}";
       };
     };
