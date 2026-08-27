@@ -18,6 +18,7 @@
     foundrixModules.hardware.peripherals.nsw2-controller
     foundrixModules.components.steam
     ./home.nix
+    ../modules/gaming/controller-touchpad-pointer.nix
     ../modules/gaming/game-mode-desktop-entry.nix
     ../modules/gaming/non-steam-games.nix
     ../modules/gaming/proton-cachyos.nix
