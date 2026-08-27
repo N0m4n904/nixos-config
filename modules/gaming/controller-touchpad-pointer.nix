@@ -13,13 +13,26 @@
 #
 # GNOME has no per-device touchpad setting - the peripherals schema is a single
 # fixed path - so this is the session-wide touchpad switch, flipped only for the
-# duration of a game and only while a controller with a touchpad is attached. On
+# duration of a game and only while one of the controllers named below is
+# attached, identified by the HID ids the kernel reports for it rather than by
+# name, so that nothing else answering to "Touchpad" can trip it. On
 # a laptop that also silences the internal touchpad for that window, which is
 # tolerable: the controller is in your hands anyway.
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   schemas = pkgs.gsettings-desktop-schemas;
+
+  # HID vendor:product of the controllers whose touchpad this applies to, as the
+  # kernel reports them in an input device's id/ attributes - lowercase, four
+  # digits, and the same over USB and Bluetooth, since they name the HID device
+  # rather than the transport. Every node a controller creates carries them, so
+  # they say which controller is attached and the node name still has to say
+  # which of its nodes is the pad.
+  touchpadControllers = {
+    "054c:0ce6" = "DualSense";
+    "054c:0df2" = "DualSense Edge";
+  };
 
   # The previous value is remembered rather than assumed, so ending a game
   # restores what was there instead of unconditionally switching touchpads on.
@@ -44,12 +57,20 @@ let
       schema=org.gnome.desktop.peripherals.touchpad
       state=''${XDG_RUNTIME_DIR:-/tmp}/controller-touchpad-pointer.state
 
+      # ${lib.concatStringsSep ", " (lib.attrValues touchpadControllers)}
       controller_touchpad_attached() {
-        local name
-        for name in /sys/class/input/input*/name; do
-          [ -r "$name" ] || continue
-          case "$(cat "$name")" in
-            *"Controller Touchpad") return 0 ;;
+        local device vendor product
+        for device in /sys/class/input/input*; do
+          [ -r "$device/id/vendor" ] || continue
+          read -r vendor < "$device/id/vendor" || continue
+          read -r product < "$device/id/product" || continue
+          case "$vendor:$product" in
+            ${lib.concatStringsSep "|" (lib.attrNames touchpadControllers)}) ;;
+            *) continue ;;
+          esac
+          # Narrows the controller's several nodes down to the pointer one.
+          case "$(cat "$device/name")" in
+            *Touchpad) return 0 ;;
           esac
         done
         return 1
