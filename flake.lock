@@ -539,11 +539,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782921576,
-        "narHash": "sha256-ID5yHFEy0tAjVa58Qzm6JUeDFsE7hQ1IfCEcYzhHRjo=",
+        "lastModified": 1787591663,
+        "narHash": "sha256-Pr7NftShdW+aPXK8nz131mQzVVASGzkwYHku0YhVTuk=",
         "owner": "MidnightJava",
         "repo": "led-matrix",
-        "rev": "fbecaca5556b9057bbde88d68ff7a8b3eff89a21",
+        "rev": "6c958b665021d2f162a6dd39a563cc258e8b9e61",
         "type": "github"
       },
       "original": {
@@ -607,11 +607,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1787360063,
-        "narHash": "sha256-dt4WdcvsA8/RCe+VZZwqU0X+XMM3wBbGCWA0/sFWzGo=",
+        "lastModified": 1787736819,
+        "narHash": "sha256-cV5xEJJK3BvhU8rEd4mC9UsmDi5qscv/kzGPhBRC5WA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2c423e03bbafcff28bfadc6781a4a8257f205cb5",
+        "rev": "9fbb54b33e91ee4ca368e35a78e0613c720600b3",
         "type": "github"
       },
       "original": {
@@ -623,11 +623,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1787414105,
-        "narHash": "sha256-WncT27+3BOkgTaJZLnCsf3LcYf9RXMuR9ONSN4rzQ7s=",
+        "lastModified": 1787753485,
+        "narHash": "sha256-BZWCi9ZRJiARTuKTbbtvFTj7t1TK4G3UEckT3HyNfRg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a9e6d84f9c2f9012f5fe7d964a7851352300e61a",
+        "rev": "062346a6d85bc4b49dfaa61c986e9c5be21217d1",
         "type": "github"
       },
       "original": {
@@ -663,7 +663,7 @@
     "proton-cachyos-release": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-XEWwXgX0lW2iJHJaTXbITQE8ZxVSwLd32RdbdIXEsbM=",
+        "narHash": "sha256-FUIKbhCXm5KgNuLUfWpupmZDMafJHSaTiiaH9JUZEoE=",
         "type": "file",
         "url": "https://api.github.com/repos/CachyOS/proton-cachyos/releases/latest"
       },
@@ -679,11 +679,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787440121,
-        "narHash": "sha256-OZdLL1rMR9kjTFZroOODeyQ0u6nrSxcFHlK6JUi+R/c=",
+        "lastModified": 1787903299,
+        "narHash": "sha256-93KTmIqzjYKuT8MoWRVxcpuajh1xb5kP6rtEf2HSVDI=",
         "ref": "refs/heads/master",
-        "rev": "0fed22a2c47d9568ddf13cf61586b3f2ac4378a2",
-        "revCount": 847,
+        "rev": "916a0dd90cf2e349116381e0abbbfcf94387eb77",
+        "revCount": 853,
         "type": "git",
         "url": "https://git.outfoxxed.me/quickshell/quickshell"
       },
@@ -812,11 +812,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787430507,
-        "narHash": "sha256-suOYXVn7PadruX8SlCji40gnmKUqQOSQRLtja/E60Vw=",
+        "lastModified": 1787853918,
+        "narHash": "sha256-/np2m3r5KdRp8nF6KXuNFP18Z8aTOBcib9gqf5ZB1fM=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "b49e5b7b3f925b78b2af9ca21e81e8c0d1a4711e",
+        "rev": "6b59aeed93305453a8374e47cc1065fac46d8822",
         "type": "github"
       },
       "original": {
