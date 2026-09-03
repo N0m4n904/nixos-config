@@ -146,6 +146,7 @@ in
             "browser.toolbars.bookmarks.visibility" = "always";
             "browser.bookmarks.restore_default_bookmarks" = false;
             "browser.bookmarks.addedImportButton" = true;
+            "layout.css.scroll-driven-animations.enabled" = true;
           };
           mods = [
             "f4866f39-cfd6-4498-ab92-54213b8279dc" # Animations Plus
