@@ -40,7 +40,7 @@ let
   # The directory inside the tarball, which is also the string upstream wrote
   # into compatibilitytool.vdf - proton-ge-bin substitutes the display name over
   # exactly this text, and fails the build if it cannot find it.
-  version = lib.removeSuffix ".tar.xz" asset.name;
+  toolName = lib.removeSuffix ".tar.xz" asset.name;
 
   tarball = pkgsUnstable.fetchurl {
     url = asset.browser_download_url;
@@ -51,22 +51,21 @@ let
   # be a directory. fetchzip would give one, but it hashes the unpacked tree,
   # and the digest upstream publishes is of the tarball - so unpack it here
   # instead, stripping the single root directory the way fetchzip would.
-  src = pkgsUnstable.runCommand "${version}-unpacked" { } ''
+  src = pkgsUnstable.runCommand "${toolName}-unpacked" { } ''
     mkdir -p "$out"
     tar -xJf ${tarball} --strip-components=1 -C "$out"
   '';
 
-  package =
-    (pkgsUnstable.proton-ge-bin.overrideAttrs (_: {
-      inherit src version;
-      pname = "proton-cachyos";
-    })).override
-      {
-        # Deliberately says nothing about the version. Steam records the chosen
-        # compatibility tool per game under this name, so folding the release
-        # into it would silently reset every one of those choices on each update.
-        steamDisplayName = "Proton-CachyOS-latest";
-      };
+  package = pkgsUnstable.proton-ge-bin.overrideAttrs (_: {
+    inherit src toolName;
+    pname = "proton-cachyos";
+    version = release.tag_name;
+
+    # Deliberately says nothing about the version. Steam records the chosen
+    # compatibility tool per game under this name, so folding the release into
+    # it would silently reset every one of those choices on each update.
+    steamDisplayName = "Proton-CachyOS-latest";
+  });
 in
 {
   options.protonCachyos.architecture = lib.mkOption {
