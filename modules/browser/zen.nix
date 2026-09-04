@@ -200,6 +200,19 @@ in
                     url = "https://warden.nonetwor.cc/#/login";
                   }
                   {
+                    name = "Nextcloud";
+                    bookmarks = [
+                      {
+                        name = "Nextcloud AIO";
+                        url = "https://192.168.178.64:8080/containers";
+                      }
+                      {
+                        name = "Nextcloud Dashboard";
+                        url = "https://nextcloud.fritz.box/apps/dashboard/";
+                      }
+                    ];
+                  }
+                  {
                     name = "Hetzner";
                     url = "https://console.hetzner.com";
                   }
@@ -210,6 +223,10 @@ in
                   {
                     name = "FRITZ!Box";
                     url = "http://fritz.box";
+                  }
+                  {
+                    name = "Tailscale ACL";
+                    url = "https://console.tailscale.com/admin/acls/file";
                   }
                   {
                     name = "LTE Stick";
