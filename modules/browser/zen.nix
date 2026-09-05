@@ -204,7 +204,7 @@ in
                     bookmarks = [
                       {
                         name = "Nextcloud AIO";
-                        url = "https://192.168.178.64:8080/containers";
+                        url = "https://nextcloud.fritz.box:8443/containers";
                       }
                       {
                         name = "Nextcloud Dashboard";
