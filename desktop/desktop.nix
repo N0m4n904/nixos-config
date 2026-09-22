@@ -69,6 +69,8 @@
     ];
     interactiveShellInit = ''
       alias claude='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x'
+      alias claude-vm='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x#claude-vm'
+      alias update='nix run .#update'
     '';
     variables = {
       BROWSER = "zen-beta";
