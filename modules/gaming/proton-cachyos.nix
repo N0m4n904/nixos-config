@@ -1,23 +1,26 @@
-# Proton-CachyOS as a Steam compatibility tool, tracking upstream's latest
-# release through the flake lock.
+# Proton-CachyOS as a Steam compatibility tool, pinned to one upstream release.
 #
 # Upstream publishes it as a release tarball rather than a package, and names
 # every asset after its version, so there is no fixed URL to point a fetcher at.
-# What is fixed is the API's "latest release" endpoint, and that answer carries
-# both the download URL and - since GitHub started publishing asset digests -
-# the sha256 to verify it with. Locking that one document therefore pins the
-# whole thing, which is why `nix flake update` is all this needs.
+# What upstream does publish is a release document naming the assets and - since
+# GitHub started publishing asset digests - the sha256 to verify each one with.
+# The pin is a copy of the few fields of that document which describe a release,
+# committed beside this file and refreshed with `nix run .#update-proton-cachyos`.
 #
-# Evaluation stays pure: nothing here asks the network what is newest. The lock
-# file already recorded that answer, so a given commit builds a given system,
-# which the console's A/B images depend on.
+# Copied rather than tracked as a flake input because the same document carries
+# a download counter per asset. Those move continuously, so its hash changed
+# without a release ever being published, and every locked hash went stale
+# within days - leaving evaluation to fail on a mismatch nothing had caused.
+#
+# Evaluation stays pure: nothing here asks the network what is newest. The
+# committed metadata already answers that, so a given commit builds a given
+# system, which the console's A/B images depend on.
 #
 # Built by re-pointing proton-ge-bin's source rather than packaging it afresh,
 # because the two are the same shape - a prebuilt Proton tree Steam is told
 # about - and only the tarball differs.
 {
   config,
-  inputs,
   lib,
   pkgsUnstable,
   ...
@@ -26,16 +29,11 @@
 let
   cfg = config.protonCachyos;
 
-  release = builtins.fromJSON (builtins.readFile inputs.proton-cachyos-release);
+  release = builtins.fromJSON (builtins.readFile ./proton-cachyos-release.json);
 
-  # Selected by suffix rather than rebuilt from the tag, so the name comes from
-  # upstream in one piece. The levels do not overlap: an x86_64_v3 asset ends in
-  # "_v3.tar.xz" and so is never mistaken for the plain x86_64 one.
-  candidates = lib.filter (
-    asset: lib.hasSuffix "-${cfg.architecture}.tar.xz" asset.name
-  ) release.assets;
-
-  asset = lib.head candidates;
+  # Kept lazy so that an architecture the pinned release does not offer is
+  # reported by the assertion below, rather than as a missing attribute.
+  asset = release.assets.${cfg.architecture} or null;
 
   # The directory inside the tarball, which is also the string upstream wrote
   # into compatibilitytool.vdf - proton-ge-bin substitutes the display name over
@@ -43,7 +41,7 @@ let
   toolName = lib.removeSuffix ".tar.xz" asset.name;
 
   tarball = pkgsUnstable.fetchurl {
-    url = asset.browser_download_url;
+    url = asset.url;
     sha256 = lib.removePrefix "sha256:" asset.digest;
   };
 
@@ -59,7 +57,7 @@ let
   package = pkgsUnstable.proton-ge-bin.overrideAttrs (_: {
     inherit src toolName;
     pname = "proton-cachyos";
-    version = release.tag_name;
+    version = release.tag;
 
     # Deliberately says nothing about the version. Steam records the chosen
     # compatibility tool per game under this name, so folding the release into
@@ -75,27 +73,20 @@ in
       Which of the release's builds to use. Upstream ships `x86_64`, `x86_64_v3`
       and `arm64`; there is no v4 build, despite the microarchitecture existing.
 
-      There is no matching option for the version. That comes from the locked
-      release metadata, and is moved with `nix flake update proton-cachyos-release`
-      or held still by leaving the lock alone.
+      There is no matching option for the version. That comes from the pinned
+      release metadata, which `nix run .#update` moves along with every flake
+      input, `nix run .#update-proton-cachyos` moves on its own, and leaving
+      the file alone holds still.
     '';
   };
 
   config = {
     assertions = [
       {
-        assertion = candidates != [ ];
+        assertion = release.assets ? ${cfg.architecture};
         message = ''
-          No ${cfg.architecture} build in Proton-CachyOS ${release.tag_name}. It published:
-          ${lib.concatMapStringsSep "\n" (a: "  ${a.name}") release.assets}
-        '';
-      }
-      {
-        assertion = candidates == [ ] || (asset.digest or null) != null;
-        message = ''
-          Proton-CachyOS ${release.tag_name} publishes no digest for ${asset.name},
-          so there is no hash to pin it with. Releases from before GitHub added
-          asset digests need pinning by hand instead.
+          No ${cfg.architecture} build in Proton-CachyOS ${release.tag}. It published:
+          ${lib.concatMapStringsSep "\n" (name: "  ${name}") (lib.attrNames release.assets)}
         '';
       }
     ];

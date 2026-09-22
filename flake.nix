@@ -54,16 +54,6 @@
       url = "git+https://gitlab.com/N0m4n904/ammaster-bridge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Proton-CachyOS ships as a release tarball rather than a package, so there
-    # is nothing to track as a source repository. This is the release metadata
-    # instead: it carries both the download URL and, since GitHub began
-    # publishing asset digests, the hash to verify it with - which is the whole
-    # pin, and is why updating it is `nix flake update` rather than an errand.
-    # See modules/gaming/proton-cachyos.nix.
-    proton-cachyos-release = {
-      url = "file+https://api.github.com/repos/CachyOS/proton-cachyos/releases/latest";
-      flake = false;
-    };
   };
 
   outputs =
@@ -217,11 +207,21 @@
                   ];
                 }).config.system.build.isoImage;
             };
+
+          # Bound here rather than below because the umbrella update command
+          # composes it, and attributes of the set being defined are not in
+          # scope within it.
+          update-proton-cachyos = pkgs.callPackage ./modules/gaming/update-proton-cachyos.nix { };
         in
         lib.mergeAttrsList (map artifactsFor consoleDevices)
         // {
           build-console-installer = pkgs.callPackage ./console/build-install-image.nix { };
           serve-console-update = pkgs.callPackage ./console/serve-update.nix { };
+
+          # Not console artifacts, but this is where the flake exposes the
+          # commands this configuration is maintained with.
+          inherit update-proton-cachyos;
+          update = pkgs.callPackage ./update.nix { inherit update-proton-cachyos; };
         };
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
