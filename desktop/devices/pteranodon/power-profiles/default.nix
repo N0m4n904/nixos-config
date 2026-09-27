@@ -198,7 +198,16 @@ in
   # CONFIG_STRICT_DEVMEM=y / CONFIG_IO_STRICT_DEVMEM=y, which blocks ryzenadj's
   # /dev/mem fallback ("Unable to get memory access" -> PPT limits silently fail).
   # The module exposes /dev/ryzen_smu and also restores `ryzenadj -i` monitoring.
-  boot.extraModulePackages = [ config.boot.kernelPackages.ryzen-smu ];
+  #
+  # Kernel 7.2 no longer pulls cpuid_eax()/cpuid_ebx() in via <asm/processor.h>;
+  # smu.c relies on that implicit include, so add the header explicitly.
+  boot.extraModulePackages = [
+    (config.boot.kernelPackages.ryzen-smu.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        sed -i '/#include <asm\/io.h>/a #include <asm/cpuid/api.h>' smu.c
+      '';
+    }))
+  ];
   boot.kernelModules = [ "ryzen_smu" ];
 
   # The power-profile services run as root with no login session, but PPD's
