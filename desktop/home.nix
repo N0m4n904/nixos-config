@@ -35,7 +35,7 @@
       thunderbird
       vlc
       pkgsUnstable.android-studio
-      pkgsUnstable.jetbrains.idea-oss
+      #pkgsUnstable.jetbrains.idea-oss
       pkgsUnstable.spotify
       (vesktop.override { withSystemVencord = true; })
     ];
