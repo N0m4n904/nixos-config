@@ -35,7 +35,7 @@
       thunderbird
       vlc
       pkgsUnstable.android-studio
-      #pkgsUnstable.jetbrains.idea-oss
+      jetbrains.idea
       pkgsUnstable.spotify
       (vesktop.override { withSystemVencord = true; })
     ];
@@ -71,5 +71,11 @@
       };
       mimeApps.defaultApplications = xdg.mimeApps.associations.added;
     };
+  };
+
+  foundrix = {
+    nixpkgs.allowedUnfreePackageNames = [
+      "idea"
+    ];
   };
 }
