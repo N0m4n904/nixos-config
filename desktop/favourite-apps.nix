@@ -7,7 +7,7 @@
   "org.gnome.Terminal.desktop"
   "codium.desktop"
   "zen-beta.desktop"
-  "idea-oss.desktop"
+  "idea.desktop"
   "steam.desktop"
   "spotify.desktop"
 ]
