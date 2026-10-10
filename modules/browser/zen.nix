@@ -293,6 +293,10 @@ in
                         url = "https://android-review.googlesource.com/q/project:kernel/common+branch:android12-5.10-lts";
                       }
                       {
+                        name = "android15-6.6-lts";
+                        url = "https://android-review.googlesource.com/q/project:kernel/common+branch:android15-6.6-lts";
+                      }
+                      {
                         name = "LOS/kernel_qcom_sm8450";
                         url = "https://review.lineageos.org/q/project:LineageOS/android_kernel_qcom_sm8450";
                       }
