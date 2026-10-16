@@ -66,6 +66,7 @@
   environment = {
     systemPackages = with pkgs; [
       gparted
+      inputs.nebula.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     interactiveShellInit = ''
       alias claude='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x'

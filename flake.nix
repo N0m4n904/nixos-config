@@ -54,6 +54,10 @@
       url = "git+https://gitlab.com/N0m4n904/ammaster-bridge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nebula = {
+      url = "git+ssh://git@github.com/N0m4n904/nebula.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
