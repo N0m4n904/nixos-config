@@ -559,11 +559,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792144922,
-        "narHash": "sha256-NIzRq/6+tRRMd6k/Fco40/ooCnGHmtCnZiR2pxhQV50=",
+        "lastModified": 1792271638,
+        "narHash": "sha256-noU0ph2UlBwygT2OKZ//JHhLtw76w7k9MRFbusipuS0=",
         "ref": "refs/heads/main",
-        "rev": "26bfaa6ce283f5082bfeb25b94f37b995b3a3c2f",
-        "revCount": 2,
+        "rev": "d63de68c32044fbc340aaf24b090e24648572d00",
+        "revCount": 19,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
@@ -687,11 +687,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791448974,
-        "narHash": "sha256-lPbqsyAD5ZoGFMZ1eqAlTULfeP5Nwhy+XvOowF7BE+E=",
+        "lastModified": 1792214446,
+        "narHash": "sha256-tq6x6CRG8Qikrjri59tzu9+b2gri8TjnShkGeh8kUgQ=",
         "ref": "refs/heads/master",
-        "rev": "4f508be500dea6e5732cc3d50382a0048b17e7b1",
-        "revCount": 868,
+        "rev": "2b4501a282689792b62e94f3fb30d8f512324fe6",
+        "revCount": 875,
         "type": "git",
         "url": "https://git.outfoxxed.me/quickshell/quickshell"
       },
@@ -820,11 +820,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791587008,
-        "narHash": "sha256-LOIfH4MtVc2KIFQI8ElOOgmgrgUzJjfx3OYu4VnTvIU=",
+        "lastModified": 1792192561,
+        "narHash": "sha256-XNE80BcOYerOY/+2bfmVk1Sik7FYq7ID9mbtXTeqDN0=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "a6359784912804e2bad0826b63454cf4493e885e",
+        "rev": "733154388e22e459c7e6dd14e6522069bbf25971",
         "type": "github"
       },
       "original": {
