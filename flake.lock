@@ -559,11 +559,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792347096,
-        "narHash": "sha256-dTYnViVEDB6uTvOV2sJ4oH7CU8i45YM9gZclm0KGWds=",
+        "lastModified": 1792790292,
+        "narHash": "sha256-w/QEzIdhmE/rOADJDDYWLY2icKXBZS57eCuHUfsxsD8=",
         "ref": "refs/heads/main",
-        "rev": "a5520811e330fe90d095ec4eeb0f495d40220f8f",
-        "revCount": 24,
+        "rev": "2edcad6645b4b54cadb3b72e2a18469e67ad224f",
+        "revCount": 27,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
