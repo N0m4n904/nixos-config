@@ -183,6 +183,7 @@
       KERNEL=="hidraw*", ATTRS{idVendor}=="362d", ATTRS{idProduct}=="0551", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0e31", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="1b7c", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     '';
   };
 }

@@ -28,6 +28,7 @@
       pavucontrol
       postman
       rose-pine-cursor
+      rpi-imager
       scrcpy
       signal-desktop
       pkgsUnstable.teamspeak6-client
