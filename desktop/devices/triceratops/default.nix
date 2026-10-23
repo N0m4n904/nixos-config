@@ -36,7 +36,6 @@
       foundrixModules.hardware.security.keystore.tpm2
       foundrixModules.config.gamescope-session
       ./filesystems.nix
-      ../../../modules/hardware/hid/via.nix
       inputs.ammaster-bridge.nixosModules.default
       ../../../modules/teamviewer.nix
     ];

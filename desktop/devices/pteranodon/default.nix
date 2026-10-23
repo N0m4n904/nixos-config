@@ -29,7 +29,6 @@
       inputs.led-matrix-monitoring.nixosModules.led-matrix-monitoring
       ./filesystems.nix
       ./power-profiles
-      ../../../modules/hardware/hid/via.nix
     ];
 
   boot = {
