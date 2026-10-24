@@ -5,7 +5,7 @@
   "vesktop.desktop"
   "org.gnome.Nautilus.desktop"
   "org.gnome.Terminal.desktop"
-  "nebula.desktop"
+  "dev.anleitner.nebula.desktop"
   "codium.desktop"
   "zen-beta.desktop"
   "idea.desktop"
