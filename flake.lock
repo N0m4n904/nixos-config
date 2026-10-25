@@ -559,11 +559,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792870319,
-        "narHash": "sha256-fHsNmb1quLJFwUTpa7eMHosglwJ5fmUR46N2IGrk4i8=",
+        "lastModified": 1792923582,
+        "narHash": "sha256-06ZqQZ/U7SrfyFc4tgO0VM9JCAp5pbyfQnFeRcyHuxU=",
         "ref": "refs/heads/main",
-        "rev": "0cd40343ce850eb2918b2dba63b03d6df144eefc",
-        "revCount": 54,
+        "rev": "7acef0f7cfa4118621d7c3d2186fd46a14e00e45",
+        "revCount": 57,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
@@ -643,11 +643,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1792615934,
-        "narHash": "sha256-MlvRfa1O5Cqc2/a+gG+l9TSuowEoCKCmrJ1d9oAVm0I=",
+        "lastModified": 1792898606,
+        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "github"
       },
       "original": {
