@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "advisory-db": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792766536,
+        "narHash": "sha256-IO2oOHRZ3yKjhBLzUYWsIV1gfwIrEZ77XDefHM98T3A=",
+        "owner": "rustsec",
+        "repo": "advisory-db",
+        "rev": "84d943a6deeb8cc6c6f632531aaf4f1c62275239",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rustsec",
+        "repo": "advisory-db",
+        "type": "github"
+      }
+    },
     "ammaster-bridge": {
       "inputs": {
         "nixpkgs": [
@@ -104,11 +120,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792611333,
-        "narHash": "sha256-HeExUVZypq1veH14TJhs6t4oYD7n2NwQGGPHW6gg+KA=",
+        "lastModified": 1793452855,
+        "narHash": "sha256-2VpJ+JOt/IRjoiGZZk7OccQ8eZHhQDMRmZRXQz+31gw=",
         "ref": "refs/heads/main",
-        "rev": "ff6b0b7883e60d72a56ab6f847075eeb4ed85ea4",
-        "revCount": 443,
+        "rev": "036a95616c0fb480f13a05b2fad705e2ffc88b91",
+        "revCount": 450,
         "type": "git",
         "url": "https://codeberg.org/xdevs23/foundrix"
       },
@@ -531,6 +547,27 @@
         "url": "https://gitlab.com/N0m4n904/joy-con-color-change"
       }
     },
+    "lavashell": {
+      "inputs": {
+        "advisory-db": "advisory-db",
+        "nixpkgs": "nixpkgs_2",
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1793256012,
+        "narHash": "sha256-hwRMihBqGZ6x48CNXFUOnkgpX2a3oXS2+9MDRTrpwFo=",
+        "owner": "xdevs23",
+        "repo": "lavashell",
+        "rev": "56960c4e76acbf5d4afc08a19d1a48d8e0462ac1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xdevs23",
+        "repo": "lavashell",
+        "rev": "56960c4e76acbf5d4afc08a19d1a48d8e0462ac1",
+        "type": "github"
+      }
+    },
     "led-matrix-monitoring": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -554,16 +591,17 @@
     },
     "nebula": {
       "inputs": {
+        "lavashell": "lavashell",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1793038366,
-        "narHash": "sha256-OiOLj0pJPklxvT6ecm8VX3xprKBBtlpc6QCCjx5vWis=",
+        "lastModified": 1793647184,
+        "narHash": "sha256-Z/pYNEmTU7uZ0+jSWkN8ifyjjEUfqk0VOri6THBc6j0=",
         "ref": "refs/heads/main",
-        "rev": "cb8e9c60967e4a919629a1b890801973d40ac4de",
-        "revCount": 58,
+        "rev": "6efe6f9fbb2839a086c6a304a86f1b835e3e38f5",
+        "revCount": 327,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
@@ -579,11 +617,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793054847,
-        "narHash": "sha256-mhud3nRH8RoP0h9MydfkJ8mISpj+QE/S//wOt9bNgC0=",
+        "lastModified": 1793355509,
+        "narHash": "sha256-/Zs18x+IW4LuVH0rKxra0WPRgsk0DQsi0Bwkf8sOC5c=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "8ba09466dc929acf5c8bb3e0cc40f472a7df3630",
+        "rev": "04c6b94fa104bc23650983a4513aea196794d321",
         "type": "github"
       },
       "original": {
@@ -627,11 +665,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1793110635,
-        "narHash": "sha256-dhoW6VgFWlaodSY5jrBn+CF2FLmaUvDVgM7+C7T2+NM=",
+        "lastModified": 1793726008,
+        "narHash": "sha256-jQp1wKvbwWdLBASTXkSi/VYmDJ5AbBi1WvcMt9HWJC8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "31ecbaca1bdefa45dffc409f0250bd8039ea0010",
+        "rev": "1d060086d60cb76a40cf37109f979d88a5bd6396",
         "type": "github"
       },
       "original": {
@@ -643,11 +681,27 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1793183032,
-        "narHash": "sha256-56mFMf8heLNfYhcgbrh4GpN5x+G9JOfTFXZC3n6w0qM=",
+        "lastModified": 1790822859,
+        "narHash": "sha256-69xHQhAeMAD2wDXO7T2pcOZIF9Sga2W+JkmY2a11Ops=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c59305bab2065cfecc4944690d9eedbb56f3a9fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1793633738,
+        "narHash": "sha256-tItrb9M8eYA6WhFgmT9tpGKueri3+wRuVA952o/2xSU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "08d3a97586f6b6343b3b5e799980773629432610",
+        "rev": "7dcdd87373d72e7a2173e4db02e20d3d7f495cfd",
         "type": "github"
       },
       "original": {
@@ -711,11 +765,34 @@
         "led-matrix-monitoring": "led-matrix-monitoring",
         "nebula": "nebula",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "quickshell": "quickshell",
         "xos-ci": "xos-ci",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nebula",
+          "lavashell",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791189933,
+        "narHash": "sha256-Y8eN7ki0Urx4Ojf4w1xSpWg8uk/3lJqK+E0Oth77rH0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "e60029353d0c48d216bc4b065168ccd4079c166f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "e60029353d0c48d216bc4b065168ccd4079c166f",
+        "type": "github"
       }
     },
     "systems": {
@@ -820,11 +897,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792595242,
-        "narHash": "sha256-kH/E0uJDslOgYcnmU+c0cm6HrUjsEtvZQKZtuQ1+uvo=",
+        "lastModified": 1793752983,
+        "narHash": "sha256-2T4ay/hK055JGIv7eE036v693+Z4p60tBxowfLk0G5Q=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "f19490ac889eabb05bdb7e8dcb85225ee75bd87b",
+        "rev": "a643602101835da649bf016714c9121fba7dda53",
         "type": "github"
       },
       "original": {
