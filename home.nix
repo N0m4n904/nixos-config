@@ -65,6 +65,7 @@
       socat
       stress
       subfinder
+      tmux
       tree
       unzip
       vim
