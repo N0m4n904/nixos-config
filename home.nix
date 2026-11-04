@@ -6,6 +6,10 @@
   ...
 }:
 {
+  imports = [
+    ./modules/overlays/opencode-node-modules-hash.nix
+  ];
+
   home-manager = applyHomeManagerShared {
     home.language = {
       base = "en_US.UTF-8";
