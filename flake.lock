@@ -554,17 +554,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1793256012,
-        "narHash": "sha256-hwRMihBqGZ6x48CNXFUOnkgpX2a3oXS2+9MDRTrpwFo=",
+        "lastModified": 1793891638,
+        "narHash": "sha256-KktJofwuviJRozx1G3HJuxfS0LiaEEDidQorQEC6EWc=",
         "owner": "xdevs23",
         "repo": "lavashell",
-        "rev": "56960c4e76acbf5d4afc08a19d1a48d8e0462ac1",
+        "rev": "ff78e4fe02df4bd2c27c3678623fc99dad7016c1",
         "type": "github"
       },
       "original": {
         "owner": "xdevs23",
         "repo": "lavashell",
-        "rev": "56960c4e76acbf5d4afc08a19d1a48d8e0462ac1",
+        "rev": "ff78e4fe02df4bd2c27c3678623fc99dad7016c1",
         "type": "github"
       }
     },
@@ -597,11 +597,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793647184,
-        "narHash": "sha256-Z/pYNEmTU7uZ0+jSWkN8ifyjjEUfqk0VOri6THBc6j0=",
+        "lastModified": 1793993001,
+        "narHash": "sha256-6jcUPW7tatSHGhEKp3uGLCdDBIlTls8QpdjU9RPaJeI=",
         "ref": "refs/heads/main",
-        "rev": "6efe6f9fbb2839a086c6a304a86f1b835e3e38f5",
-        "revCount": 327,
+        "rev": "798de2ef95c18c1a534c4e5d8de7c99161fd4d16",
+        "revCount": 376,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
@@ -617,11 +617,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793355509,
-        "narHash": "sha256-/Zs18x+IW4LuVH0rKxra0WPRgsk0DQsi0Bwkf8sOC5c=",
+        "lastModified": 1793871777,
+        "narHash": "sha256-DbFyxXHjP4SJDWVVIILkgrUZxj29cDusi8ULXoQGuZ8=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "04c6b94fa104bc23650983a4513aea196794d321",
+        "rev": "d645c71a58dbae3eb17ff551a07aea13a541cb1a",
         "type": "github"
       },
       "original": {
@@ -697,11 +697,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1793633738,
-        "narHash": "sha256-tItrb9M8eYA6WhFgmT9tpGKueri3+wRuVA952o/2xSU=",
+        "lastModified": 1793865203,
+        "narHash": "sha256-/cpdPHaySDIyCgZI6EWngiM6jK3YLUNzv1b7lTzy6Bk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7dcdd87373d72e7a2173e4db02e20d3d7f495cfd",
+        "rev": "c56a87d8e41ce69bd2af57eb35dcc117a9dfca33",
         "type": "github"
       },
       "original": {
