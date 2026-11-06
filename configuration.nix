@@ -19,6 +19,7 @@ in
     foundrixModules.config.shell.zsh.power10k
     foundrixModules.config.home-manager
     foundrixModules.config.graphics.fonts.adwaita-sans
+    ./modules/shell/zsh-drop-github-plugin.nix
   ];
 
   # ./home.nix is deliberately not imported here. It is the general-purpose
