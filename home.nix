@@ -41,6 +41,7 @@
       foundrixPkgs.git-aliases
       foundrixPkgs.pickrange
       gedit
+      gh
       git
       git-repo
       hwloc
