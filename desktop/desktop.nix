@@ -24,6 +24,7 @@
     ../modules/gaming/proton-cachyos.nix
     ../modules/browser/zen.nix
     ../modules/overlays/noriskclient-launcher.nix
+    ../modules/shell/zsh-init-outside-home.nix
     inputs.joycon-colors.nixosModules.default
   ];
 
