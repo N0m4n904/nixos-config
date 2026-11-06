@@ -54,10 +54,9 @@
       url = "git+https://gitlab.com/N0m4n904/ammaster-bridge";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nebula = {
-      url = "git+ssh://git@github.com/N0m4n904/nebula.git";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Deliberately not following nixpkgs: lavashell needs a newer rustc than the
+    # stable channel has (1.95 cannot compile it, 1.99 can).
+    nebula.url = "git+ssh://git@github.com/N0m4n904/nebula.git";
   };
 
   outputs =
