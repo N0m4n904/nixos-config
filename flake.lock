@@ -69,6 +69,21 @@
         "type": "github"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1793836618,
+        "narHash": "sha256-TREenflwEjxOSq292FYwbc3kEm7TDRtXCZRNWEdjBmg=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "79fd63528501446749c09f08cad486a58c7d173e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -591,15 +606,16 @@
     },
     "nebula": {
       "inputs": {
+        "crane": "crane",
         "lavashell": "lavashell",
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1794050390,
-        "narHash": "sha256-/7/ooRoQ/kYtcA5foUAOhg/W8i2z7Tq6iNgu+Pc249I=",
+        "lastModified": 1794056428,
+        "narHash": "sha256-kOKtZjKZHVo+hPv74DZHRuCLbM7l+7u/zwBWymSoSwE=",
         "ref": "refs/heads/main",
-        "rev": "852ae01336d46d3bab5f785fa541658e1b34955f",
-        "revCount": 386,
+        "rev": "9d0c7ff2537e6bb30fa525fa958d6e2ded99a2e7",
+        "revCount": 393,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
