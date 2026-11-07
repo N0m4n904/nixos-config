@@ -70,8 +70,11 @@
       inputs.nebula.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     interactiveShellInit = ''
-      alias claude='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x'
-      alias claude-vm='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x#claude-vm'
+      claude_run='NIXPKGS_ALLOW_UNFREE=1 nix run --impure git+https://gitlab.com/xdevs23/claude-code-10x'
+
+      alias claude="$claude_run"
+      alias claude-vm="$claude_run#claude-vm"
+      alias claude-plugin-update='claude -- plugin marketplace update && claude -- plugin update'
       alias update='nix run .#update'
     '';
     variables = {
