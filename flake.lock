@@ -595,11 +595,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1793998611,
-        "narHash": "sha256-SJfTShTlKKLNLBzKG8vgDDLa61cdVqMykofPpl8b6I0=",
+        "lastModified": 1794050390,
+        "narHash": "sha256-/7/ooRoQ/kYtcA5foUAOhg/W8i2z7Tq6iNgu+Pc249I=",
         "ref": "refs/heads/main",
-        "rev": "ddf541e0310d8a1d544278ee1ed991993cf0c8c1",
-        "revCount": 378,
+        "rev": "852ae01336d46d3bab5f785fa541658e1b34955f",
+        "revCount": 386,
         "type": "git",
         "url": "ssh://git@github.com/N0m4n904/nebula.git"
       },
