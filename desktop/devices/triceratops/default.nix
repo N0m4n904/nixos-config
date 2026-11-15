@@ -38,6 +38,7 @@
       ./filesystems.nix
       inputs.ammaster-bridge.nixosModules.default
       ../../../modules/teamviewer.nix
+      ../../../modules/voidport/share.nix
     ];
 
   boot.loader.timeout = 1;
@@ -184,5 +185,18 @@
       KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0e31", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="1b7c", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     '';
+  };
+
+  # The ROM build output, for the machines that do not build it. Shared
+  # read-only, and only over the tailnet: voidport authenticates nobody and
+  # encrypts nothing, so which interface the port is opened on is the whole of
+  # the access control. That is the same trade already made above for the update
+  # server on this network, and what is exposed here is one directory instead of
+  # a filesystem.
+  voidport.serve = {
+    user = "noah";
+    tcpListeners = [ { port = 9000; } ];
+    firewallInterfaces = [ "tailscale0" ];
+    namespaces.rom_out.directories."/home/noah/Stuff2/rom_out".mode = "readOnly";
   };
 }

@@ -29,6 +29,7 @@
       inputs.led-matrix-monitoring.nixosModules.led-matrix-monitoring
       ./filesystems.nix
       ./power-profiles
+      ../../../modules/voidport/mount.nix
     ];
 
   boot = {
@@ -114,6 +115,16 @@
       disableKeyListener = true;
       user = "noah";
     };
+  };
+
+  # The ROM build output of the machine that builds it. Read-only here as well as
+  # there, so a write fails on this side instead of after a round trip.
+  voidport.mounts."/home/noah/rom_out" = {
+    server = "triceratops";
+    port = 9000;
+    namespace = "rom_out";
+    directory = "/home/noah/Stuff2/rom_out";
+    readOnly = true;
   };
 
   systemd.services.led-matrix-monitoring = {
