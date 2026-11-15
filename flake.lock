@@ -825,6 +825,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "quickshell": "quickshell",
+        "voidport": "voidport",
         "xos-ci": "xos-ci",
         "zen-browser": "zen-browser"
       }
@@ -879,6 +880,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "voidport": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792832185,
+        "narHash": "sha256-ShlAhLxqXrd78CxrpTw+N0Co/mmk5mjdhr1MePbBzN4=",
+        "owner": "xdevs23",
+        "repo": "voidport",
+        "rev": "319e84ff0baf2d0a80ffde3c2e2e7dcd0f3f94cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xdevs23",
+        "repo": "voidport",
         "type": "github"
       }
     },

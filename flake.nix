@@ -57,6 +57,14 @@
     # Deliberately not following nixpkgs: lavashell needs a newer rustc than the
     # stable channel has (1.95 cannot compile it, 1.99 can).
     nebula.url = "git+ssh://git@github.com/N0m4n904/nebula.git";
+    # Upstream publishes no releases or tags, so this tracks the branch and the
+    # lock file pins the revision it was last built from. Reviewed at
+    # 319e84ff0baf2d0a80ffde3c2e2e7dcd0f3f94cf on 2026-11-15: every commit is by
+    # the author of the foundrix input above, with no third-party contributors.
+    voidport = {
+      url = "github:xdevs23/voidport";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
