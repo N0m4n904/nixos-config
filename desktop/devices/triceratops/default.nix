@@ -177,13 +177,15 @@
     };
 
     openssh.enable = true;
-    # Support for Carolina Mech Fossil, Lemokey L5 HE 8k, Keychron Link and Keychron K3 HE
+    # Support for Carolina Mech Fossil, Lemokey L5 HE 8k, Keychron Link, Keychron K3 HE, Corsair K100 OPX, Gravastar Wireless receiver
     udev.extraRules = ''
       KERNEL=="hidraw*", ATTRS{idVendor}=="4069", ATTRS{idProduct}=="0002", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="362d", ATTRS{idProduct}=="0551", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0e31", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
       KERNEL=="hidraw*", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="1b7c", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="372e", ATTRS{idProduct}=="106c", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="372e", ATTRS{idProduct}=="10e5", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
     '';
   };
 
